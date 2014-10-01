@@ -17,6 +17,9 @@ public class Gui extends javax.swing.JFrame {
      */
     public Gui() {
         initComponents();
+        CalendarPanel cp = new CalendarPanel();
+        jPanel1.add(cp);
+        cp.setVisible(true);
         
     }
 
