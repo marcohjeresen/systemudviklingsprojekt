@@ -20,7 +20,6 @@ public class CalendarPanel extends javax.swing.JPanel {
     public CalendarPanel() {
         initComponents();
         setSize(new Dimension(1356, 520));
-        
     }
 
     /**
@@ -72,7 +71,7 @@ public class CalendarPanel extends javax.swing.JPanel {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 520, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);

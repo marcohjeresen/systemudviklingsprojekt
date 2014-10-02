@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controller;
 
 /**
@@ -11,13 +10,17 @@ package controller;
  * @author markh_000
  */
 public class Calendar_Ct {
-   
+private static Calendar_Ct cc;
 
-    public Calendar_Ct() {
+    private Calendar_Ct() {
         
+    }
+    
+    public static Calendar_Ct getInstance(){
+        if(cc == null){
+            cc = new Calendar_Ct();
         }
-    
-    
-    
-    
+        return cc;
+    }
+
 }
