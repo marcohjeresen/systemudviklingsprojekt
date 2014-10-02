@@ -15,7 +15,7 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
  * @author markh_000
  */
 public class Gui extends javax.swing.JFrame {
-private CalendarPanel cp;
+    private CalendarPanel cp;
     /**
      * Creates new form Gui
      */
@@ -103,7 +103,7 @@ private CalendarPanel cp;
         jframe.setSize(new Dimension(400, 400));
         jframe.add(new MonthPanel(jframe));
         jframe.setVisible(true);
-        jframe.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        jframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

@@ -6,6 +6,7 @@
 
 package view;
 
+import controller.Calendar_Ct;
 import java.util.Calendar;
 import javax.swing.JFrame;
 
@@ -17,6 +18,7 @@ public class DayPanel extends javax.swing.JPanel {
 private int day;
 private Calendar cal;
 private JFrame jFrame;
+private Calendar_Ct cc;
     /**
      * Creates new form NewJPanel
      */
@@ -24,6 +26,7 @@ private JFrame jFrame;
         this.day = day;
         this.cal = cal;
         this.jFrame = jFrame;
+        cc = Calendar_Ct.getInstance();
         
         initComponents();
         jLabel1.setText("" + day);
@@ -70,7 +73,7 @@ private JFrame jFrame;
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         Calendar cl = cal;
         cl.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), day);
-        System.out.println(cl.getTime().toString());
+        cc.setCal(cal);
         jFrame.dispose();
     }//GEN-LAST:event_formMouseClicked
 
