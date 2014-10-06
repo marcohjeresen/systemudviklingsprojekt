@@ -33,13 +33,13 @@ public class MonthPanel extends javax.swing.JPanel {
 
     public MonthPanel(JFrame jFrame) {
         this.jFrame = jFrame;
-        iconSizeHeight = 35;
-        iconSizeWidth = 35;
+        iconSizeHeight = 40;
+        iconSizeWidth = 40;
         listOfDays = new ArrayList<>();
         cal = Calendar.getInstance();
         jPanel = new JPanel();
         initComponents();
-        jLabel_maaned.setText(new SimpleDateFormat("MMMM").format(cal.getTime()));
+        jLabel_maaned.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
         drawDays();
     }
 
@@ -51,6 +51,7 @@ public class MonthPanel extends javax.swing.JPanel {
         jButton_Frem = new javax.swing.JButton();
         jPanel_calender = new javax.swing.JPanel();
         jLabel_maaned = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setLayout(null);
 
@@ -61,7 +62,7 @@ public class MonthPanel extends javax.swing.JPanel {
             }
         });
         add(jButton_tilbage);
-        jButton_tilbage.setBounds(10, 10, 67, 23);
+        jButton_tilbage.setBounds(10, 10, 80, 23);
 
         jButton_Frem.setText("Frem");
         jButton_Frem.addActionListener(new java.awt.event.ActionListener() {
@@ -70,27 +71,33 @@ public class MonthPanel extends javax.swing.JPanel {
             }
         });
         add(jButton_Frem);
-        jButton_Frem.setBounds(326, 11, 57, 23);
+        jButton_Frem.setBounds(210, 10, 80, 23);
 
         jPanel_calender.setBackground(new java.awt.Color(51, 51, 80));
+        jPanel_calender.setOpaque(false);
         jPanel_calender.setLayout(null);
         add(jPanel_calender);
-        jPanel_calender.setBounds(10, 50, 380, 240);
+        jPanel_calender.setBounds(10, 50, 280, 240);
 
+        jLabel_maaned.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel_maaned.setText("jLabel1");
         add(jLabel_maaned);
-        jLabel_maaned.setBounds(150, 10, 120, 20);
+        jLabel_maaned.setBounds(90, 10, 120, 20);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/month background.png"))); // NOI18N
+        add(jLabel1);
+        jLabel1.setBounds(0, 0, 300, 300);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_FremActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_FremActionPerformed
         cal.roll(cal.MONTH, 1);
-        jLabel_maaned.setText(new SimpleDateFormat("MMMM").format(cal.getTime()));
+        jLabel_maaned.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
         drawDays();
     }//GEN-LAST:event_jButton_FremActionPerformed
 
     private void jButton_tilbageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_tilbageActionPerformed
         cal.roll(cal.MONTH, -1);
-        jLabel_maaned.setText(new SimpleDateFormat("MMMM").format(cal.getTime()));
+        jLabel_maaned.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
         drawDays();
     }//GEN-LAST:event_jButton_tilbageActionPerformed
 
@@ -164,12 +171,12 @@ public class MonthPanel extends javax.swing.JPanel {
             for (int j = 0; j < days.size(); j++) {
 
                 if (days.get(j).equals(da)) {
-                    listOfDays.get(i).setBackground(Color.RED);
+                    listOfDays.get(i).setBackground(new Color(0,66,81));
                     erder = true;
                 }
             }
             if (!erder) {
-                listOfDays.get(i).setBackground(Color.GRAY);
+                listOfDays.get(i).setBackground(new Color(0,146,160));
             }
             jPanel_calender.add(listOfDays.get(i));
             listOfDays.get(i).setVisible(true);
@@ -182,6 +189,7 @@ public class MonthPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Frem;
     private javax.swing.JButton jButton_tilbage;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel_maaned;
     private javax.swing.JPanel jPanel_calender;
     // End of variables declaration//GEN-END:variables

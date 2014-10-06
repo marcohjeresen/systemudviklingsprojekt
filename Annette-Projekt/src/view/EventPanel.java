@@ -6,17 +6,45 @@
 
 package view;
 
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import javax.swing.JFrame;
+
 /**
  *
  * @author Annette
  */
 public class EventPanel extends javax.swing.JPanel {
-
+    private CardLayout cl;
+    private JFrame jFrame;
     /**
      * Creates new form EventPanel
      */
-    public EventPanel() {
+    public EventPanel(String panel, JFrame jFrame) {
+        this.jFrame = jFrame;
         initComponents();
+        
+        cl = (CardLayout) getLayout();
+        cl.addLayoutComponent(choosePanel, "vælg");
+        cl.addLayoutComponent(massagePanel, "massage");
+        showPage(panel);
+    }
+    
+    public void showPage(String panel){
+        switch(panel){
+        case("vælg"):
+            jFrame.setSize(new Dimension(242, 150));
+            jFrame.setLocation(400, 200);
+            cl.show(this, "vælg");
+            break;
+        case("massage"):
+            jFrame.setSize(new Dimension(300, 370));
+            jFrame.setLocation(200, 0);
+            cl.show(this, "massage");
+            break;
+        }
+        jFrame.revalidate();
+        jFrame.repaint();
     }
 
     /**
@@ -28,19 +56,157 @@ public class EventPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        choosePanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jBMassage = new javax.swing.JButton();
+        jBGrill = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        massagePanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLabel7 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jLabel8 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox();
+        jButton4 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+
+        setLayout(new java.awt.CardLayout());
+
+        choosePanel.setLayout(null);
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Opret aftale");
+        choosePanel.add(jLabel1);
+        jLabel1.setBounds(43, 22, 146, 14);
+
+        jBMassage.setText("Massage");
+        jBMassage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBMassageActionPerformed(evt);
+            }
+        });
+        choosePanel.add(jBMassage);
+        jBMassage.setBounds(43, 42, 146, 23);
+
+        jBGrill.setText("Grill");
+        choosePanel.add(jBGrill);
+        jBGrill.setBounds(43, 71, 146, 23);
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/event background.png"))); // NOI18N
+        choosePanel.add(jLabel11);
+        jLabel11.setBounds(0, 0, 242, 140);
+
+        add(choosePanel, "card2");
+
+        massagePanel.setLayout(null);
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Opret massage");
+        massagePanel.add(jLabel2);
+        jLabel2.setBounds(10, 0, 266, 14);
+
+        jCheckBox1.setText("Halvkrops");
+        jCheckBox1.setOpaque(false);
+        massagePanel.add(jCheckBox1);
+        jCheckBox1.setBounds(10, 82, 140, 23);
+
+        jCheckBox2.setText("Helkrops");
+        jCheckBox2.setOpaque(false);
+        massagePanel.add(jCheckBox2);
+        jCheckBox2.setBounds(153, 82, 130, 23);
+        massagePanel.add(jTextField1);
+        jTextField1.setBounds(10, 55, 117, 20);
+
+        jLabel3.setText("Kunde:");
+        massagePanel.add(jLabel3);
+        jLabel3.setBounds(10, 20, 120, 14);
+
+        jLabel4.setText("Navn:");
+        massagePanel.add(jLabel4);
+        jLabel4.setBounds(10, 40, 120, 14);
+
+        jLabel5.setText("Telefon nummer:");
+        massagePanel.add(jLabel5);
+        jLabel5.setBounds(153, 40, 120, 14);
+        massagePanel.add(jTextField2);
+        jTextField2.setBounds(153, 55, 111, 20);
+
+        jLabel6.setText("Bemærkninger:");
+        massagePanel.add(jLabel6);
+        jLabel6.setBounds(10, 112, 260, 14);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        massagePanel.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 132, 266, 96);
+
+        jLabel7.setText("Fra:");
+        massagePanel.add(jLabel7);
+        jLabel7.setBounds(10, 240, 80, 14);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        massagePanel.add(jComboBox1);
+        jComboBox1.setBounds(90, 240, 93, 20);
+
+        jLabel8.setText("Varighed:");
+        massagePanel.add(jLabel8);
+        jLabel8.setBounds(10, 270, 80, 14);
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        massagePanel.add(jComboBox2);
+        jComboBox2.setBounds(90, 270, 94, 20);
+
+        jButton4.setText("Opret");
+        massagePanel.add(jButton4);
+        jButton4.setBounds(91, 300, 90, 23);
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/massage background.png"))); // NOI18N
+        massagePanel.add(jLabel9);
+        jLabel9.setBounds(0, 0, 290, 340);
+
+        add(massagePanel, "card3");
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jBMassageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMassageActionPerformed
+        showPage("massage");
+    }//GEN-LAST:event_jBMassageActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel choosePanel;
+    private javax.swing.JButton jBGrill;
+    private javax.swing.JButton jBMassage;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JPanel massagePanel;
     // End of variables declaration//GEN-END:variables
 }

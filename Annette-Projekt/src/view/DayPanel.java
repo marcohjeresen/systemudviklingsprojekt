@@ -9,6 +9,7 @@ package view;
 import controller.Calendar_Ct;
 import java.util.Calendar;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  *
@@ -32,6 +33,8 @@ private Calendar_Ct cc;
         jLabel1.setText("" + day);
     }
 
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,6 +52,7 @@ private Calendar_Ct cc;
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("jLabel1");
 

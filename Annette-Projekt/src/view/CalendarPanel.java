@@ -10,7 +10,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.JLabel;
+import javax.swing.JFrame;
 import util.Listeners;
 
 /**
@@ -26,6 +26,7 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
      * Creates new form WeekPanel
      */
     public CalendarPanel() {
+        
         cc = Calendar_Ct.getInstance();
         listener = Listeners.getList();
         initComponents();
@@ -43,6 +44,14 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         jLabel5.setText(list.get(4));
         jLabel6.setText(list.get(5));
         jLabel7.setText(list.get(6));
+    }
+    
+    public void newChoose(){
+        JFrame jf = new JFrame();
+        EventPanel ep = new EventPanel("vælg", jf);
+        jf.add(ep);
+        jf.setVisible(true);
+        ep.setVisible(true);
     }
 
     /**
@@ -71,10 +80,20 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         jLabel7 = new javax.swing.JLabel();
         monthPanel = new javax.swing.JPanel();
 
+        setOpaque(false);
         setLayout(new java.awt.CardLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        weekPanel.setOpaque(false);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.setOpaque(false);
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
+
+        jLabel1.setForeground(new java.awt.Color(0, 70, 70));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -94,7 +113,9 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setOpaque(false);
 
+        jLabel2.setForeground(new java.awt.Color(0, 102, 102));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -114,7 +135,9 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setOpaque(false);
 
+        jLabel3.setForeground(new java.awt.Color(0, 153, 153));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("jLabel3");
 
@@ -135,7 +158,9 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel4.setOpaque(false);
 
+        jLabel4.setForeground(new java.awt.Color(0, 204, 204));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("jLabel4");
 
@@ -156,7 +181,9 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel5.setOpaque(false);
 
+        jLabel5.setForeground(new java.awt.Color(153, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("jLabel5");
 
@@ -177,7 +204,9 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         );
 
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel6.setOpaque(false);
 
+        jLabel6.setForeground(new java.awt.Color(204, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("jLabel6");
 
@@ -198,7 +227,9 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel7.setOpaque(false);
 
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("jLabel7");
 
@@ -251,6 +282,8 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
 
         add(weekPanel, "card2");
 
+        monthPanel.setOpaque(false);
+
         javax.swing.GroupLayout monthPanelLayout = new javax.swing.GroupLayout(monthPanel);
         monthPanel.setLayout(monthPanelLayout);
         monthPanelLayout.setHorizontalGroup(
@@ -264,6 +297,10 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
 
         add(monthPanel, "card3");
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        newChoose();
+    }//GEN-LAST:event_jPanel1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
