@@ -30,6 +30,7 @@ public class EventPanel extends javax.swing.JPanel {
         showPage(panel);
     }
     
+    //bruges til at navigere i vores CardLayout
     public void showPage(String panel){
         switch(panel){
         case("vælg"):

@@ -27,6 +27,15 @@ public class Gui extends javax.swing.JFrame {
         cp.setVisible(true);
         jPanel1.repaint();
     }
+    
+    //bruges til at vise måneds panelet
+    public void showMonth(){
+        JFrame jframe = new JFrame("Månedskalender");
+        jframe.setSize(new Dimension(317, 337));
+        jframe.add(new MonthPanel(jframe));
+        jframe.setVisible(true);
+        jframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -94,11 +103,7 @@ public class Gui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JFrame jframe = new JFrame("Månedskalender");
-        jframe.setSize(new Dimension(317, 337));
-        jframe.add(new MonthPanel(jframe));
-        jframe.setVisible(true);
-        jframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        showMonth();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

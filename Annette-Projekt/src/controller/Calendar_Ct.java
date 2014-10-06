@@ -34,6 +34,7 @@ public class Calendar_Ct {
         return cal;
     }
 
+    //den finder den uge som den valgte dato ligger i og retunere et ArrayList med dem
     public ArrayList<String> getWeek() {
         ArrayList<String> days = new ArrayList<>();
         String day = new SimpleDateFormat("EEEE").format(cal.getTime());

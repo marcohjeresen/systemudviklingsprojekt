@@ -9,7 +9,6 @@ package view;
 import controller.Calendar_Ct;
 import java.util.Calendar;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 /**
  *
@@ -32,8 +31,13 @@ private Calendar_Ct cc;
         initComponents();
         jLabel1.setText("" + day);
     }
-
-
+    
+    public void mouseClicked(){
+        Calendar cl = cal;
+        cl.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), day);
+        cc.setCal(cal);
+        jFrame.dispose();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -75,12 +79,8 @@ private Calendar_Ct cc;
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        Calendar cl = cal;
-        cl.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), day);
-        cc.setCal(cal);
-        jFrame.dispose();
+        mouseClicked();
     }//GEN-LAST:event_formMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

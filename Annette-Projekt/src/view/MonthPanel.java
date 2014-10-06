@@ -39,73 +39,19 @@ public class MonthPanel extends javax.swing.JPanel {
         cal = Calendar.getInstance();
         jPanel = new JPanel();
         initComponents();
-        jLabel_maaned.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
+        jLabel_monht.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
         drawDays();
     }
-
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        jButton_tilbage = new javax.swing.JButton();
-        jButton_Frem = new javax.swing.JButton();
-        jPanel_calender = new javax.swing.JPanel();
-        jLabel_maaned = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-
-        setLayout(null);
-
-        jButton_tilbage.setText("Tilbage");
-        jButton_tilbage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_tilbageActionPerformed(evt);
-            }
-        });
-        add(jButton_tilbage);
-        jButton_tilbage.setBounds(10, 10, 80, 23);
-
-        jButton_Frem.setText("Frem");
-        jButton_Frem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_FremActionPerformed(evt);
-            }
-        });
-        add(jButton_Frem);
-        jButton_Frem.setBounds(210, 10, 80, 23);
-
-        jPanel_calender.setBackground(new java.awt.Color(51, 51, 80));
-        jPanel_calender.setOpaque(false);
-        jPanel_calender.setLayout(null);
-        add(jPanel_calender);
-        jPanel_calender.setBounds(10, 50, 280, 240);
-
-        jLabel_maaned.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel_maaned.setText("jLabel1");
-        add(jLabel_maaned);
-        jLabel_maaned.setBounds(90, 10, 120, 20);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/month background.png"))); // NOI18N
-        add(jLabel1);
-        jLabel1.setBounds(0, 0, 300, 300);
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton_FremActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_FremActionPerformed
-        cal.roll(cal.MONTH, 1);
-        jLabel_maaned.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
-        drawDays();
-    }//GEN-LAST:event_jButton_FremActionPerformed
-
-    private void jButton_tilbageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_tilbageActionPerformed
-        cal.roll(cal.MONTH, -1);
-        jLabel_maaned.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
-        drawDays();
-    }//GEN-LAST:event_jButton_tilbageActionPerformed
-
-    private void drawDays() {
+    
+    
+    //bruges til at tegne og finde evt optaget dage i den måned som vises
+     private void drawDays() {
         int x = 0, y = 0;
         listOfDays.clear();
         jPanel_calender.removeAll();
         jPanel_calender.repaint();
+        
+        // ArrayList - her skal info ind om optaget dage.
         ArrayList<String> days = new ArrayList<>();
         days.add("2014-10-23");
         days.add("2014-10-25");
@@ -168,6 +114,7 @@ public class MonthPanel extends javax.swing.JPanel {
 
             boolean erder = false;
             String da = cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + i;
+            // her tjekker den efter om der er et event på selve dagen inden den tilføjer den til panelet
             for (int j = 0; j < days.size(); j++) {
 
                 if (days.get(j).equals(da)) {
@@ -183,14 +130,72 @@ public class MonthPanel extends javax.swing.JPanel {
         }
         jPanel_calender.repaint();
     }
-    
-   
+     
+     // bruges til at gå frem og tilbage i månederne
+     public void rollMonth(int days){
+         cal.roll(cal.MONTH, days);
+        jLabel_monht.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
+        drawDays();
+     }
 
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jButton_back = new javax.swing.JButton();
+        jButton_forward = new javax.swing.JButton();
+        jPanel_calender = new javax.swing.JPanel();
+        jLabel_monht = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+
+        setLayout(null);
+
+        jButton_back.setText("Tilbage");
+        jButton_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_backActionPerformed(evt);
+            }
+        });
+        add(jButton_back);
+        jButton_back.setBounds(10, 10, 80, 23);
+
+        jButton_forward.setText("Frem");
+        jButton_forward.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_forwardActionPerformed(evt);
+            }
+        });
+        add(jButton_forward);
+        jButton_forward.setBounds(210, 10, 80, 23);
+
+        jPanel_calender.setBackground(new java.awt.Color(51, 51, 80));
+        jPanel_calender.setOpaque(false);
+        jPanel_calender.setLayout(null);
+        add(jPanel_calender);
+        jPanel_calender.setBounds(10, 50, 280, 240);
+
+        jLabel_monht.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_monht.setText("jLabel1");
+        add(jLabel_monht);
+        jLabel_monht.setBounds(90, 10, 120, 20);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/month background.png"))); // NOI18N
+        add(jLabel1);
+        jLabel1.setBounds(0, 0, 300, 300);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton_forwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_forwardActionPerformed
+        rollMonth(1);
+    }//GEN-LAST:event_jButton_forwardActionPerformed
+
+    private void jButton_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_backActionPerformed
+        rollMonth(-1);
+    }//GEN-LAST:event_jButton_backActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton_Frem;
-    private javax.swing.JButton jButton_tilbage;
+    private javax.swing.JButton jButton_back;
+    private javax.swing.JButton jButton_forward;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel_maaned;
+    private javax.swing.JLabel jLabel_monht;
     private javax.swing.JPanel jPanel_calender;
     // End of variables declaration//GEN-END:variables
 }

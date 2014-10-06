@@ -18,7 +18,6 @@ public class Listeners {
         listenersList = new ArrayList<>();
     }
     
-    
     /**
      * Method, creates a singleton of Listeners if it doesn't exist already.
      * @return listeners.
