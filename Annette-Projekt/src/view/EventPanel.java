@@ -9,6 +9,7 @@ import controller.CustomerControl;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import model.Customer;
 import model.MassageBuilder;
 
 /**
@@ -21,6 +22,7 @@ public class EventPanel extends javax.swing.JPanel {
     private JFrame jFrame;
     private MassageBuilder massage;
     private CustomerControl cc;
+    private Customer customer;
 
     /**
      * Creates new form EventPanel
@@ -46,6 +48,7 @@ public class EventPanel extends javax.swing.JPanel {
                 break;
             case ("massage"):
                 massage = new MassageBuilder();
+                customer = null;
                 jFrame.setSize(new Dimension(300, 370));
                 jFrame.setLocation(200, 0);
                 cl.show(this, "massage");
@@ -76,6 +79,13 @@ public class EventPanel extends javax.swing.JPanel {
             }
         }
 
+    }
+    
+    public void findCustomer(){
+        customer = cc.getSpecificCustomer(jTextField2.getText());
+        if (customer != null) {
+            jTextField1.setText(customer.getName());
+        }
     }
 
     /**
@@ -247,7 +257,7 @@ public class EventPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextArea1FocusLost
 
     private void jTextField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusLost
-        cc.getSpecificCustomer(jTextField2.getText());
+        findCustomer();
     }//GEN-LAST:event_jTextField2FocusLost
 
 

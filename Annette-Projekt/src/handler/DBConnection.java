@@ -12,41 +12,29 @@ import java.sql.Statement;
  */
 public class DBConnection {
 
-    private Connection connect;
+   private Connection connect;
     private Statement state;
     private boolean isConnected;
     private static DBConnection connection;
-    private String host;
-    private String port;
-    private String dbNavn;
-    private String user;
-    private String pass;
-    private String db;
+    private final String host;
+    private final String port;
+    private final String dbNavn;
+    private final String user;
+    private final String pass;
+    private final String db;
 
     /**
      * Constructor, creates a new object of the class.
-     * 
      */
-    public DBConnection() {
-
-        this.dbNavn = "annetteprojekt";
+    private DBConnection() {
         this.host = "localhost";
         this.port = "3306";
+        this.dbNavn = "annetteprojekt";
         this.user = "root";
         this.pass = "root";
+        this.db = "jdbc:mysql://" + host + ":" + port + "/" + dbNavn;
         isConnected = false;
         connection();
-    }
-
-    /**
-     * 
-     * @throws ClassNotFoundException
-     * @throws SQLException 
-     */
-    public void connect() throws ClassNotFoundException, SQLException {
-        isConnected = false;
-        connection();
-  
     }
 
     /**
@@ -60,16 +48,13 @@ public class DBConnection {
             connect = (Connection) DriverManager.getConnection(db, user, pass);
             state = (Statement) connect.createStatement();
             isConnected = true;
-
-        } catch (ClassNotFoundException ex) {
-            System.out.println("db.DBConnection - connection(): Database Not Found!!" + ex.getLocalizedMessage());
         } catch (SQLException ex) {
-            System.out.println("db.DBConnection - connection(): Connect Failed:" + ex.getLocalizedMessage());
+            System.out.println("Could not connect: " + db + " , " + user + " , " + pass);
+            System.out.println(ex.getLocalizedMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("No driver found");
+            System.out.println(ex.getLocalizedMessage());
         }
-        return isConnected;
-    }
-
-    public boolean isConnected() {
         return isConnected;
     }
 
@@ -91,29 +76,16 @@ public class DBConnection {
      * @param sql a String containing the sql command
      * @throws SQLException
      */
-    public void execute(String sql){
-        try {
-            state.execute(sql);
-        } catch (SQLException ex) {
-            System.out.println("db.DBConnection - DBConnection - execute(): Connect Failed:" + ex.getLocalizedMessage());
-        }
+    public void execute(String sql) throws SQLException {
+        state.execute(sql);
     }
 
-    public ResultSet getResult(String sql) {
-        ResultSet rs = null;
-        try {
-            rs = state.executeQuery(sql);
-        } catch (SQLException ex) {
-            System.out.println("db.DBConnection - DBConnection - getResult(): Connect Failed:" + ex.getLocalizedMessage());
-        }
+    public ResultSet getResult(String sql) throws SQLException {
+        ResultSet rs = state.executeQuery(sql);
         return rs;
     }
 
-    public void close()  {
-        try {
-            connect.close();
-        } catch (SQLException ex) {
-            System.out.println("db.DBConnection - DBConnection - close(): Connect Failed:" + ex.getLocalizedMessage());
-        }
+    public void close() throws SQLException {
+        connect.close();
     }
 }

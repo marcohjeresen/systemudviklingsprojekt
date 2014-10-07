@@ -34,13 +34,16 @@ public class CustomerHandler {
     }
 
     public Customer getSpecificCustomerFromDb(String phone) {
-        String sql = "select * from customer where cus_phone = "+phone;
-        ResultSet rs = db.getResult(sql);
-        Customer cus = null; 
+        Customer cus = null;
+        String sql = "select * from customer where cus_phone = " + phone;
         try {
-            cus = new Customer(rs.getString("cus_phone"),rs.getString("cus_name") , rs.getString("cus_homeAddress"), rs.getString("cus_address"));
+            ResultSet rs = db.getResult(sql);
+            while (rs.next()) {
+                cus = new Customer(rs.getString("cus_phone"), rs.getString("cus_name"), rs.getString("cus_homeAddress"), rs.getString("cus_address"));
+            }
+            
         } catch (SQLException ex) {
-            System.out.println("Exception occured in CustomerHandler - getSpecificCustomerFromDb SQL exception\n"+ex.getLocalizedMessage());
+            System.out.println("Exception occured in CustomerHandler - getSpecificCustomerFromDb SQL exception\n" + ex.getLocalizedMessage());
         }
         return cus;
     }
