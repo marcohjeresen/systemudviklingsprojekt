@@ -133,7 +133,7 @@ public class MonthPanel extends javax.swing.JPanel {
      
      // bruges til at gå frem og tilbage i månederne
      public void rollMonth(int days){
-         cal.roll(cal.MONTH, days);
+        cal.roll(cal.MONTH, days);
         jLabel_monht.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
         drawDays();
      }
