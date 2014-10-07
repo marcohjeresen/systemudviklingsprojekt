@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package model;
 
 /**
@@ -11,16 +10,23 @@ package model;
  * @author Annette
  */
 public class Massage {
+
     private int id;
     private String comment;
     private String startTime;
     private MassageType type;
+    private Customer customer;
 
-    public Massage(int id, String comment, String startTime, MassageType type) {
+    public Massage(int id, String comment, String startTime, MassageType type, Customer customer) {
         this.id = id;
         this.comment = comment;
         this.startTime = startTime;
         this.type = type;
+        this.customer = customer;
+    }
+
+    public Customer getCustomer() {
+        return customer;
     }
 
     public int getId() {
@@ -54,5 +60,5 @@ public class Massage {
     public void setType(MassageType type) {
         this.type = type;
     }
-    
+
 }

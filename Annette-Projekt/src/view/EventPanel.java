@@ -3,49 +3,79 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package view;
 
+import controller.CustomerControl;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import model.MassageBuilder;
 
 /**
  *
  * @author Annette
  */
 public class EventPanel extends javax.swing.JPanel {
+
     private CardLayout cl;
     private JFrame jFrame;
+    private MassageBuilder massage;
+    private CustomerControl cc;
+
     /**
      * Creates new form EventPanel
      */
     public EventPanel(String panel, JFrame jFrame) {
         this.jFrame = jFrame;
+        cc = CustomerControl.getInstance();
         initComponents();
-        
+
         cl = (CardLayout) getLayout();
         cl.addLayoutComponent(choosePanel, "vælg");
         cl.addLayoutComponent(massagePanel, "massage");
         showPage(panel);
+        fillComboStartTime();
     }
-    
+
     //bruges til at navigere i vores CardLayout
-    public void showPage(String panel){
-        switch(panel){
-        case("vælg"):
-            jFrame.setSize(new Dimension(242, 150));
-            jFrame.setLocation(400, 200);
-            cl.show(this, "vælg");
-            break;
-        case("massage"):
-            jFrame.setSize(new Dimension(300, 370));
-            jFrame.setLocation(200, 0);
-            cl.show(this, "massage");
-            break;
+    public void showPage(String panel) {
+        switch (panel) {
+            case ("vælg"):
+                jFrame.setSize(new Dimension(242, 150));
+                jFrame.setLocation(400, 200);
+                cl.show(this, "vælg");
+                break;
+            case ("massage"):
+                massage = new MassageBuilder();
+                jFrame.setSize(new Dimension(300, 370));
+                jFrame.setLocation(200, 0);
+                cl.show(this, "massage");
+                break;
         }
         jFrame.revalidate();
         jFrame.repaint();
+    }
+
+    public void fillComboStartTime() {
+        jComboBox1.removeAllItems();
+        int time = 11;
+        int minut = 0;
+        String tid = "";
+
+        for (int i = 0; i < 12; i++) {
+            if (minut == 0) {
+                tid = time + ":" + minut + "0";
+                minut = 30;
+            } else {
+                tid = time + ":" + minut;
+                minut = 0;
+            }
+            jComboBox1.addItem(tid);
+            if (minut == 0) {
+                time++;
+            }
+        }
+
     }
 
     /**
@@ -76,8 +106,6 @@ public class EventPanel extends javax.swing.JPanel {
         jTextArea1 = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
-        jLabel8 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
         jButton4 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
 
@@ -118,15 +146,25 @@ public class EventPanel extends javax.swing.JPanel {
 
         jCheckBox1.setText("Halvkrops");
         jCheckBox1.setOpaque(false);
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
         massagePanel.add(jCheckBox1);
         jCheckBox1.setBounds(10, 82, 140, 23);
 
         jCheckBox2.setText("Helkrops");
         jCheckBox2.setOpaque(false);
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox2ActionPerformed(evt);
+            }
+        });
         massagePanel.add(jCheckBox2);
         jCheckBox2.setBounds(153, 82, 130, 23);
         massagePanel.add(jTextField1);
-        jTextField1.setBounds(10, 55, 117, 20);
+        jTextField1.setBounds(150, 60, 117, 20);
 
         jLabel3.setText("Kunde:");
         massagePanel.add(jLabel3);
@@ -134,13 +172,19 @@ public class EventPanel extends javax.swing.JPanel {
 
         jLabel4.setText("Navn:");
         massagePanel.add(jLabel4);
-        jLabel4.setBounds(10, 40, 120, 14);
+        jLabel4.setBounds(150, 40, 120, 14);
 
         jLabel5.setText("Telefon nummer:");
         massagePanel.add(jLabel5);
-        jLabel5.setBounds(153, 40, 120, 14);
+        jLabel5.setBounds(10, 40, 120, 14);
+
+        jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField2FocusLost(evt);
+            }
+        });
         massagePanel.add(jTextField2);
-        jTextField2.setBounds(153, 55, 111, 20);
+        jTextField2.setBounds(10, 60, 111, 20);
 
         jLabel6.setText("Bemærkninger:");
         massagePanel.add(jLabel6);
@@ -148,6 +192,11 @@ public class EventPanel extends javax.swing.JPanel {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextArea1FocusLost(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTextArea1);
 
         massagePanel.add(jScrollPane1);
@@ -158,20 +207,17 @@ public class EventPanel extends javax.swing.JPanel {
         jLabel7.setBounds(10, 240, 80, 14);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
         massagePanel.add(jComboBox1);
         jComboBox1.setBounds(90, 240, 93, 20);
 
-        jLabel8.setText("Varighed:");
-        massagePanel.add(jLabel8);
-        jLabel8.setBounds(10, 270, 80, 14);
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        massagePanel.add(jComboBox2);
-        jComboBox2.setBounds(90, 270, 94, 20);
-
         jButton4.setText("Opret");
         massagePanel.add(jButton4);
-        jButton4.setBounds(91, 300, 90, 23);
+        jButton4.setBounds(90, 270, 90, 23);
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/massage background.png"))); // NOI18N
         massagePanel.add(jLabel9);
@@ -184,6 +230,26 @@ public class EventPanel extends javax.swing.JPanel {
         showPage("massage");
     }//GEN-LAST:event_jBMassageActionPerformed
 
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        jCheckBox2.setSelected(false);
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+        jCheckBox1.setSelected(false);
+    }//GEN-LAST:event_jCheckBox2ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        massage.setStartTime(jComboBox1.getSelectedItem() + "");
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jTextArea1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextArea1FocusLost
+        massage.setComment(jTextArea1.getText());
+    }//GEN-LAST:event_jTextArea1FocusLost
+
+    private void jTextField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusLost
+        cc.getSpecificCustomer(jTextField2.getText());
+    }//GEN-LAST:event_jTextField2FocusLost
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel choosePanel;
@@ -193,7 +259,6 @@ public class EventPanel extends javax.swing.JPanel {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -202,7 +267,6 @@ public class EventPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
@@ -210,4 +274,5 @@ public class EventPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JPanel massagePanel;
     // End of variables declaration//GEN-END:variables
+
 }
