@@ -34,7 +34,6 @@ public class EventPanel extends javax.swing.JPanel {
         cl.addLayoutComponent(choosePanel, "vælg");
         cl.addLayoutComponent(massagePanel, "massage");
         showPage(panel);
-        fillComboStartTime();
     }
 
     //bruges til at navigere i vores CardLayout
@@ -50,6 +49,7 @@ public class EventPanel extends javax.swing.JPanel {
                 jFrame.setSize(new Dimension(300, 370));
                 jFrame.setLocation(200, 0);
                 cl.show(this, "massage");
+                fillComboStartTime();
                 break;
         }
         jFrame.revalidate();
