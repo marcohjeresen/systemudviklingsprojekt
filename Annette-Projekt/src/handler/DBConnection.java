@@ -32,35 +32,11 @@ public class DBConnection {
      */
     public DBConnection() {
 
-        String filename = "DbLogInfo.txt";
-        Scanner textScan;
-        try {
-            File file = new File(filename);
-            textScan = new Scanner(file);
-            while (textScan.hasNext()) {
-                switch (textScan.next()) {
-                    case "Host:":
-                        host = textScan.next();
-                        break;
-                    case "Port:":
-                        port = textScan.next();
-                        break;
-                    case "DbNavn:":
-                        dbNavn = textScan.next();
-                        break;
-                    case "User:":
-                        user = textScan.next();
-                        break;
-                    case "PassWord:":
-                        pass = textScan.next();
-                        break;
-                }
-            }
-            textScan.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("db.DBConnection - DBConnection(): kunne ikke finde dbLogInfo." + ex.getMessage());
-        }
-        db = "jdbc:mysql://" + host + ":" + port + "/" + dbNavn;
+        this.dbNavn = "annetteprojekt";
+        this.host = "localhost";
+        this.port = "3306";
+        this.user = "root";
+        this.pass = "root";
         isConnected = false;
         connection();
     }
