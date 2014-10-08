@@ -85,6 +85,8 @@ public class EventPanel extends javax.swing.JPanel {
         customer = cc.getSpecificCustomer(jTextField2.getText());
         if (customer != null) {
             jTextField1.setText(customer.getName());
+        } else {
+            jTextField1.setText("");
         }
     }
 
@@ -249,7 +251,9 @@ public class EventPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        massage.setStartTime(jComboBox1.getSelectedItem() + "");
+        if (jComboBox1.getSelectedItem() != null) {
+            massage.setStartTime(jComboBox1.getSelectedItem().toString());
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jTextArea1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextArea1FocusLost
