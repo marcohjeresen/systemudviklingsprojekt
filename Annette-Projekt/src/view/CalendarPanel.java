@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.JFrame;
 import util.Listeners;
 
@@ -21,6 +22,7 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
 
     private Calendar_Ct cc;
     private Listeners listener;
+    private int chosenPanel;
 
     /**
      * Creates new form WeekPanel
@@ -29,6 +31,7 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         
         cc = Calendar_Ct.getInstance();
         listener = Listeners.getList();
+        chosenPanel = 0;
         initComponents();
         listener.addListener(this);
         setSize(new Dimension(1356, 520));
@@ -48,7 +51,10 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
     
     public void newChoose(){
         JFrame jf = new JFrame();
-        EventPanel ep = new EventPanel("vælg", jf);
+        
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_YEAR, cc.getCallList().get(chosenPanel));
+        EventPanel ep = new EventPanel("vælg", jf, cal);
         jf.add(ep);
         jf.setVisible(true);
         ep.setVisible(true);
@@ -329,31 +335,45 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        chosenPanel = 0;
         newChoose();
+        
     }//GEN-LAST:event_jPanel1MouseClicked
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
+       chosenPanel = 1;
         newChoose();
+        
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+        chosenPanel = 2;
         newChoose();
+        
     }//GEN-LAST:event_jPanel3MouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
+       chosenPanel = 3;
         newChoose();
+        
     }//GEN-LAST:event_jPanel4MouseClicked
 
     private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+      chosenPanel = 4;
         newChoose();
+        
     }//GEN-LAST:event_jPanel5MouseClicked
 
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
+      chosenPanel = 5;
         newChoose();
+        
     }//GEN-LAST:event_jPanel6MouseClicked
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
+       chosenPanel = 6;
         newChoose();
+        
     }//GEN-LAST:event_jPanel7MouseClicked
 
 

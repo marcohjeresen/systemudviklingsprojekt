@@ -19,10 +19,12 @@ public class Calendar_Ct {
     private static Calendar_Ct cc;
     private Listeners listener;
     private Calendar cal;
+    private ArrayList<Integer> callList;
 
     private Calendar_Ct() {
         listener = Listeners.getList();
         cal = Calendar.getInstance();
+        callList = new ArrayList<>();
     }
 
     public void setCal(Calendar cal) {
@@ -36,6 +38,7 @@ public class Calendar_Ct {
 
     //den finder den uge som den valgte dato ligger i og retunere et ArrayList med dem
     public ArrayList<String> getWeek() {
+        callList.removeAll(callList);
         ArrayList<String> days = new ArrayList<>();
         String day = new SimpleDateFormat("EEEE").format(cal.getTime());
         while (!day.equals("mandag")) {
@@ -48,11 +51,17 @@ public class Calendar_Ct {
         int delta = -cal.get(Calendar.DAY_OF_WEEK) + 2; //add 2 if your week start on monday
         cal.add(Calendar.DAY_OF_MONTH, delta);
         for (int i = 0; i < 7; i++) {
+            int dag = cal.get(Calendar.DAY_OF_YEAR);
             String dateToUpper = format.format(cal.getTime());
             days.add(dateToUpper.substring(0, 1).toUpperCase() + dateToUpper.substring(1));
+            callList.add(dag);
             cal.add(Calendar.DAY_OF_MONTH, 1);
         }
         return days;
+    }
+    
+    public ArrayList<Integer> getCallList(){
+        return callList;
     }
 
     public static Calendar_Ct getInstance() {

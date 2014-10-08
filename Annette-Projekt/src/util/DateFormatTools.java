@@ -21,6 +21,7 @@ public class DateFormatTools {
 
     /**
      * Method, gets the current date.
+     *
      * @return date as a String.
      */
     public String getDateNowString() {
@@ -35,9 +36,9 @@ public class DateFormatTools {
         return date;
     }
 
-    
     /**
      * Method, gets the current date in a shorter String.
+     *
      * @return date as a String.
      */
     public String getDateNowShortString() {
@@ -57,6 +58,7 @@ public class DateFormatTools {
 
     /**
      * Method, gets the current day from Calender.
+     *
      * @param calendar
      * @return date as a String.
      */
@@ -71,12 +73,12 @@ public class DateFormatTools {
         return date;
     }
 
-    
     /**
      * Method, gets a short date.
+     *
      * @param date
      * @return c as a Calender object.
-     * @throws ParseException 
+     * @throws ParseException
      */
     public Calendar getShortDate(String date) throws ParseException {
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -87,6 +89,7 @@ public class DateFormatTools {
 
     /**
      * Method, gets a short date from Calender.
+     *
      * @param c
      * @return date as a String.
      */
@@ -110,6 +113,7 @@ public class DateFormatTools {
 
     /**
      * Method, formats stringdate to a calender.
+     *
      * @param date
      * @return datecal as a Calender object.
      */
@@ -127,6 +131,7 @@ public class DateFormatTools {
 
     /**
      * Method, jumps a chosen number of days forward in the calender.
+     *
      * @param calendar
      * @param days
      * @return calender as a Calender object.
@@ -137,7 +142,9 @@ public class DateFormatTools {
     }
 
     /**
-     * Method, is initialized with a string date and formats it to a calender and sets hour, minutes and seconds to 0.
+     * Method, is initialized with a string date and formats it to a calender
+     * and sets hour, minutes and seconds to 0.
+     *
      * @param date
      * @return dateCal as a Calender object.
      */
@@ -157,7 +164,9 @@ public class DateFormatTools {
     }
 
     /**
-     * Method, is initialized with a string date and formats it to a calender and sets hour to 23, minutes to 59 and seconds to 59.
+     * Method, is initialized with a string date and formats it to a calender
+     * and sets hour to 23, minutes to 59 and seconds to 59.
+     *
      * @param date
      * @return dateCal as a Calender object.
      */
@@ -178,6 +187,7 @@ public class DateFormatTools {
 
     /**
      * Method, shows the day name, month and date.
+     *
      * @param date
      * @return theDate as a String.
      */
@@ -199,6 +209,7 @@ public class DateFormatTools {
 
     /**
      * Method, shows the name of the day and the date of the month.
+     *
      * @param date
      * @return theDate as a String.
      */
@@ -216,5 +227,13 @@ public class DateFormatTools {
             System.out.println("utility - DateFormatTools - getDayLetter(): Date parse error" + ex.getLocalizedMessage());
         }
         return theDate;
+    }
+
+    public String getDayLetters(Calendar c) {
+        String days = "";
+        SimpleDateFormat format = new SimpleDateFormat("EEEE, dd.MMM");
+        String dateToUpper = format.format(c.getTime());
+        days = (dateToUpper.substring(0, 1).toUpperCase() + dateToUpper.substring(1));
+        return days;
     }
 }

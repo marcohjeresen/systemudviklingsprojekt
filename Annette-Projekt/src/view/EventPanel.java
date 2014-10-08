@@ -8,9 +8,11 @@ package view;
 import controller.CustomerControl;
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.util.Calendar;
 import javax.swing.JFrame;
 import model.Customer;
 import model.MassageBuilder;
+import util.DateFormatTools;
 
 /**
  *
@@ -23,13 +25,17 @@ public class EventPanel extends javax.swing.JPanel {
     private MassageBuilder massage;
     private CustomerControl cc;
     private Customer customer;
+    private Calendar cal;
+    private DateFormatTools dateFormatTools;
 
     /**
      * Creates new form EventPanel
      */
-    public EventPanel(String panel, JFrame jFrame) {
+    public EventPanel(String panel, JFrame jFrame, Calendar calendar) {
         this.jFrame = jFrame;
+        this.cal = calendar;
         cc = CustomerControl.getInstance();
+        dateFormatTools = new DateFormatTools();
         initComponents();
 
         cl = (CardLayout) getLayout();
@@ -44,6 +50,7 @@ public class EventPanel extends javax.swing.JPanel {
             case ("vælg"):
                 jFrame.setSize(new Dimension(242, 150));
                 jFrame.setLocation(575, 250);
+                jFrame.setTitle(dateFormatTools.getDayLetters(cal));
                 cl.show(this, "vælg");
                 break;
             case ("massage"):
@@ -51,7 +58,7 @@ public class EventPanel extends javax.swing.JPanel {
                 customer = null;
                 jFrame.setLocation(550, 150);
                 jFrame.setSize(new Dimension(300, 370));
-                
+                jFrame.setTitle(dateFormatTools.getDayLetters(cal));
                 cl.show(this, "massage");
                 fillComboStartTime();
                 break;
@@ -79,7 +86,6 @@ public class EventPanel extends javax.swing.JPanel {
                 time++;
             }
         }
-
     }
     
     public void findCustomer(){
