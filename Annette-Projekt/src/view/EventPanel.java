@@ -43,14 +43,15 @@ public class EventPanel extends javax.swing.JPanel {
         switch (panel) {
             case ("vælg"):
                 jFrame.setSize(new Dimension(242, 150));
-                jFrame.setLocation(400, 200);
+                jFrame.setLocation(575, 250);
                 cl.show(this, "vælg");
                 break;
             case ("massage"):
                 massage = new MassageBuilder();
                 customer = null;
+                jFrame.setLocation(550, 150);
                 jFrame.setSize(new Dimension(300, 370));
-                jFrame.setLocation(200, 0);
+                
                 cl.show(this, "massage");
                 fillComboStartTime();
                 break;
