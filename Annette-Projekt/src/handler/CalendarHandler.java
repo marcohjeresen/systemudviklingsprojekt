@@ -39,7 +39,7 @@ public class CalendarHandler {
         ArrayList<CalendarClass> cList = new ArrayList<>();
         String sql = "select * from calendar, massage, customer, massagetype "
                 + "where c_massage_id = m_id and c_customer_number = cus_phone "
-                + "and m_type_id = mt_id and (c_date between '"+firstDate+"%' and '"+lastDate+"%');";
+                + "and m_type_id = mt_id and (c_date between '"+firstDate+"%' and '"+lastDate+"%') order by c_date;";
         try {
             ResultSet rs = db.getResult(sql);
             while (rs.next()) {
