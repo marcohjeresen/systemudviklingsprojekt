@@ -5,9 +5,11 @@
  */
 package controller;
 
+import handler.CalendarHandler;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import model.CalendarClass;
 import util.Listeners;
 
 /**
@@ -20,10 +22,14 @@ public class Calendar_Ct {
     private Listeners listener;
     private Calendar cal;
     private ArrayList<Integer> callList;
+    private String firstDayOfWeeek; 
+    private String lastDayofWeek;
+    private CalendarHandler ch;
 
     private Calendar_Ct() {
         listener = Listeners.getList();
         cal = Calendar.getInstance();
+        ch = CalendarHandler.getInstance();
         callList = new ArrayList<>();
     }
 
@@ -44,6 +50,10 @@ public class Calendar_Ct {
         while (!day.equals("mandag")) {
             cal.roll(Calendar.DAY_OF_YEAR, -1);
             day = new SimpleDateFormat("EEEE").format(cal.getTime());
+            cal.roll(Calendar.DAY_OF_YEAR, -1);
+            firstDayOfWeeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+            cal.roll(Calendar.DAY_OF_YEAR, 1);
+            
         }
 
         SimpleDateFormat format = new SimpleDateFormat("EEEE, dd.MMM.yyyy");
@@ -56,10 +66,18 @@ public class Calendar_Ct {
             days.add(dateToUpper.substring(0, 1).toUpperCase() + dateToUpper.substring(1));
             callList.add(dag);
             cal.add(Calendar.DAY_OF_MONTH, 1);
+            cal.roll(Calendar.DAY_OF_YEAR, 1);
+            lastDayofWeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+            cal.roll(Calendar.DAY_OF_YEAR, -1);
         }
         return days;
     }
     
+    public ArrayList<CalendarClass> getEventsOfWeek(){
+        ArrayList<CalendarClass> calList = ch.getCalendarFromDB(firstDayOfWeeek, lastDayofWeek);
+        return calList;
+    }
+
     public ArrayList<Integer> getCallList(){
         return callList;
     }
@@ -70,5 +88,7 @@ public class Calendar_Ct {
         }
         return cc;
     }
+    
+    
 
 }

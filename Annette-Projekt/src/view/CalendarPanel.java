@@ -9,9 +9,11 @@ import controller.Calendar_Ct;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JFrame;
+import model.CalendarClass;
 import util.Listeners;
 
 /**
@@ -28,7 +30,6 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
      * Creates new form WeekPanel
      */
     public CalendarPanel() {
-        
         cc = Calendar_Ct.getInstance();
         listener = Listeners.getList();
         chosenPanel = 0;
@@ -36,10 +37,12 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         listener.addListener(this);
         setSize(new Dimension(1356, 520));
         fillLabels();
+        fillItUp();
     }
 
     public void fillLabels() {
         ArrayList<String> list = cc.getWeek();
+        fillItUp();
         jLabel1.setText(list.get(0));
         jLabel2.setText(list.get(1));
         jLabel3.setText(list.get(2));
@@ -47,17 +50,108 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         jLabel5.setText(list.get(4));
         jLabel6.setText(list.get(5));
         jLabel7.setText(list.get(6));
-    }
-    
-    public void newChoose(){
-        JFrame jf = new JFrame();
         
+    }
+
+    public void newChoose() {
+        JFrame jf = new JFrame();
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_YEAR, cc.getCallList().get(chosenPanel));
         EventPanel ep = new EventPanel("vælg", jf, cal);
         jf.add(ep);
         jf.setVisible(true);
         ep.setVisible(true);
+        
+    }
+
+    public void fillItUp() {
+        jPanel1.removeAll();
+        jPanel2.removeAll();
+        jPanel3.removeAll();
+        jPanel4.removeAll();
+        jPanel5.removeAll();
+        jPanel6.removeAll();
+        jPanel7.removeAll();
+        ArrayList<CalendarClass> calList = cc.getEventsOfWeek();
+        int monCount = 0;
+        int tueCount = 0;
+        int wedCount = 0;
+        int thuCount = 0;
+        int friCount = 0;
+        int satCount = 0;
+        int sunCount = 0;
+        int x = 2;
+        int y = 15;
+        EventOfDayPanel eodp;
+        for (CalendarClass calendarClass : calList) {
+            String day = new SimpleDateFormat("EEEE").format(calendarClass.getDate().getTime());
+            switch (day) {
+                case ("mandag"): 
+                    eodp = new EventOfDayPanel(calendarClass);
+                    eodp.setLocation(x, monCount*eodp.getHeight()+(monCount*5)+y);
+                    jPanel1.add(eodp);
+                    eodp.setVisible(true);
+                    jPanel1.revalidate();
+                    jPanel1.repaint();
+                    monCount++;
+                    break;
+                case ("tirsdag"):
+                    eodp = new EventOfDayPanel(calendarClass);
+                    eodp.setLocation(x, tueCount*eodp.getHeight()+(tueCount*5)+y);
+                    jPanel2.add(eodp);
+                    eodp.setVisible(true);
+                    jPanel2.revalidate();
+                    jPanel2.repaint();
+                    tueCount++;
+                    break;
+                case ("onsdag"):
+                    eodp = new EventOfDayPanel(calendarClass);
+                    eodp.setLocation(x, wedCount*eodp.getHeight()+(wedCount*5)+y);
+                    jPanel3.add(eodp);
+                    eodp.setVisible(true);
+                    jPanel3.revalidate();
+                    jPanel3.repaint();
+                    wedCount++;
+                    break;
+                case ("torsdag"):
+                    eodp = new EventOfDayPanel(calendarClass);
+                    eodp.setLocation(x, thuCount*eodp.getHeight()+(thuCount*5)+y);
+                    jPanel4.add(eodp);
+                    eodp.setVisible(true);
+                    jPanel4.revalidate();
+                    jPanel4.repaint();
+                    thuCount++;
+                    break;
+                case ("fredag"):
+                    eodp = new EventOfDayPanel(calendarClass);
+                    eodp.setLocation(x, friCount*eodp.getHeight()+(friCount*5)+y);
+                    jPanel5.add(eodp);
+                    eodp.setVisible(true);
+                    jPanel5.revalidate();
+                    jPanel5.repaint();
+                    friCount++;
+                    break;
+                case ("lørdag"):
+                    eodp = new EventOfDayPanel(calendarClass);
+                    eodp.setLocation(x, satCount*eodp.getHeight()+(satCount*5)+y);
+                    jPanel6.add(eodp);
+                    eodp.setVisible(true);
+                    jPanel6.revalidate();
+                    jPanel6.repaint();
+                    satCount++;
+                    break;
+                case ("søndag"):
+                    eodp = new EventOfDayPanel(calendarClass);
+                    eodp.setLocation(x, sunCount*eodp.getHeight()+(sunCount*5)+y);
+                    jPanel7.add(eodp);
+                    eodp.setVisible(true);
+                    jPanel7.revalidate();
+                    jPanel7.repaint();
+                    sunCount++;
+                    break;
+            }
+        }
+
     }
 
     /**
@@ -337,43 +431,43 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
         chosenPanel = 0;
         newChoose();
-        
+
     }//GEN-LAST:event_jPanel1MouseClicked
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
-       chosenPanel = 1;
+        chosenPanel = 1;
         newChoose();
-        
+
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
         chosenPanel = 2;
         newChoose();
-        
+
     }//GEN-LAST:event_jPanel3MouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
-       chosenPanel = 3;
+        chosenPanel = 3;
         newChoose();
-        
+
     }//GEN-LAST:event_jPanel4MouseClicked
 
     private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
-      chosenPanel = 4;
+        chosenPanel = 4;
         newChoose();
-        
+
     }//GEN-LAST:event_jPanel5MouseClicked
 
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
-      chosenPanel = 5;
+        chosenPanel = 5;
         newChoose();
-        
+
     }//GEN-LAST:event_jPanel6MouseClicked
 
     private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
-       chosenPanel = 6;
+        chosenPanel = 6;
         newChoose();
-        
+
     }//GEN-LAST:event_jPanel7MouseClicked
 
 
