@@ -118,12 +118,12 @@ public class MonthPanel extends javax.swing.JPanel {
             for (int j = 0; j < days.size(); j++) {
 
                 if (days.get(j).equals(da)) {
-                    listOfDays.get(i).setBackground(new Color(0,66,81));
+                    listOfDays.get(i).setBackground(new Color(62,79,88));
                     erder = true;
                 }
             }
             if (!erder) {
-                listOfDays.get(i).setBackground(new Color(0,146,160));
+                listOfDays.get(i).setBackground(new Color(92,143,154));
             }
             jPanel_calender.add(listOfDays.get(i));
             listOfDays.get(i).setVisible(true);

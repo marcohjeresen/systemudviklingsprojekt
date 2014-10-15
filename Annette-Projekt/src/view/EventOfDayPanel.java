@@ -46,22 +46,27 @@ public class EventOfDayPanel extends javax.swing.JPanel {
         jLEndTime = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
-        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        setBackground(new java.awt.Color(92, 143, 154));
+        setBorder(javax.swing.BorderFactory.createEtchedBorder());
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
             }
         });
 
+        jLEventType.setForeground(new java.awt.Color(255, 255, 255));
         jLEventType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLEventType.setText("jLabel1");
 
+        jLStartTime.setForeground(new java.awt.Color(255, 255, 255));
         jLStartTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLStartTime.setText("jLabel2");
 
+        jLEndTime.setForeground(new java.awt.Color(255, 255, 255));
         jLEndTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLEndTime.setText("jLabel3");
 
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("-");
 
