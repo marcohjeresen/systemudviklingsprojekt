@@ -302,6 +302,7 @@ public class EventPanel extends javax.swing.JPanel {
         Massage mas = massage.createMassage();
         calC = new CalendarClass(cal, customer, mas);
         mc.saveMassage(mas, calC);
+        jFrame.dispose();
     }//GEN-LAST:event_jBCreateMassageActionPerformed
 
 
