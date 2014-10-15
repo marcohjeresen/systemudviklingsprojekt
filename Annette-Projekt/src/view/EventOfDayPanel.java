@@ -25,7 +25,12 @@ public class EventOfDayPanel extends javax.swing.JPanel {
         String starttime = calC.getMassage().getStartTime();
         jLStartTime.setText(starttime);
         int endTimeValue = Integer.parseInt(starttime.replace(":", ""));
-        int duration = calC.getMassage().getType().getDuration();
+        int duration = 0;
+        if (calC.getMassage().getType().getDuration() == 60) {
+            duration = 100;
+        }else{
+            duration = calC.getMassage().getType().getDuration();
+        }
         endTimeValue += duration;
         String endTime = endTimeValue+"";
         endTime = endTime.substring(0, 2) + ":" + endTime.substring(2, endTime.length());
