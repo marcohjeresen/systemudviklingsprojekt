@@ -8,9 +8,13 @@ package view;
 import controller.CustomerControl;
 import controller.MassageControl;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import model.CalendarClass;
 import model.Customer;
@@ -252,7 +256,7 @@ public class EventPanel extends javax.swing.JPanel {
             }
         });
         massagePanel.add(jCStartTime);
-        jCStartTime.setBounds(90, 240, 93, 20);
+        jCStartTime.setBounds(73, 240, 130, 20);
 
         jBCreateMassage.setText("Opret");
         jBCreateMassage.addActionListener(new java.awt.event.ActionListener() {
@@ -261,7 +265,7 @@ public class EventPanel extends javax.swing.JPanel {
             }
         });
         massagePanel.add(jBCreateMassage);
-        jBCreateMassage.setBounds(90, 270, 90, 23);
+        jBCreateMassage.setBounds(70, 270, 130, 23);
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/massage background.png"))); // NOI18N
         massagePanel.add(jLabel9);
@@ -301,8 +305,17 @@ public class EventPanel extends javax.swing.JPanel {
     private void jBCreateMassageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCreateMassageActionPerformed
         Massage mas = massage.createMassage();
         calC = new CalendarClass(cal, customer, mas);
-        mc.saveMassage(mas, calC);
-        jFrame.dispose();
+        try {
+            mc.saveMassage(mas, calC);
+            jFrame.dispose();
+        } catch (SQLException ex) {
+            if (ex.getLocalizedMessage().length() == 55) {
+                jBCreateMassage.setText("Tid Optaget");
+                jBCreateMassage.setBackground(Color.red);
+            }
+            
+        }
+        
     }//GEN-LAST:event_jBCreateMassageActionPerformed
 
 

@@ -53,7 +53,7 @@ public class MassageHandler {
         return massTypeList;
     }
 
-    public void saveMassage(Massage massage, CalendarClass cal) {
+    public void saveMassage(Massage massage, CalendarClass cal) throws SQLException {
         ResultSet rs;
         int id = 0;
         try {
@@ -77,7 +77,13 @@ public class MassageHandler {
             db.execute(sql);
             db.execute(sqlCal);
         } catch (SQLException ex) {
-            System.out.println(ex.getLocalizedMessage());
+            
+            if (ex.getLocalizedMessage().length() == 55) {
+               throw ex;
+            }else{
+                System.out.println(ex.getLocalizedMessage());
+            }
+            
         }
     }
 

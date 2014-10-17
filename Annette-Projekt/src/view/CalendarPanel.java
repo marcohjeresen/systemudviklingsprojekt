@@ -101,24 +101,31 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
             switch (day) {
                 case ("mandag"):
                     createEventOnPanel(jPanel1, monCount, calendarClass);
+                    monCount++;
                     break;
                 case ("tirsdag"):
                     createEventOnPanel(jPanel2, tueCount, calendarClass);
+                    tueCount++;
                     break;
                 case ("onsdag"):
                     createEventOnPanel(jPanel3, wedCount, calendarClass);
+                    wedCount++;
                     break;
                 case ("torsdag"):
                     createEventOnPanel(jPanel4, thuCount, calendarClass);
+                    thuCount++;
                     break;
                 case ("fredag"):
                     createEventOnPanel(jPanel5, friCount, calendarClass);
+                    friCount++;
                     break;
                 case ("lørdag"):
                     createEventOnPanel(jPanel6, satCount, calendarClass);
+                    satCount++;
                     break;
                 case ("søndag"):
                     createEventOnPanel(jPanel7, sunCount, calendarClass);
+                    sunCount++;
                     break;
             }
         }
@@ -134,7 +141,6 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         jpanel.add(eodp);
         jpanel.revalidate();
         jpanel.repaint();
-        count++;
     }
 
     /**
