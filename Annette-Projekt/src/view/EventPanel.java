@@ -39,6 +39,7 @@ public class EventPanel extends javax.swing.JPanel {
     private Calendar cal;
     private DateFormatTools dateFormatTools;
     private ArrayList<MassageType> masTypeList;
+    private boolean phoneCearch;
 
     /**
      * Creates new form EventPanel
@@ -46,6 +47,7 @@ public class EventPanel extends javax.swing.JPanel {
     public EventPanel(String panel, JFrame jFrame, Calendar calendar) {
         this.jFrame = jFrame;
         this.cal = calendar;
+        phoneCearch = true;
         cc = CustomerControl.getInstance();
         mc = MassageControl.getInstance();
         dateFormatTools = new DateFormatTools();
@@ -101,17 +103,22 @@ public class EventPanel extends javax.swing.JPanel {
             }
         }
     }
-    
-    public void findCustomer(){
-        customer = cc.getSpecificCustomer(jTPhone.getText());
+
+    public void findCustomer(boolean phoneCearch) {
+        if (phoneCearch) {
+            customer = cc.getSpecificCustomer(jTPhone.getText(), phoneCearch);
+        }else{
+            customer = cc.getSpecificCustomer(jTName.getText(), phoneCearch);
+        }
         if (customer != null) {
+            jTPhone.setText(customer.getPhone());
             jTName.setText(customer.getName());
         } else {
             jTName.setText("");
         }
     }
-    
-    public MassageType choseMasType(String type){
+
+    public MassageType choseMasType(String type) {
         MassageType mt = null;
         for (MassageType massageType : masTypeList) {
             if (massageType.getType().equals(type)) {
@@ -206,6 +213,12 @@ public class EventPanel extends javax.swing.JPanel {
         });
         massagePanel.add(jCWhole);
         jCWhole.setBounds(153, 82, 130, 23);
+
+        jTName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTNameFocusLost(evt);
+            }
+        });
         massagePanel.add(jTName);
         jTName.setBounds(150, 60, 117, 20);
 
@@ -299,7 +312,9 @@ public class EventPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jTCommentFocusLost
 
     private void jTPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTPhoneFocusLost
-        findCustomer();
+        phoneCearch = true;
+        
+        findCustomer(phoneCearch);
     }//GEN-LAST:event_jTPhoneFocusLost
 
     private void jBCreateMassageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCreateMassageActionPerformed
@@ -313,10 +328,15 @@ public class EventPanel extends javax.swing.JPanel {
                 jBCreateMassage.setText("Tid Optaget");
                 jBCreateMassage.setBackground(Color.red);
             }
-            
+
         }
-        
+
     }//GEN-LAST:event_jBCreateMassageActionPerformed
+
+    private void jTNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTNameFocusLost
+        phoneCearch = false;
+        findCustomer(phoneCearch);
+    }//GEN-LAST:event_jTNameFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -30,17 +30,25 @@ public class CustomerHandler {
         return ch;
     }
 
-    public Customer getSpecificCustomerFromDb(String phone) {
+    public Customer getSpecificCustomerFromDb(String phone, boolean phoneSearch) {
         Customer cus = null;
-        String sql = "select * from customer where cus_phone = " + phone;
-        try {
-            ResultSet rs = db.getResult(sql);
-            while (rs.next()) {
-                cus = new Customer(rs.getString("cus_phone"), rs.getString("cus_name"), rs.getString("cus_homeAddress"), rs.getString("cus_address"));
+        String sql = "";
+        if (!"".equals(phone)) {
+            if (phoneSearch) {
+                sql = "select * from customer where cus_phone like '" + phone + "%'";
+            } else {
+                sql = "select * from customer where cus_name like '" + phone + "%'";
             }
-            
-        } catch (SQLException ex) {
-            System.out.println("Exception occured in CustomerHandler - getSpecificCustomerFromDb SQL exception\n" + ex.getLocalizedMessage());
+
+            try {
+                ResultSet rs = db.getResult(sql);
+                while (rs.next()) {
+                    cus = new Customer(rs.getString("cus_phone"), rs.getString("cus_name"), rs.getString("cus_homeAddress"), rs.getString("cus_address"));
+                }
+
+            } catch (SQLException ex) {
+                System.out.println("Exception occured in CustomerHandler - getSpecificCustomerFromDb SQL exception\n" + ex.getLocalizedMessage());
+            }
         }
         return cus;
     }

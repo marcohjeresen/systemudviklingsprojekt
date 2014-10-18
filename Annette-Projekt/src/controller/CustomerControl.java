@@ -28,7 +28,7 @@ public class CustomerControl {
         return cc; //that shit
     }
 
-    public Customer getSpecificCustomer(String phone) {
-        return ch.getSpecificCustomerFromDb(phone);
+    public Customer getSpecificCustomer(String phone, boolean phoneCearch) {
+        return ch.getSpecificCustomerFromDb(phone, phoneCearch);
     }
 }
