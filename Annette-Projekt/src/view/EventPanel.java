@@ -104,17 +104,15 @@ public class EventPanel extends javax.swing.JPanel {
         }
     }
 
-    public void findCustomer(boolean phoneCearch) {
-        if (phoneCearch) {
-            customer = cc.getSpecificCustomer(jTPhone.getText(), phoneCearch);
+    public void findCustomer(boolean phoneSearch) {
+        if (phoneSearch) {
+            customer = cc.getSpecificCustomer(jTPhone.getText(), phoneSearch);
         }else{
-            customer = cc.getSpecificCustomer(jTName.getText(), phoneCearch);
+            customer = cc.getSpecificCustomer(jTName.getText(), phoneSearch);
         }
         if (customer != null) {
             jTPhone.setText(customer.getPhone());
             jTName.setText(customer.getName());
-        } else {
-            jTName.setText("");
         }
     }
 
