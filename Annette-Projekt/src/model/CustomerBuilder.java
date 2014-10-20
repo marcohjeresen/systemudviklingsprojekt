@@ -13,9 +13,17 @@ public class CustomerBuilder {
     private String homeAddress;
     private String address;
 
-    public CustomerBuilder(String phone, String name) {
+    public CustomerBuilder() {
+    }
+
+    public CustomerBuilder setPhone(String phone) {
         this.phone = phone;
+        return this;
+    }
+
+    public CustomerBuilder setName(String name) {
         this.name = name;
+        return this;
     }
 
     public CustomerBuilder setHomeAddress(String homeAddress) {
@@ -29,6 +37,11 @@ public class CustomerBuilder {
     }
 
     public Customer createCustomer() {
+        if (phone.equals("")) {
+            throw new IllegalStateException("Cannot create customer without phone");
+        } else if (name.equals("")) {
+            throw new IllegalStateException("Cannot create customer without name");
+        }
         return new Customer(phone, name, homeAddress, address);
     }
     

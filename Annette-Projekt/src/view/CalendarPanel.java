@@ -478,6 +478,9 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
             case "Chosen Date":
                 fillLabels();
                 break;
+            case "New Event Created":
+                fillItUp();
+                break;
         }
     }
 }

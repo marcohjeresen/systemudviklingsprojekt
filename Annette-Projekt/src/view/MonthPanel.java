@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Henrik J. Nielsen <henrik@hjess.dk>
+ * @author Mark Hjeresen
  */
 public class MonthPanel extends javax.swing.JPanel {
 

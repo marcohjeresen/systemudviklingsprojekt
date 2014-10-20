@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.CalendarClass;
 import model.Customer;
+import model.CustomerBuilder;
 import model.Massage;
 import model.MassageType;
 import util.DateFormatTools;
@@ -44,7 +45,7 @@ public class CalendarHandler {
             ResultSet rs = db.getResult(sql);
             while (rs.next()) {
                 MassageType mt = new MassageType(rs.getInt("mt_id"), rs.getInt("mt_price"), rs.getString("mt_type"), rs.getInt("mt_duration"));
-                Customer c = new Customer(rs.getString("cus_phone"), rs.getString("cus_name"), rs.getString("cus_homeAddress"), rs.getString("cus_address"));
+                Customer c = new CustomerBuilder().setPhone(rs.getString("cus_phone")).setName(rs.getString("cus_name")).setHomeAddress(rs.getString("cus_homeAddress")).setAddress(rs.getString("cus_address")).createCustomer();
                 Massage m = new Massage(rs.getInt("m_id"), rs.getString("m_comment"), rs.getString("m_startTime"), mt, c);
                String date = rs.getString("c_date").substring(0, 10);
                 CalendarClass calC = new CalendarClass(dt.getDateFromString(date), c, m);

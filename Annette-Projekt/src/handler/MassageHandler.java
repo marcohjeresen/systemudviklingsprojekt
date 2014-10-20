@@ -9,13 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.CalendarClass;
-import model.Customer;
 import model.Massage;
 import model.MassageType;
-import org.omg.CORBA.MARSHAL;
 
 /**
  *
@@ -39,7 +35,6 @@ public class MassageHandler {
 
     public ArrayList<MassageType> getMTypeList() {
         ArrayList<MassageType> massTypeList = new ArrayList<>();
-
         ResultSet rs;
         try {
             rs = db.getResult("select * from massagetype");
@@ -64,7 +59,6 @@ public class MassageHandler {
         } catch (SQLException ex) {
             System.out.println(ex.getLocalizedMessage());
         }
-
         String sql = "insert into massage values (" + id + ",'"
                 + massage.getComment() + "','" + massage.getStartTime()
                 + "'," + massage.getType().getId() + ");";
@@ -77,15 +71,11 @@ public class MassageHandler {
             db.execute(sql);
             db.execute(sqlCal);
         } catch (SQLException ex) {
-            
             if (ex.getLocalizedMessage().length() == 55) {
                throw ex;
             }else{
                 System.out.println(ex.getLocalizedMessage());
             }
-            
         }
     }
-
-   
 }

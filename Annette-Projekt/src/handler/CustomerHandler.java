@@ -7,7 +7,11 @@ package handler;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Customer;
+import model.CustomerBuilder;
 
 /**
  *
@@ -30,8 +34,8 @@ public class CustomerHandler {
         return ch;
     }
 
-    public Customer getSpecificCustomerFromDb(String phone, boolean phoneSearch) {
-        Customer cus = null;
+    public ArrayList<Customer> getSpecificCustomerFromDb(String phone, boolean phoneSearch) {
+        ArrayList<Customer> cus = new ArrayList<>();
         String sql = "";
         if (!"".equals(phone)) {
             if (phoneSearch) {
@@ -43,13 +47,21 @@ public class CustomerHandler {
             try {
                 ResultSet rs = db.getResult(sql);
                 while (rs.next()) {
-                    cus = new Customer(rs.getString("cus_phone"), rs.getString("cus_name"), rs.getString("cus_homeAddress"), rs.getString("cus_address"));
+                    cus.add(new CustomerBuilder().setPhone(rs.getString("cus_phone")).setName(rs.getString("cus_name")).setHomeAddress(rs.getString("cus_homeAddress")).setAddress(rs.getString("cus_address")).createCustomer());
                 }
-
             } catch (SQLException ex) {
                 System.out.println("Exception occured in CustomerHandler - getSpecificCustomerFromDb SQL exception\n" + ex.getLocalizedMessage());
             }
         }
         return cus;
+    }
+    
+    public void saveCustomer(Customer customer){
+        String sql = "insert into customer values ('"+customer.getPhone()+"', '"+customer.getName()+"', '"+customer.getHomeAddress()+"', '"+customer.getAddress()+"');";
+        try {
+            db.execute(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

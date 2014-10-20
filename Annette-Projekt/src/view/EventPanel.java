@@ -10,24 +10,26 @@ import controller.MassageControl;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import model.CalendarClass;
 import model.Customer;
+import model.CustomerBuilder;
 import model.Massage;
 import model.MassageBuilder;
 import model.MassageType;
 import util.DateFormatTools;
+import util.Listeners;
 
 /**
  *
  * @author Annette
  */
-public class EventPanel extends javax.swing.JPanel {
+public class EventPanel extends javax.swing.JPanel implements ActionListener {
 
     private CardLayout cl;
     private JFrame jFrame;
@@ -39,15 +41,19 @@ public class EventPanel extends javax.swing.JPanel {
     private Calendar cal;
     private DateFormatTools dateFormatTools;
     private ArrayList<MassageType> masTypeList;
-    private boolean phoneCearch;
+    private boolean phoneSearch;
+    private Listeners listener;
+    private CustomerBuilder cb;
 
     /**
      * Creates new form EventPanel
      */
     public EventPanel(String panel, JFrame jFrame, Calendar calendar) {
+        cb = new CustomerBuilder();
         this.jFrame = jFrame;
         this.cal = calendar;
-        phoneCearch = true;
+        phoneSearch = true;
+        listener = Listeners.getList();
         cc = CustomerControl.getInstance();
         mc = MassageControl.getInstance();
         dateFormatTools = new DateFormatTools();
@@ -105,18 +111,39 @@ public class EventPanel extends javax.swing.JPanel {
     }
 
     public void findCustomer(boolean phoneSearch) {
+        ArrayList<Customer> cus = new ArrayList<>();
         if (phoneSearch) {
-            customer = cc.getSpecificCustomer(jTPhone.getText(), phoneSearch);
-        }else{
-            customer = cc.getSpecificCustomer(jTName.getText(), phoneSearch);
+            cus = cc.getSpecificCustomer(jTPhone.getText(), phoneSearch);
+        } else {
+            cus = cc.getSpecificCustomer(jTName.getText(), phoneSearch);
         }
-        if (customer != null) {
-            jTPhone.setText(customer.getPhone());
-            jTName.setText(customer.getName());
+        if (!cus.isEmpty() && cus.size() <= 1) {
+            jTPhone.setText(cus.get(0).getPhone());
+            jTName.setText(cus.get(0).getName());
+        } else if (!cus.isEmpty() && cus.size() >= 2) {
+            System.out.println("in else if where >= 2");
+            CustomerPanel cp = new CustomerPanel(cus);
+//            this.add(cp);
+            JFrame jf = new JFrame();
+            jf.add(cp);
+            jf.setSize(260, 50);
+            jf.setVisible(true);
+            cp.setSize(260, 20);
+            cp.setVisible(true);
+            cp.setLocation(10, 80);
+            revalidate();
+            repaint();
+        } 
+    }
+
+    public void saveCustomer() {
+        if (jTPhone.getText().length() != 0  && jTName.getText().length() != 0) {
+            customer = cb.createCustomer();
+            cc.saveCustomer(customer);
         }
     }
 
-    public MassageType choseMasType(String type) {
+    public MassageType chooseMasType(String type) {
         MassageType mt = null;
         for (MassageType massageType : masTypeList) {
             if (massageType.getType().equals(type)) {
@@ -242,7 +269,7 @@ public class EventPanel extends javax.swing.JPanel {
 
         jLabel6.setText("Bemærkninger:");
         massagePanel.add(jLabel6);
-        jLabel6.setBounds(10, 112, 260, 14);
+        jLabel6.setBounds(10, 110, 260, 14);
 
         jTComment.setColumns(20);
         jTComment.setRows(5);
@@ -254,7 +281,7 @@ public class EventPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTComment);
 
         massagePanel.add(jScrollPane1);
-        jScrollPane1.setBounds(10, 132, 266, 96);
+        jScrollPane1.setBounds(10, 130, 266, 96);
 
         jLabel7.setText("Fra:");
         massagePanel.add(jLabel7);
@@ -291,12 +318,12 @@ public class EventPanel extends javax.swing.JPanel {
 
     private void jCHalfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCHalfActionPerformed
         jCWhole.setSelected(false);
-        massage.setType(choseMasType("Halv krops massage"));
+        massage.setType(chooseMasType("Halv krops massage"));
     }//GEN-LAST:event_jCHalfActionPerformed
 
     private void jCWholeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCWholeActionPerformed
         jCHalf.setSelected(false);
-        massage.setType(choseMasType("Hel krops massage"));
+        massage.setType(chooseMasType("Hel krops massage"));
     }//GEN-LAST:event_jCWholeActionPerformed
 
     private void jCStartTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCStartTimeActionPerformed
@@ -310,30 +337,33 @@ public class EventPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jTCommentFocusLost
 
     private void jTPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTPhoneFocusLost
-        phoneCearch = true;
-        
-        findCustomer(phoneCearch);
+        phoneSearch = true;
+        cb.setPhone(jTPhone.getText());
+        findCustomer(phoneSearch);
     }//GEN-LAST:event_jTPhoneFocusLost
 
     private void jBCreateMassageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCreateMassageActionPerformed
+        if(customer == null){
+            saveCustomer();
+        }
         Massage mas = massage.createMassage();
         calC = new CalendarClass(cal, customer, mas);
         try {
             mc.saveMassage(mas, calC);
+            listener.notifyListeners("New Event Created");
             jFrame.dispose();
         } catch (SQLException ex) {
             if (ex.getLocalizedMessage().length() == 55) {
                 jBCreateMassage.setText("Tid Optaget");
                 jBCreateMassage.setBackground(Color.red);
             }
-
         }
-
     }//GEN-LAST:event_jBCreateMassageActionPerformed
 
     private void jTNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTNameFocusLost
-        phoneCearch = false;
-        findCustomer(phoneCearch);
+        phoneSearch = false;
+        cb.setName(jTName.getText());
+        findCustomer(phoneSearch);
     }//GEN-LAST:event_jTNameFocusLost
 
 
@@ -360,5 +390,16 @@ public class EventPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTPhone;
     private javax.swing.JPanel massagePanel;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()) {
+            case "Customer Chosen":
+                customer = cc.getCustomer();
+                jTPhone.setText(customer.getPhone());
+                jTName.setText(customer.getName());
+                break;
+        }
+    }
 
 }

@@ -6,6 +6,7 @@
 package controller;
 
 import handler.CustomerHandler;
+import java.util.ArrayList;
 import model.Customer;
 
 /**
@@ -16,6 +17,7 @@ public class CustomerControl {
 
     private CustomerHandler ch;
     private static CustomerControl cc;
+    private Customer customer;
 
     private CustomerControl() {
         ch = CustomerHandler.getInstance();
@@ -28,7 +30,19 @@ public class CustomerControl {
         return cc; //that shit
     }
 
-    public Customer getSpecificCustomer(String phone, boolean phoneCearch) {
-        return ch.getSpecificCustomerFromDb(phone, phoneCearch);
+    public ArrayList<Customer> getSpecificCustomer(String phone, boolean phoneSearch) {
+        return ch.getSpecificCustomerFromDb(phone, phoneSearch);
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+    
+    public void saveCustomer(Customer customer){
+        ch.saveCustomer(customer);
     }
 }
