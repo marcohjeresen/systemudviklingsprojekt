@@ -102,27 +102,30 @@ public class MonthPanel extends javax.swing.JPanel {
                 count++;
                 x += iconSizeWidth;
             }
-
             if (count != 0 && (count % 7) == 0) {
                 x = 0;
                 y += iconSizeHeight;
             }
-
             listOfDays.get(i).setBounds(x, y, iconSizeHeight, iconSizeWidth);
             listOfDays.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
 
             boolean erder = false;
             int day = i+1;
             String month = "";
+            String dayys = "";
             if((cal.get(Calendar.MONTH) + 1)<10){
                 month = "0"+(cal.get(Calendar.MONTH) + 1);
             } else {
                 month = ""+(cal.get(Calendar.MONTH) + 1);
             }
-            String da = cal.get(Calendar.YEAR) + "-" + month + "-" + day;
+            if (day <= 9) {
+                dayys = "0"+day;
+            }else{
+                dayys = ""+day;
+            }
+            String da = cal.get(Calendar.YEAR) + "-" + month + "-" + dayys;
             // her tjekker den efter om der er et event på selve dagen inden den tilføjer den til panelet
             for (int j = 0; j < days.size(); j++) {
-
                 if (days.get(j).equals(da)) {
                     listOfDays.get(i).setBackground(new Color(62,79,88));
                     erder = true;
