@@ -122,7 +122,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             jTName.setText(cus.get(0).getName());
             customer = cus.get(0);
         } else if (!cus.isEmpty() && cus.size() >= 2) {
-            System.out.println("in else if where >= 2");
             CustomerPanel cp = new CustomerPanel(cus);
 //            this.add(cp);
             JFrame jf = new JFrame();
@@ -140,7 +139,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     public void saveCustomer() {
         if (jTPhone.getText().length() != 0  && jTName.getText().length() != 0) {
             if (customer == null) {
-                System.out.println("erge");
                 cb.setPhone(jTPhone.getText());
             cb.setName(jTName.getText());
             customer = cb.createCustomer();
@@ -346,7 +344,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
 
     private void jTPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTPhoneFocusLost
         phoneSearch = true;
-        
         findCustomer(phoneSearch);
     }//GEN-LAST:event_jTPhoneFocusLost
 
@@ -370,7 +367,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
 
     private void jTNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTNameFocusLost
         phoneSearch = false;
-        
         findCustomer(phoneSearch);
     }//GEN-LAST:event_jTNameFocusLost
 

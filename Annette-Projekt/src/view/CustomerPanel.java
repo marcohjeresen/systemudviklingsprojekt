@@ -16,7 +16,6 @@ import model.Customer;
 public class CustomerPanel extends javax.swing.JPanel {
 
     private ArrayList<Customer> customers;
-    
 
     /**
      * Creates new form CustomerPanel
