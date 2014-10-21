@@ -43,7 +43,7 @@ public class MassageHandler {
                 massTypeList.add(mt);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println("Exception occured in MassageHandler - getMTypeList SQL exception\n" + ex.getLocalizedMessage());
         }
         return massTypeList;
     }
@@ -57,7 +57,7 @@ public class MassageHandler {
                 id = rs.getInt("max(m_id)") + 1;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println("Exception occured in MassageHandler - saveMassage - getMaxId SQL exception\n" + ex.getLocalizedMessage());
         }
         String sql = "insert into massage values (" + id + ",'"
                 + massage.getComment() + "','" + massage.getStartTime()
@@ -74,7 +74,7 @@ public class MassageHandler {
             if (ex.getLocalizedMessage().length() == 55) {
                throw ex;
             }else{
-                System.out.println(ex.getLocalizedMessage());
+                System.out.println("Exception occured in MassageHandler - saveMassage SQL exception\n" + ex.getLocalizedMessage());
             }
         }
     }

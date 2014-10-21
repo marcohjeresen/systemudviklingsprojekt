@@ -27,7 +27,7 @@ public class CustomerControl {
         if (cc == null) {
             cc = new CustomerControl();
         }
-        return cc; //that shit
+        return cc; 
     }
 
     public ArrayList<Customer> getSpecificCustomer(String phone, boolean phoneSearch) {

@@ -31,7 +31,13 @@ public class EventOfDayPanel extends javax.swing.JPanel {
         }else{
             duration = event.getMassage().getType().getDuration();
         }
+        
         endTimeValue += duration;
+        String checkTime = endTimeValue+"";
+        checkTime = checkTime.substring(2, 3);
+        if (checkTime.equals("6")) {
+            endTimeValue += 40;
+        }
         String endTime = endTimeValue+"";
         endTime = endTime.substring(0, 2) + ":" + endTime.substring(2, endTime.length());
         jLEndTime.setText(endTime);

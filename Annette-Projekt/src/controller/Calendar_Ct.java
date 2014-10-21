@@ -54,11 +54,8 @@ public class Calendar_Ct {
             cal.roll(Calendar.DAY_OF_YEAR, -1);
             firstDayOfWeeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
             cal.roll(Calendar.DAY_OF_YEAR, 1);
-            
         }
-
         SimpleDateFormat format = new SimpleDateFormat("EEEE, dd.MMM.yyyy");
-
         int delta = -cal.get(Calendar.DAY_OF_WEEK) + 2; //add 2 if your week start on monday
         cal.add(Calendar.DAY_OF_MONTH, delta);
         for (int i = 0; i < 7; i++) {

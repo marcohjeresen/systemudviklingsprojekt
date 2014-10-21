@@ -54,7 +54,7 @@ public class CalendarHandler {
                 eventList.add(calC);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getLocalizedMessage() + " I AM BATMAN");
+            System.out.println("Exception occured in CalendarHandler - getEventFromDB SQL exception\n" + ex.getLocalizedMessage());
         }
         return eventList;
     }
@@ -68,7 +68,7 @@ public class CalendarHandler {
                 dates.add(rs.getString("c_date").substring(0, 10));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CalendarHandler.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Exception occured in CalendarHandler - getDates SQL exception\n" + ex.getLocalizedMessage());
         }
         return dates;
     }

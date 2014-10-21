@@ -43,7 +43,6 @@ public class CustomerHandler {
             } else {
                 sql = "select * from customer where cus_name like '" + phone + "%'";
             }
-
             try {
                 ResultSet rs = db.getResult(sql);
                 while (rs.next()) {
@@ -61,7 +60,7 @@ public class CustomerHandler {
         try {
             db.execute(sql);
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerHandler.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Exception occured in CustomerHandler - saveCustomer SQL exception\n" + ex.getLocalizedMessage());
         }
     }
 }

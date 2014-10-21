@@ -45,7 +45,7 @@ public class MonthPanel extends javax.swing.JPanel {
         jLabel_monht.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
         drawDays();
     }
-    
+  
     
     //bruges til at tegne og finde evt optaget dage i den måned som vises
      private void drawDays() {
