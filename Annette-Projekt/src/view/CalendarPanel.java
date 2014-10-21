@@ -47,7 +47,6 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         panelList.add(jPanel6);
         panelList.add(jPanel7);
         fillLabels();
-        fillItUp();
     }
 
     public void fillLabels() {
@@ -60,7 +59,6 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         jLabel5.setText(list.get(4));
         jLabel6.setText(list.get(5));
         jLabel7.setText(list.get(6));
-
     }
 
     public void newChoose() {
@@ -86,6 +84,7 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
 
         removeFromJp();
         ArrayList<CalendarClass> calList = cc.getEventsOfWeek();
+        System.out.println(calList.size());
         int monCount = 0;
         int tueCount = 0;
         int wedCount = 0;
@@ -95,7 +94,6 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         int sunCount = 0;
         int x = 2;
         int y = 15;
-        EventOfDayPanel eodp;
         for (CalendarClass calendarClass : calList) {
             String day = new SimpleDateFormat("EEEE").format(calendarClass.getDate().getTime());
             switch (day) {

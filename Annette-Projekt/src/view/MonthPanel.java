@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.Calendar_Ct;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,9 +30,11 @@ public class MonthPanel extends javax.swing.JPanel {
     private int iconSizeHeight;
     private int iconSizeWidth;
     private ArrayList<JPanel> listOfDays;
+    private Calendar_Ct cc;
     private JFrame jFrame;
 
     public MonthPanel(JFrame jFrame) {
+        cc = Calendar_Ct.getInstance();
         this.jFrame = jFrame;
         iconSizeHeight = 40;
         iconSizeWidth = 40;
@@ -52,12 +55,8 @@ public class MonthPanel extends javax.swing.JPanel {
         jPanel_calender.repaint();
         
         // ArrayList - her skal info ind om optaget dage.
-        ArrayList<String> days = new ArrayList<>();
-        days.add("2014-10-23");
-        days.add("2014-10-25");
-        days.add("2014-10-30");
-        days.add("2014-11-23");
-
+        ArrayList<String> days = cc.getDates();
+        
         int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
         for (int i = 0; i < daysInMonth; i++) {
@@ -113,7 +112,14 @@ public class MonthPanel extends javax.swing.JPanel {
             listOfDays.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
 
             boolean erder = false;
-            String da = cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + i;
+            int day = i+1;
+            String month = "";
+            if((cal.get(Calendar.MONTH) + 1)<10){
+                month = "0"+(cal.get(Calendar.MONTH) + 1);
+            } else {
+                month = ""+(cal.get(Calendar.MONTH) + 1);
+            }
+            String da = cal.get(Calendar.YEAR) + "-" + month + "-" + day;
             // her tjekker den efter om der er et event på selve dagen inden den tilføjer den til panelet
             for (int j = 0; j < days.size(); j++) {
 

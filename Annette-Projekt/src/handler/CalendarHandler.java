@@ -8,6 +8,8 @@ package handler;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.CalendarClass;
 import model.Customer;
 import model.CustomerBuilder;
@@ -40,14 +42,14 @@ public class CalendarHandler {
         ArrayList<CalendarClass> cList = new ArrayList<>();
         String sql = "select * from calendar, massage, customer, massagetype "
                 + "where c_massage_id = m_id and c_customer_number = cus_phone "
-                + "and m_type_id = mt_id and (c_date between '"+firstDate+"%' and '"+lastDate+"%') order by c_date;";
+                + "and m_type_id = mt_id and (c_date between '" + firstDate + "%' and '" + lastDate + "%') order by c_date;";
         try {
             ResultSet rs = db.getResult(sql);
             while (rs.next()) {
                 MassageType mt = new MassageType(rs.getInt("mt_id"), rs.getInt("mt_price"), rs.getString("mt_type"), rs.getInt("mt_duration"));
                 Customer c = new CustomerBuilder().setPhone(rs.getString("cus_phone")).setName(rs.getString("cus_name")).setHomeAddress(rs.getString("cus_homeAddress")).setAddress(rs.getString("cus_address")).createCustomer();
                 Massage m = new Massage(rs.getInt("m_id"), rs.getString("m_comment"), rs.getString("m_startTime"), mt, c);
-               String date = rs.getString("c_date").substring(0, 10);
+                String date = rs.getString("c_date").substring(0, 10);
                 CalendarClass calC = new CalendarClass(dt.getDateFromString(date), c, m);
                 cList.add(calC);
             }
@@ -55,6 +57,19 @@ public class CalendarHandler {
             System.out.println(ex.getLocalizedMessage() + " I AM BATMAN");
         }
         return cList;
+    }
 
+    public ArrayList<String> getDates() {
+        ArrayList<String> dates = new ArrayList<>();
+        String sql = "select c_date from calendar;";
+        try {
+            ResultSet rs = db.getResult(sql);
+            while (rs.next()) {
+                dates.add(rs.getString("c_date").substring(0, 10));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CalendarHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dates;
     }
 }

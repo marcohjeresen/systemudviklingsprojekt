@@ -47,6 +47,7 @@ public class Calendar_Ct {
         callList.removeAll(callList);
         ArrayList<String> days = new ArrayList<>();
         String day = new SimpleDateFormat("EEEE").format(cal.getTime());
+        firstDayOfWeeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
         while (!day.equals("mandag")) {
             cal.roll(Calendar.DAY_OF_YEAR, -1);
             day = new SimpleDateFormat("EEEE").format(cal.getTime());
@@ -89,6 +90,8 @@ public class Calendar_Ct {
         return cc;
     }
     
-    
+    public ArrayList<String> getDates(){
+        return ch.getDates();
+    }
 
 }
