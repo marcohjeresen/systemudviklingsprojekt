@@ -21,12 +21,6 @@ public class MassageBuilder {
         return this;
     }
 
-    public MassageBuilder setCustomer(Customer customer) {
-        this.customer = customer;
-        return this; 
-    }
-
-    
     public MassageBuilder setComment(String comment) {
         this.comment = comment;
         return this;
@@ -43,7 +37,7 @@ public class MassageBuilder {
     }
 
     public Massage createMassage() {
-        return new Massage(id, comment, startTime, type, customer);
+        return new Massage(id, comment, startTime, type);
     }
     
 }

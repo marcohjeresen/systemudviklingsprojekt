@@ -6,30 +6,30 @@
 
 package view;
 
-import model.CalendarClass;
+import model.Event;
 
 /**
  *
  * @author Annette
  */
 public class EventOfDayPanel extends javax.swing.JPanel {
-    private CalendarClass calC;
+    private Event event;
     /**
      * Creates new form EventOfDayPanel
      */
-    public EventOfDayPanel(CalendarClass calC) {
-        this.calC = calC;
+    public EventOfDayPanel(Event event){
+        this.event = event;
         setSize(190, 50);
         initComponents();
-        jLEventType.setText(calC.getMassage().getClass().getSimpleName());
-        String starttime = calC.getMassage().getStartTime();
+        jLEventType.setText(event.getMassage().getClass().getSimpleName());
+        String starttime = event.getMassage().getStartTime();
         jLStartTime.setText(starttime);
         int endTimeValue = Integer.parseInt(starttime.replace(":", ""));
         int duration = 0;
-        if (calC.getMassage().getType().getDuration() == 60) {
+        if (event.getMassage().getType().getDuration() == 60) {
             duration = 100;
         }else{
-            duration = calC.getMassage().getType().getDuration();
+            duration = event.getMassage().getType().getDuration();
         }
         endTimeValue += duration;
         String endTime = endTimeValue+"";

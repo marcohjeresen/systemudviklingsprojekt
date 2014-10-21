@@ -12,12 +12,12 @@ import java.util.Calendar;
  *
  * @author Annette
  */
-public class CalendarClass {
+public class Event {
     private Calendar date;
     private Customer customer;
     private Massage massage;
 
-    public CalendarClass(Calendar date, Customer customer, Massage massage) {
+    public Event(Calendar date, Customer customer, Massage massage) {
         this.date = date;
         this.customer = customer;
         this.massage = massage;

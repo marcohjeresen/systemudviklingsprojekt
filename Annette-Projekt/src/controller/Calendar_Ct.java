@@ -9,7 +9,7 @@ import handler.CalendarHandler;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import model.CalendarClass;
+import model.Event;
 import util.Listeners;
 
 /**
@@ -74,8 +74,8 @@ public class Calendar_Ct {
         return days;
     }
     
-    public ArrayList<CalendarClass> getEventsOfWeek(){
-        ArrayList<CalendarClass> calList = ch.getCalendarFromDB(firstDayOfWeeek, lastDayofWeek);
+    public ArrayList<Event> getEventsOfWeek(){
+        ArrayList<Event> calList = ch.getEventFromDB(firstDayOfWeeek, lastDayofWeek);
         return calList;
     }
 

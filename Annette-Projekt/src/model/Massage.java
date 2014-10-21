@@ -15,18 +15,12 @@ public class Massage {
     private String comment;
     private String startTime;
     private MassageType type;
-    private Customer customer;
 
-    public Massage(int id, String comment, String startTime, MassageType type, Customer customer) {
+    public Massage(int id, String comment, String startTime, MassageType type) {
         this.id = id;
         this.comment = comment;
         this.startTime = startTime;
         this.type = type;
-        this.customer = customer;
-    }
-
-    public Customer getCustomer() {
-        return customer;
     }
 
     public int getId() {

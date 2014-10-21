@@ -9,7 +9,7 @@ package controller;
 import handler.MassageHandler;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import model.CalendarClass;
+import model.Event;
 import model.Massage;
 import model.MassageType;
 
@@ -32,7 +32,7 @@ public class MassageControl {
         return mc;
     }
     
-    public void saveMassage(Massage massage, CalendarClass cal) throws SQLException{
+    public void saveMassage(Massage massage, Event cal) throws SQLException{
         mh.saveMassage(massage, cal);
     }
     

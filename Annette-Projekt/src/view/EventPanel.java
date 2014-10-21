@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JFrame;
-import model.CalendarClass;
+import model.Event;
 import model.Customer;
 import model.CustomerBuilder;
 import model.Massage;
@@ -36,7 +36,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private MassageBuilder massage;
     private CustomerControl cc;
     private Customer customer;
-    private CalendarClass calC;
+    private Event event;
     private MassageControl mc;
     private Calendar cal;
     private DateFormatTools dateFormatTools;
@@ -347,9 +347,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             saveCustomer();
         }
         Massage mas = massage.createMassage();
-        calC = new CalendarClass(cal, customer, mas);
+        event = new Event(cal, customer, mas);
         try {
-            mc.saveMassage(mas, calC);
+            mc.saveMassage(mas, event);
             listener.notifyListeners("New Event Created");
             jFrame.dispose();
         } catch (SQLException ex) {

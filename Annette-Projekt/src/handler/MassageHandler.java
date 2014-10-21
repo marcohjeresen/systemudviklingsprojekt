@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import model.CalendarClass;
+import model.Event;
 import model.Massage;
 import model.MassageType;
 
@@ -48,7 +48,7 @@ public class MassageHandler {
         return massTypeList;
     }
 
-    public void saveMassage(Massage massage, CalendarClass cal) throws SQLException {
+    public void saveMassage(Massage massage, Event cal) throws SQLException {
         ResultSet rs;
         int id = 0;
         try {

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import model.CalendarClass;
+import model.Event;
 import util.Listeners;
 
 /**
@@ -83,7 +83,7 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
     public void fillItUp() {
 
         removeFromJp();
-        ArrayList<CalendarClass> calList = cc.getEventsOfWeek();
+        ArrayList<Event> calList = cc.getEventsOfWeek();
         System.out.println(calList.size());
         int monCount = 0;
         int tueCount = 0;
@@ -94,46 +94,46 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         int sunCount = 0;
         int x = 2;
         int y = 15;
-        for (CalendarClass calendarClass : calList) {
-            String day = new SimpleDateFormat("EEEE").format(calendarClass.getDate().getTime());
+        for (Event event : calList) {
+            String day = new SimpleDateFormat("EEEE").format(event.getDate().getTime());
             switch (day) {
                 case ("mandag"):
-                    createEventOnPanel(jPanel1, monCount, calendarClass);
+                    createEventOnPanel(jPanel1, monCount, event);
                     monCount++;
                     break;
                 case ("tirsdag"):
-                    createEventOnPanel(jPanel2, tueCount, calendarClass);
+                    createEventOnPanel(jPanel2, tueCount, event);
                     tueCount++;
                     break;
                 case ("onsdag"):
-                    createEventOnPanel(jPanel3, wedCount, calendarClass);
+                    createEventOnPanel(jPanel3, wedCount, event);
                     wedCount++;
                     break;
                 case ("torsdag"):
-                    createEventOnPanel(jPanel4, thuCount, calendarClass);
+                    createEventOnPanel(jPanel4, thuCount, event);
                     thuCount++;
                     break;
                 case ("fredag"):
-                    createEventOnPanel(jPanel5, friCount, calendarClass);
+                    createEventOnPanel(jPanel5, friCount, event);
                     friCount++;
                     break;
                 case ("lørdag"):
-                    createEventOnPanel(jPanel6, satCount, calendarClass);
+                    createEventOnPanel(jPanel6, satCount, event);
                     satCount++;
                     break;
                 case ("søndag"):
-                    createEventOnPanel(jPanel7, sunCount, calendarClass);
+                    createEventOnPanel(jPanel7, sunCount, event);
                     sunCount++;
                     break;
             }
         }
     }
 
-    public void createEventOnPanel(JPanel jpanel, int count, CalendarClass calendarClass) {
+    public void createEventOnPanel(JPanel jpanel, int count, Event event){
         EventOfDayPanel eodp;
         int x = 2;
         int y = 15;
-        eodp = new EventOfDayPanel(calendarClass);
+        eodp = new EventOfDayPanel(event);
         eodp.setLocation(x, count * eodp.getHeight() + (count * 5) + y);
         eodp.setVisible(true);
         jpanel.add(eodp);

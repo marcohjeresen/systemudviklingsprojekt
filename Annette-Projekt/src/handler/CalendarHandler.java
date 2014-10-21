@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.CalendarClass;
+import model.Event;
 import model.Customer;
 import model.CustomerBuilder;
 import model.Massage;
@@ -37,9 +37,9 @@ public class CalendarHandler {
         return ch;
     }
 
-    public ArrayList<CalendarClass> getCalendarFromDB(String firstDate, String lastDate) {
+    public ArrayList<Event> getEventFromDB(String firstDate, String lastDate) {
         DateFormatTools dt = new DateFormatTools();
-        ArrayList<CalendarClass> cList = new ArrayList<>();
+        ArrayList<Event> eventList = new ArrayList<>();
         String sql = "select * from calendar, massage, customer, massagetype "
                 + "where c_massage_id = m_id and c_customer_number = cus_phone "
                 + "and m_type_id = mt_id and (c_date between '" + firstDate + "%' and '" + lastDate + "%') order by c_date;";
@@ -48,15 +48,15 @@ public class CalendarHandler {
             while (rs.next()) {
                 MassageType mt = new MassageType(rs.getInt("mt_id"), rs.getInt("mt_price"), rs.getString("mt_type"), rs.getInt("mt_duration"));
                 Customer c = new CustomerBuilder().setPhone(rs.getString("cus_phone")).setName(rs.getString("cus_name")).setHomeAddress(rs.getString("cus_homeAddress")).setAddress(rs.getString("cus_address")).createCustomer();
-                Massage m = new Massage(rs.getInt("m_id"), rs.getString("m_comment"), rs.getString("m_startTime"), mt, c);
+                Massage m = new Massage(rs.getInt("m_id"), rs.getString("m_comment"), rs.getString("m_startTime"), mt);
                 String date = rs.getString("c_date").substring(0, 10);
-                CalendarClass calC = new CalendarClass(dt.getDateFromString(date), c, m);
-                cList.add(calC);
+                Event calC = new Event(dt.getDateFromString(date), c, m);
+                eventList.add(calC);
             }
         } catch (SQLException ex) {
             System.out.println(ex.getLocalizedMessage() + " I AM BATMAN");
         }
-        return cList;
+        return eventList;
     }
 
     public ArrayList<String> getDates() {
