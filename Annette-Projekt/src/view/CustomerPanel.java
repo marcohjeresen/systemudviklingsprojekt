@@ -26,11 +26,10 @@ public class CustomerPanel extends javax.swing.JPanel {
         int y = 0;
         for (Customer customer : customers) {
             CustomerButton button = new CustomerButton(customer, this);
-            add(button);
             button.setLocation(0, y);
             button.setVisible(true);
+            add(button);
             y += button.getHeight();
-            this.setSize(260, y);
         }
         revalidate();
         repaint();

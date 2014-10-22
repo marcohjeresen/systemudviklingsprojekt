@@ -58,7 +58,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         mc = MassageControl.getInstance();
         dateFormatTools = new DateFormatTools();
         initComponents();
-
+        listener.addListener(this);
         cl = (CardLayout) getLayout();
         cl.addLayoutComponent(choosePanel, "vælg");
         cl.addLayoutComponent(massagePanel, "massage");
@@ -123,29 +123,27 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             customer = cus.get(0);
         } else if (!cus.isEmpty() && cus.size() >= 2) {
             CustomerPanel cp = new CustomerPanel(cus);
-//            this.add(cp);
-            JFrame jf = new JFrame();
-            jf.add(cp);
-            jf.setSize(260, 50);
-            jf.setVisible(true);
             cp.setSize(260, 20);
             cp.setVisible(true);
             cp.setLocation(10, 80);
-            revalidate();
-            repaint();
-        } 
+            cp.setSize(260, cus.size() * cp.getHeight());
+            massagePanel.add(cp);
+            massagePanel.setComponentZOrder(cp, 0);
+        }
+        revalidate();
+        repaint();
     }
 
     public void saveCustomer() {
-        if (jTPhone.getText().length() != 0  && jTName.getText().length() != 0) {
+        if (jTPhone.getText().length() != 0 && jTName.getText().length() != 0) {
             if (customer == null) {
                 cb.setPhone(jTPhone.getText());
-            cb.setName(jTName.getText());
-            customer = cb.createCustomer();
-            cc.saveCustomer(customer);
-            customer = null;
+                cb.setName(jTName.getText());
+                customer = cb.createCustomer();
+                cc.saveCustomer(customer);
+                customer = null;
             }
-            
+
         }
     }
 
@@ -348,7 +346,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     }//GEN-LAST:event_jTPhoneFocusLost
 
     private void jBCreateMassageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCreateMassageActionPerformed
-        if(customer == null){
+        if (customer == null) {
             saveCustomer();
         }
         Massage mas = massage.createMassage();

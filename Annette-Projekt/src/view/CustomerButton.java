@@ -29,7 +29,6 @@ public class CustomerButton extends JButton {
         this.panel = panel;
         cc = CustomerControl.getInstance();
         listener = Listeners.getList();
-        setOpaque(false);
         setSize(255, 20);
         setText(customer.getPhone() + "  " + customer.getName());
         this.addActionListener(new ActionListener() {
@@ -37,7 +36,6 @@ public class CustomerButton extends JButton {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 cc.setCustomer(customer);
-                listener.notifyListeners("Customer Chosen");
                 panel.setVisible(false);
             }
         });
