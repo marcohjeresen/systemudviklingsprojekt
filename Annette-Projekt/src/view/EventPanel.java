@@ -126,7 +126,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             cp.setSize(260, 20);
             cp.setVisible(true);
             cp.setLocation(10, 80);
-            cp.setSize(260, cus.size() * cp.getHeight());
+            cp.setSize(256, cus.size() * cp.getHeight());
             massagePanel.add(cp);
             massagePanel.setComponentZOrder(cp, 0);
         }
