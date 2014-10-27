@@ -15,7 +15,4 @@ public class Main {
         gui.setSize(1366, 730);
         gui.setVisible(true);
     }
-
-
-
 }

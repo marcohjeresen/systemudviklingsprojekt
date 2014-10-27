@@ -35,22 +35,6 @@ private JLabel label;
         jLabel1.setText("" + day);
     }
 
-    public JLabel getjLabel1() {
-        return jLabel1;
-    }
-
-    public void setjLabel1(JLabel jLabel1) {
-        this.jLabel1 = jLabel1;
-    }
-
-    public JLabel getLabel() {
-        return label;
-    }
-
-    public void setLabel(JLabel label) {
-        this.label = label;
-    }
-    
     public void mouseClicked(){
         Calendar cl = cal;
         cl.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), day);

@@ -49,14 +49,12 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
                 jPanel1.setSize(280, 437);
                 jLabel2.setSize(300, 480);
                 jScrollPane1.setSize(new Dimension(270, 400));
-//                jTextArea1.setSize(new Dimension(300, 430));
                 jButton1.setLocation(jScrollPane1.getX(), (jPanel1.getHeight()- jButton1.getHeight()-3));
                 jButton2.setLocation((jScrollPane1.getX()+jScrollPane1.getWidth())-jButton2.getWidth(), (jPanel1.getHeight()-jButton2.getHeight() - 3));
                 jButton3.setSize(23, 23);
                 jButton3.setLocation((jPanel1.getWidth()/2)-(jButton3.getWidth()/2), jButton1.getY());
                 frame.setLocation(533, 125);
                 createReceipt();
-                
                 cl.show(this, "kvittering");
                 break;
         }
@@ -79,7 +77,6 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
             double y0 = pf.getImageableY() + 50;
             g2d.translate(x0, y0);
             jTextArea1.printAll(g);
-            //     drawLines(g2d, page);
             printResult = PAGE_EXISTS;
         }
         return printResult;
@@ -172,7 +169,7 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
             try {
                 job.print();
             } catch (PrinterException ex) {
-                System.out.println(ex.getLocalizedMessage());
+                System.out.println("Exception occured in ReceiptPanel - JButton3 - print "+ex.getLocalizedMessage());
             }
         }
     }//GEN-LAST:event_jButton3ActionPerformed

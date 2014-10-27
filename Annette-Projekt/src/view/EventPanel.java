@@ -90,7 +90,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 break;
             case ("rediger massage"):
                 editing = true;
-                
                 startTime = mc.getEvent().getDate();
                 masTypeList = mc.getMTypeList();
                 event = mc.getEvent();
@@ -107,7 +106,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     }
 
     public void fillMassage() {
-        
         jTName.setText(event.getCustomer().getName());
         jTPhone.setText(event.getCustomer().getPhone());
         jTComment.setText(event.getMassage().getComment());
@@ -117,7 +115,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             jCWhole.setSelected(true);
         }
         jCStartTime.setSelectedItem(event.getMassage().getStartTime());
-
     }
 
     public void fillComboStartTime() {
@@ -179,7 +176,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 cc.saveCustomer(customer);
                 customer = null;
             }
-
         }
     }
 
@@ -390,9 +386,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             mc.updateMassage(event, cal);
             listener.notifyListeners("New Event Created");
             jFrame.dispose();
-
         } else {
-
             if (customer == null) {
                 saveCustomer();
             }
@@ -453,7 +447,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     jTPhone.setText(customer.getPhone());
                     jTName.setText(customer.getName());
                 }
-
                 break;
         }
     }
