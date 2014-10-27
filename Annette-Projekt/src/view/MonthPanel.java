@@ -150,7 +150,6 @@ public class MonthPanel extends javax.swing.JPanel {
                 }
                 if (days.get(j).equals(todayString)) {
                     listOfDays.get(i);
-                    
                 }
             }
             if (!erder) {

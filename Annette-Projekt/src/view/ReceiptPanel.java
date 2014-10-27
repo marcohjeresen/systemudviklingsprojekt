@@ -16,7 +16,6 @@ import static java.awt.print.Printable.NO_SUCH_PAGE;
 import static java.awt.print.Printable.PAGE_EXISTS;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-import java.util.Calendar;
 import javax.swing.JFrame;
 import model.Event;
 
@@ -48,6 +47,7 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
             case ("kvittering"):
                 frame.setSize(new Dimension(300, 480));
                 jPanel1.setSize(280, 437);
+                jLabel2.setSize(300, 480);
                 jScrollPane1.setSize(new Dimension(270, 400));
 //                jTextArea1.setSize(new Dimension(300, 430));
                 jButton1.setLocation(jScrollPane1.getX(), (jPanel1.getHeight()- jButton1.getHeight()-3));
@@ -100,6 +100,7 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setLayout(new java.awt.CardLayout());
 
@@ -140,6 +141,10 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
         jPanel1.add(jButton3);
         jButton3.setBounds(70, 230, 53, 29);
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/receipt_background.png"))); // NOI18N
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(0, 0, 270, 410);
+
         add(jPanel1, "card3");
     }// </editor-fold>//GEN-END:initComponents
 
@@ -177,6 +182,7 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
