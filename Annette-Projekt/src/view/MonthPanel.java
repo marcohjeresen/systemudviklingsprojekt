@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -125,9 +126,10 @@ public class MonthPanel extends javax.swing.JPanel {
             String da = cal.get(Calendar.YEAR) + "-" + month + "-" + dayys;
             Calendar today = Calendar.getInstance();
             int todayMo = today.get(Calendar.MONTH)+1;
-            int todayDay = today.get(Calendar.DAY_OF_YEAR);
+            int todayDay = today.get(Calendar.DAY_OF_MONTH);
             String todaySM = "";
             String todaySD = "";
+            
             if (todayMo <= 9) {
                 todaySM = "0"+ todayMo;
             }else{
@@ -140,18 +142,22 @@ public class MonthPanel extends javax.swing.JPanel {
                 todaySD = todayDay +"";
             }
             String todayString = today.get(Calendar.YEAR)+"-"+todaySM+"-"+todaySD;
-            String label = jLabel1.getText();
-            jLabel1.setText("<html>" + label + "</html>");
             // her tjekker den efter om der er et event på selve dagen inden den tilføjer den til panelet
             for (int j = 0; j < days.size(); j++) {
                 if (days.get(j).equals(da)) {
                     listOfDays.get(i).setBackground(new Color(62, 79, 88));
                     erder = true;
                 }
-                if (days.get(j).equals(todayString)) {
-                    listOfDays.get(i);
-                }
+                
             }
+// her laver den dagen om
+                if (da.equals(todayString)) {
+                    if (listOfDays.get(i).getComponent(0) instanceof JLabel) {
+                        JLabel jl = (JLabel) listOfDays.get(i).getComponent(0);
+                        jl.setForeground(Color.red);
+                    }
+                }
+            
             if (!erder) {
                 listOfDays.get(i).setBackground(new Color(92, 143, 154));
             }
