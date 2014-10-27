@@ -54,6 +54,11 @@ public class MassageType {
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
+    @Override
+    public String toString() {
+        return type + "\t" + duration + " min.";
+    }
     
     
 }

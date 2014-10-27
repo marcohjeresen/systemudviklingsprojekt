@@ -6,6 +6,7 @@
 
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -34,6 +35,26 @@ public class Event {
     public Massage getMassage() {
         return massage;
     }
+
+    public void setDate(Calendar date) {
+        this.date = date;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void setMassage(Massage massage) {
+        this.massage = massage;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        
+        return "Sund Massage\n\n\n" + customer +"\n\n"+ dateFormat.format(date.getTime()) +"\t\t"+ massage.getStartTime() +"\n\n"+ massage + "\n\nDorthe Sund Petersen\nFysiurgisk massør\n\nVallensved Bygade 11\n4700 Næstved\n\n22387172";
+    }
     
-    
+     
 }

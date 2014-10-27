@@ -9,6 +9,7 @@ package view;
 import controller.Calendar_Ct;
 import java.util.Calendar;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  *
@@ -19,10 +20,12 @@ private int day;
 private Calendar cal;
 private JFrame jFrame;
 private Calendar_Ct cc;
+private JLabel label;
     /**
      * Creates new form NewJPanel
      */
     public DayPanel(int day, Calendar cal, JFrame jFrame) {
+        label = jLabel1;
         this.day = day;
         this.cal = cal;
         this.jFrame = jFrame;
@@ -30,6 +33,22 @@ private Calendar_Ct cc;
         
         initComponents();
         jLabel1.setText("" + day);
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JLabel getLabel() {
+        return label;
+    }
+
+    public void setLabel(JLabel label) {
+        this.label = label;
     }
     
     public void mouseClicked(){

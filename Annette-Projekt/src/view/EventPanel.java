@@ -44,11 +44,15 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private boolean phoneSearch;
     private Listeners listener;
     private CustomerBuilder cb;
+    private boolean editing;
+    private Calendar startTime;
 
     /**
      * Creates new form EventPanel
      */
     public EventPanel(String panel, JFrame jFrame, Calendar calendar) {
+        editing = false;
+        startTime = Calendar.getInstance();
         cb = new CustomerBuilder();
         this.jFrame = jFrame;
         this.cal = calendar;
@@ -84,9 +88,36 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 cl.show(this, "massage");
                 fillComboStartTime();
                 break;
+            case ("rediger massage"):
+                editing = true;
+                
+                startTime = mc.getEvent().getDate();
+                masTypeList = mc.getMTypeList();
+                event = mc.getEvent();
+                jFrame.setLocation(550, 150);
+                jFrame.setSize(new Dimension(300, 370));
+                jFrame.setTitle(dateFormatTools.getDayLetters(cal));
+                cl.show(this, "massage");
+                fillComboStartTime();
+                fillMassage();
+                break;
         }
         jFrame.revalidate();
         jFrame.repaint();
+    }
+
+    public void fillMassage() {
+        
+        jTName.setText(event.getCustomer().getName());
+        jTPhone.setText(event.getCustomer().getPhone());
+        jTComment.setText(event.getMassage().getComment());
+        if (event.getMassage().getType().getType().equals("Halv krops massage")) {
+            jCHalf.setSelected(true);
+        } else {
+            jCWhole.setSelected(true);
+        }
+        jCStartTime.setSelectedItem(event.getMassage().getStartTime());
+
     }
 
     public void fillComboStartTime() {
@@ -120,7 +151,12 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         if (!cus.isEmpty() && cus.size() <= 1) {
             jTPhone.setText(cus.get(0).getPhone());
             jTName.setText(cus.get(0).getName());
-            customer = cus.get(0);
+            if (editing) {
+                event.setCustomer(cus.get(0));
+            } else {
+                customer = cus.get(0);
+            }
+
         } else if (!cus.isEmpty() && cus.size() >= 2) {
             CustomerPanel cp = new CustomerPanel(cus);
             cp.setSize(260, 20);
@@ -292,11 +328,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jLabel7.setBounds(10, 240, 80, 14);
 
         jCStartTime.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jCStartTime.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCStartTimeActionPerformed(evt);
-            }
-        });
         massagePanel.add(jCStartTime);
         jCStartTime.setBounds(73, 240, 130, 20);
 
@@ -321,23 +352,31 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     }//GEN-LAST:event_jBMassageActionPerformed
 
     private void jCHalfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCHalfActionPerformed
-        jCWhole.setSelected(false);
-        massage.setType(chooseMasType("Halv krops massage"));
+        if (!editing) {
+            jCWhole.setSelected(false);
+            massage.setType(chooseMasType("Halv krops massage"));
+        } else {
+            jCWhole.setSelected(false);
+            event.getMassage().setType(chooseMasType("Halv krops massage"));
+        }
     }//GEN-LAST:event_jCHalfActionPerformed
 
     private void jCWholeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCWholeActionPerformed
-        jCHalf.setSelected(false);
-        massage.setType(chooseMasType("Hel krops massage"));
+        if (!editing) {
+            jCHalf.setSelected(false);
+            massage.setType(chooseMasType("Hel krops massage"));
+        } else {
+            jCHalf.setSelected(false);
+            event.getMassage().setType(chooseMasType("Hel krops massage"));
+        }
     }//GEN-LAST:event_jCWholeActionPerformed
 
-    private void jCStartTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCStartTimeActionPerformed
-        if (jCStartTime.getSelectedItem() != null) {
-            massage.setStartTime(jCStartTime.getSelectedItem().toString());
-        }
-    }//GEN-LAST:event_jCStartTimeActionPerformed
-
     private void jTCommentFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTCommentFocusLost
-        massage.setComment(jTComment.getText());
+        if (!editing) {
+            massage.setComment(jTComment.getText());
+        } else {
+            event.getMassage().setComment(jTComment.getText());
+        }
     }//GEN-LAST:event_jTCommentFocusLost
 
     private void jTPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTPhoneFocusLost
@@ -346,19 +385,29 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     }//GEN-LAST:event_jTPhoneFocusLost
 
     private void jBCreateMassageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCreateMassageActionPerformed
-        if (customer == null) {
-            saveCustomer();
-        }
-        Massage mas = massage.createMassage();
-        event = new Event(cal, customer, mas);
-        try {
-            mc.saveMassage(mas, event);
+        if (editing) {
+            event.getMassage().setStartTime(jCStartTime.getSelectedItem().toString());
+            mc.updateMassage(event, cal);
             listener.notifyListeners("New Event Created");
             jFrame.dispose();
-        } catch (SQLException ex) {
-            if (ex.getLocalizedMessage().length() == 55) {
-                jBCreateMassage.setText("Tid Optaget");
-                jBCreateMassage.setBackground(Color.red);
+
+        } else {
+
+            if (customer == null) {
+                saveCustomer();
+            }
+            massage.setStartTime(jCStartTime.getSelectedItem().toString());
+            Massage mas = massage.createMassage();
+            event = new Event(cal, customer, mas);
+            try {
+                mc.saveMassage(mas, event);
+                listener.notifyListeners("New Event Created");
+                jFrame.dispose();
+            } catch (SQLException ex) {
+                if (ex.getLocalizedMessage().length() == 55) {
+                    jBCreateMassage.setText("Tid Optaget");
+                    jBCreateMassage.setBackground(Color.red);
+                }
             }
         }
     }//GEN-LAST:event_jBCreateMassageActionPerformed
@@ -397,9 +446,14 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Customer Chosen":
-                customer = cc.getCustomer();
-                jTPhone.setText(customer.getPhone());
-                jTName.setText(customer.getName());
+                if (editing) {
+                    event.setCustomer(cc.getCustomer());
+                } else {
+                    customer = cc.getCustomer();
+                    jTPhone.setText(customer.getPhone());
+                    jTName.setText(customer.getName());
+                }
+
                 break;
         }
     }

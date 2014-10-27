@@ -6,7 +6,6 @@
 package view;
 
 import java.util.ArrayList;
-import javax.swing.JPanel;
 import model.Customer;
 
 /**
@@ -43,6 +42,8 @@ public class CustomerPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

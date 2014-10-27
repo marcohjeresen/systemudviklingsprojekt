@@ -9,6 +9,7 @@ package controller;
 import handler.MassageHandler;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import model.Event;
 import model.Massage;
 import model.MassageType;
@@ -20,6 +21,7 @@ import model.MassageType;
 public class MassageControl {
     private MassageHandler mh;
     private static MassageControl mc;
+    private Event event = null;
 
     private MassageControl() {
         mh = MassageHandler.getInstance();
@@ -38,5 +40,21 @@ public class MassageControl {
     
     public ArrayList<MassageType> getMTypeList(){
         return mh.getMTypeList();
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+    
+    public void updateMassage(Event event, Calendar cal){
+        mh.updateMassage(event, cal);
+    }
+    
+    public void deleteMassage(Event event){
+        mh.deleteMassage(event);
     }
 }

@@ -12,6 +12,7 @@ import java.util.Calendar;
 import model.Event;
 import model.Massage;
 import model.MassageType;
+import util.Listeners;
 
 /**
  *
@@ -21,8 +22,10 @@ public class MassageHandler {
 
     private DBConnection db;
     private static MassageHandler mh;
+    private Listeners listener;
 
     private MassageHandler() {
+        listener = Listeners.getList();
         db = DBConnection.getInstance();
     }
 
@@ -76,6 +79,32 @@ public class MassageHandler {
             }else{
                 System.out.println("Exception occured in MassageHandler - saveMassage SQL exception\n" + ex.getLocalizedMessage());
             }
+        }
+    }
+    
+    public void updateMassage(Event event, Calendar cal){
+        String sqlMas = "update massage set m_comment='"+event.getMassage().getComment()
+                +"', m_startTime='"+event.getMassage().getStartTime()+"', m_type_id="
+                +event.getMassage().getType().getId()+" where m_id="+event.getMassage().getId()+";";
+        int month = cal.get(Calendar.MONTH)+1;
+        String date = cal.get(Calendar.YEAR)+"-"+ month+"-"+cal.get(Calendar.DAY_OF_MONTH);
+        date = date + " "+ event.getMassage().getStartTime();
+        String sqlCal = "update calendar set c_date='"+date+"' where c_date='"+cal.getTime()+"';";
+        try {
+            db.execute(sqlMas);
+            db.execute(sqlCal);
+        } catch (SQLException ex) {
+            System.out.println(ex.getLocalizedMessage()+"\n"+sqlMas+"\n"+sqlCal);
+        }
+    }
+    
+    public void deleteMassage(Event event){
+        String sqlMas = "delete from massage where m_id="+event.getMassage().getId()+";";
+        try {
+            db.execute(sqlMas);
+            listener.notifyListeners("New Event Created");
+        } catch (SQLException ex) {
+            System.out.println(ex.getLocalizedMessage()+"\n"+sqlMas);
         }
     }
 }

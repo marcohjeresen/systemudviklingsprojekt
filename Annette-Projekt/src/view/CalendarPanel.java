@@ -69,7 +69,6 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         jf.add(ep);
         jf.setVisible(true);
         ep.setVisible(true);
-
     }
 
     public void removeFromJp() {
@@ -84,7 +83,6 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
 
         removeFromJp();
         ArrayList<Event> calList = cc.getEventsOfWeek();
-        System.out.println(calList.size());
         int monCount = 0;
         int tueCount = 0;
         int wedCount = 0;

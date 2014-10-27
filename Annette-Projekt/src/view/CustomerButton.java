@@ -6,10 +6,10 @@
 package view;
 
 import controller.CustomerControl;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 import model.Customer;
 import util.Listeners;
 
@@ -29,7 +29,9 @@ public class CustomerButton extends JButton {
         this.panel = panel;
         cc = CustomerControl.getInstance();
         listener = Listeners.getList();
-        setSize(256, 20);
+        setBackground(Color.white);
+        setBorder(null);
+        setSize(255, 20);
         setText(customer.getPhone() + "  " + customer.getName());
         this.addActionListener(new ActionListener() {
 

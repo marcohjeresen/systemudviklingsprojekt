@@ -45,18 +45,17 @@ public class MonthPanel extends javax.swing.JPanel {
         jLabel_monht.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
         drawDays();
     }
-  
-    
+
     //bruges til at tegne og finde evt optaget dage i den måned som vises
-     private void drawDays() {
+    private void drawDays() {
         int x = 0, y = 0;
         listOfDays.clear();
         jPanel_calender.removeAll();
         jPanel_calender.repaint();
-        
+
         // ArrayList - her skal info ind om optaget dage.
         ArrayList<String> days = cc.getDates();
-        
+
         int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
         for (int i = 0; i < daysInMonth; i++) {
@@ -110,42 +109,65 @@ public class MonthPanel extends javax.swing.JPanel {
             listOfDays.get(i).setBorder(BorderFactory.createLineBorder(Color.black));
 
             boolean erder = false;
-            int day = i+1;
+            int day = i + 1;
             String month = "";
             String dayys = "";
-            if((cal.get(Calendar.MONTH) + 1)<10){
-                month = "0"+(cal.get(Calendar.MONTH) + 1);
+            if ((cal.get(Calendar.MONTH) + 1) < 10) {
+                month = "0" + (cal.get(Calendar.MONTH) + 1);
             } else {
-                month = ""+(cal.get(Calendar.MONTH) + 1);
+                month = "" + (cal.get(Calendar.MONTH) + 1);
             }
             if (day <= 9) {
-                dayys = "0"+day;
-            }else{
-                dayys = ""+day;
+                dayys = "0" + day;
+            } else {
+                dayys = "" + day;
             }
             String da = cal.get(Calendar.YEAR) + "-" + month + "-" + dayys;
+            Calendar today = Calendar.getInstance();
+            int todayMo = today.get(Calendar.MONTH)+1;
+            int todayDay = today.get(Calendar.DAY_OF_YEAR);
+            String todaySM = "";
+            String todaySD = "";
+            if (todayMo <= 9) {
+                todaySM = "0"+ todayMo;
+            }else{
+                todaySM = todayMo+"";
+            }
+            
+            if (todayDay <= 9) {
+                todaySD = "0"+ todayDay;
+            }else{
+                todaySD = todayDay +"";
+            }
+            String todayString = today.get(Calendar.YEAR)+"-"+todaySM+"-"+todaySD;
+            String label = jLabel1.getText();
+            jLabel1.setText("<html>" + label + "</html>");
             // her tjekker den efter om der er et event på selve dagen inden den tilføjer den til panelet
             for (int j = 0; j < days.size(); j++) {
                 if (days.get(j).equals(da)) {
-                    listOfDays.get(i).setBackground(new Color(62,79,88));
+                    listOfDays.get(i).setBackground(new Color(62, 79, 88));
                     erder = true;
+                }
+                if (days.get(j).equals(todayString)) {
+                    listOfDays.get(i);
+                    
                 }
             }
             if (!erder) {
-                listOfDays.get(i).setBackground(new Color(92,143,154));
+                listOfDays.get(i).setBackground(new Color(92, 143, 154));
             }
             jPanel_calender.add(listOfDays.get(i));
             listOfDays.get(i).setVisible(true);
         }
         jPanel_calender.repaint();
     }
-     
-     // bruges til at gå frem og tilbage i månederne
-     public void rollMonth(int days){
+
+    // bruges til at gå frem og tilbage i månederne
+    public void rollMonth(int days) {
         cal.roll(cal.MONTH, days);
         jLabel_monht.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
         drawDays();
-     }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -207,4 +229,6 @@ public class MonthPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel_monht;
     private javax.swing.JPanel jPanel_calender;
     // End of variables declaration//GEN-END:variables
+
+    
 }

@@ -55,4 +55,12 @@ public class Massage {
         this.type = type;
     }
 
+    @Override
+    public String toString() {
+        if(comment.equals("null")){
+            comment ="";
+        }
+        return  type + "\n\nEvt. Kommentarer:\n" + comment + "\n\nPris:\t\tDKK " + type.getPrice();
+    }
+
 }

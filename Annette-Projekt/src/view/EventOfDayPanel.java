@@ -6,6 +6,8 @@
 
 package view;
 
+import java.util.Calendar;
+import javax.swing.JFrame;
 import model.Event;
 
 /**
@@ -111,7 +113,11 @@ public class EventOfDayPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        System.out.println("hej");
+        JFrame jf = new JFrame();
+        ReceiptPanel rp = new ReceiptPanel("kvittering", jf, event);
+        jf.add(rp);
+        jf.setVisible(true);
+        rp.setVisible(true);
     }//GEN-LAST:event_formMouseClicked
 
 
