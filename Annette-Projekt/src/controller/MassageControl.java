@@ -23,11 +23,11 @@ public class MassageControl {
     private static MassageControl mc;
     private Event event = null;
 
-    private MassageControl() {
+    private MassageControl() throws ClassNotFoundException, SQLException {
         mh = MassageHandler.getInstance();
     }
     
-    public static MassageControl getInstance(){
+    public static MassageControl getInstance() throws ClassNotFoundException, SQLException{
         if(mc == null){
             mc = new MassageControl();
         }
@@ -38,7 +38,7 @@ public class MassageControl {
         mh.saveMassage(massage, cal);
     }
     
-    public ArrayList<MassageType> getMTypeList(){
+    public ArrayList<MassageType> getMTypeList() throws SQLException{
         return mh.getMTypeList();
     }
 
@@ -50,11 +50,11 @@ public class MassageControl {
         this.event = event;
     }
     
-    public void updateMassage(Event event, Calendar cal){
+    public void updateMassage(Event event, Calendar cal) throws SQLException{
         mh.updateMassage(event, cal);
     }
     
-    public void deleteMassage(Event event){
+    public void deleteMassage(Event event) throws SQLException{
         mh.deleteMassage(event);
     }
 }

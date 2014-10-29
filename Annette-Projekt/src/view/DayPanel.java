@@ -7,6 +7,7 @@
 package view;
 
 import controller.Calendar_Ct;
+import java.sql.SQLException;
 import java.util.Calendar;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,8 +30,19 @@ private JLabel label;
         this.day = day;
         this.cal = cal;
         this.jFrame = jFrame;
+    try {
         cc = Calendar_Ct.getInstance();
-        
+    } catch (ClassNotFoundException ex) {
+        new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
+                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+    } catch (SQLException ex) {
+        new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
+                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+    }
         initComponents();
         jLabel1.setText("" + day);
     }

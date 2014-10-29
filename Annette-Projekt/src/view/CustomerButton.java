@@ -9,6 +9,7 @@ import controller.CustomerControl;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import javax.swing.JButton;
 import model.Customer;
 import util.Listeners;
@@ -27,7 +28,19 @@ public class CustomerButton extends JButton {
     public CustomerButton(final Customer customer, final CustomerPanel panel) {
         this.customer = customer;
         this.panel = panel;
-        cc = CustomerControl.getInstance();
+        try {
+            cc = CustomerControl.getInstance();
+        } catch (ClassNotFoundException ex) {
+            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
+                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+        } catch (SQLException ex) {
+            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
+                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+        }
         listener = Listeners.getList();
         setBackground(Color.white);
         setBorder(null);

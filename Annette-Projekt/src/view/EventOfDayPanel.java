@@ -6,7 +6,6 @@
 
 package view;
 
-import java.util.Calendar;
 import javax.swing.JFrame;
 import model.Event;
 

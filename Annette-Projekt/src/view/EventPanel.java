@@ -15,7 +15,9 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.border.Border;
 import model.Event;
 import model.Customer;
 import model.CustomerBuilder;
@@ -46,11 +48,13 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private CustomerBuilder cb;
     private boolean editing;
     private Calendar startTime;
+    private final Border redLineBorder;
 
     /**
      * Creates new form EventPanel
      */
     public EventPanel(String panel, JFrame jFrame, Calendar calendar) {
+        redLineBorder = BorderFactory.createLineBorder(Color.red);
         editing = false;
         startTime = Calendar.getInstance();
         cb = new CustomerBuilder();
@@ -58,8 +62,21 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         this.cal = calendar;
         phoneSearch = true;
         listener = Listeners.getList();
-        cc = CustomerControl.getInstance();
-        mc = MassageControl.getInstance();
+        try {
+            cc = CustomerControl.getInstance();
+            mc = MassageControl.getInstance();
+        } catch (ClassNotFoundException ex) {
+            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
+                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+        } catch (SQLException ex) {
+            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
+                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+        }
+
         dateFormatTools = new DateFormatTools();
         initComponents();
         listener.addListener(this);
@@ -81,7 +98,14 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             case ("massage"):
                 massage = new MassageBuilder();
                 customer = null;
-                masTypeList = mc.getMTypeList();
+                try {
+                    masTypeList = mc.getMTypeList();
+                } catch (SQLException ex) {
+                    new ErrorPopup("Der kunne ikke hentes massagetyper fra databasen. "
+                            + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                            + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+                    System.out.println(ex.getLocalizedMessage());
+                }
                 jFrame.setLocation(550, 150);
                 jFrame.setSize(new Dimension(300, 370));
                 jFrame.setTitle(dateFormatTools.getDayLetters(cal));
@@ -91,7 +115,14 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             case ("rediger massage"):
                 editing = true;
                 startTime = mc.getEvent().getDate();
-                masTypeList = mc.getMTypeList();
+                try {
+                    masTypeList = mc.getMTypeList();
+                } catch (SQLException ex) {
+                    new ErrorPopup("Der kunne ikke hentes massagetyper fra databasen. "
+                            + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                            + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+                    System.out.println(ex.getLocalizedMessage());
+                }
                 event = mc.getEvent();
                 jFrame.setLocation(550, 150);
                 jFrame.setSize(new Dimension(300, 370));
@@ -140,10 +171,17 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
 
     public void findCustomer(boolean phoneSearch) {
         ArrayList<Customer> cus = new ArrayList<>();
-        if (phoneSearch) {
-            cus = cc.getSpecificCustomer(jTPhone.getText(), phoneSearch);
-        } else {
-            cus = cc.getSpecificCustomer(jTName.getText(), phoneSearch);
+        try {
+            if (phoneSearch) {
+                cus = cc.getSpecificCustomer(jTPhone.getText(), phoneSearch);
+            } else {
+                cus = cc.getSpecificCustomer(jTName.getText(), phoneSearch);
+            }
+        } catch (SQLException ex) {
+            new ErrorPopup("Der kunne ikke hentes kunder fra databasen. "
+                    + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
         }
         if (!cus.isEmpty() && cus.size() <= 1) {
             jTPhone.setText(cus.get(0).getPhone());
@@ -173,7 +211,14 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 cb.setPhone(jTPhone.getText());
                 cb.setName(jTName.getText());
                 customer = cb.createCustomer();
-                cc.saveCustomer(customer);
+                try {
+                    cc.saveCustomer(customer);
+                } catch (SQLException ex) {
+                    new ErrorPopup("Kunden kunne ikke gemmes i databasen. "
+                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+                }
                 customer = null;
             }
         }
@@ -381,26 +426,49 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     }//GEN-LAST:event_jTPhoneFocusLost
 
     private void jBCreateMassageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCreateMassageActionPerformed
-        if (editing) {
-            event.getMassage().setStartTime(jCStartTime.getSelectedItem().toString());
-            mc.updateMassage(event, cal);
-            listener.notifyListeners("New Event Created");
-            jFrame.dispose();
-        } else {
-            if (customer == null) {
-                saveCustomer();
-            }
-            massage.setStartTime(jCStartTime.getSelectedItem().toString());
-            Massage mas = massage.createMassage();
-            event = new Event(cal, customer, mas);
-            try {
-                mc.saveMassage(mas, event);
+        boolean goodToGo = true;
+        if (jTPhone.getText().equals("")) {
+            jTPhone.setBorder(redLineBorder);
+            goodToGo = false;
+        }
+        if (jTName.getText().equals("")) {
+            jTName.setBorder(redLineBorder);
+            goodToGo = false;
+        }
+        if (!jCHalf.isSelected() && !jCWhole.isSelected()) {
+            jCHalf.setForeground(Color.red);
+            jCWhole.setForeground(Color.red);
+            goodToGo = false;
+        }
+        if (goodToGo) {
+            if (editing) {
+                event.getMassage().setStartTime(jCStartTime.getSelectedItem().toString());
+                try {
+                    mc.updateMassage(event, cal);
+                } catch (SQLException ex) {
+                    new ErrorPopup("Aftalen kunne ikke redigeres. "
+                            + "<br/> Kontakt Annette, for få dette fixet<br/>"
+                            + "(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+                }
                 listener.notifyListeners("New Event Created");
                 jFrame.dispose();
-            } catch (SQLException ex) {
-                if (ex.getLocalizedMessage().length() == 55) {
-                    jBCreateMassage.setText("Tid Optaget");
-                    jBCreateMassage.setBackground(Color.red);
+            } else {
+                if (customer == null) {
+                    saveCustomer();
+                }
+                massage.setStartTime(jCStartTime.getSelectedItem().toString());
+                Massage mas = massage.createMassage();
+                event = new Event(cal, customer, mas);
+                try {
+                    mc.saveMassage(mas, event);
+                    listener.notifyListeners("New Event Created");
+                    jFrame.dispose();
+                } catch (SQLException ex) {
+                    if (ex.getLocalizedMessage().length() == 55) {
+                        jBCreateMassage.setText("Tid Optaget");
+                        jBCreateMassage.setBackground(Color.red);
+                    }
                 }
             }
         }

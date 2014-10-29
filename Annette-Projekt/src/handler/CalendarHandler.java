@@ -24,24 +24,23 @@ public class CalendarHandler {
     private DBConnection db;
     private static CalendarHandler ch;
 
-    private CalendarHandler() {
+    private CalendarHandler() throws ClassNotFoundException, SQLException {
         db = DBConnection.getInstance();
     }
 
-    public static CalendarHandler getInstance() {
+    public static CalendarHandler getInstance() throws ClassNotFoundException, SQLException {
         if (ch == null) {
             ch = new CalendarHandler();
         }
         return ch;
     }
 
-    public ArrayList<Event> getEventFromDB(String firstDate, String lastDate) {
+    public ArrayList<Event> getEventFromDB(String firstDate, String lastDate) throws SQLException {
         DateFormatTools dt = new DateFormatTools();
         ArrayList<Event> eventList = new ArrayList<>();
         String sql = "select * from calendar, massage, customer, massagetype "
                 + "where c_massage_id = m_id and c_customer_number = cus_phone "
                 + "and m_type_id = mt_id and (c_date between '" + firstDate + "%' and '" + lastDate + "%') order by c_date;";
-        try {
             ResultSet rs = db.getResult(sql);
             while (rs.next()) {
                 MassageType mt = new MassageType(rs.getInt("mt_id"), rs.getInt("mt_price"), rs.getString("mt_type"), rs.getInt("mt_duration"));
@@ -51,23 +50,16 @@ public class CalendarHandler {
                 Event calC = new Event(dt.getDateFromString(date), c, m);
                 eventList.add(calC);
             }
-        } catch (SQLException ex) {
-            System.out.println("Exception occured in CalendarHandler - getEventFromDB SQL exception\n" + ex.getLocalizedMessage());
-        }
         return eventList;
     }
 
-    public ArrayList<String> getDates() {
+    public ArrayList<String> getDates() throws SQLException {
         ArrayList<String> dates = new ArrayList<>();
         String sql = "select c_date from calendar;";
-        try {
             ResultSet rs = db.getResult(sql);
             while (rs.next()) {
                 dates.add(rs.getString("c_date").substring(0, 10));
             }
-        } catch (SQLException ex) {
-            System.out.println("Exception occured in CalendarHandler - getDates SQL exception\n" + ex.getLocalizedMessage());
-        }
         return dates;
     }
 }

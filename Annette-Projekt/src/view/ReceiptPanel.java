@@ -16,6 +16,7 @@ import static java.awt.print.Printable.NO_SUCH_PAGE;
 import static java.awt.print.Printable.PAGE_EXISTS;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.sql.SQLException;
 import javax.swing.JFrame;
 import model.Event;
 
@@ -36,7 +37,19 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
     public ReceiptPanel(String panel, JFrame frame, Event event) {
         this.event = event;
         this.frame = frame;
-        mc = MassageControl.getInstance();
+        try {
+            mc = MassageControl.getInstance();
+        } catch (ClassNotFoundException ex) {
+            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
+                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+        } catch (SQLException ex) {
+            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
+                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+        }
         initComponents();
         cl = (CardLayout) getLayout();
         showPage(panel);
@@ -156,7 +169,13 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        mc.deleteMassage(event);
+        try {
+            mc.deleteMassage(event);
+        } catch (SQLException ex) {
+            new ErrorPopup("Aftalen kunne ikke slettes. <br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+        }
         frame.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 

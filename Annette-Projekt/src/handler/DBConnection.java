@@ -12,7 +12,7 @@ import java.sql.Statement;
  */
 public class DBConnection {
 
-   private Connection connect;
+    private Connection connect;
     private Statement state;
     private boolean isConnected;
     private static DBConnection connection;
@@ -26,7 +26,7 @@ public class DBConnection {
     /**
      * Constructor, creates a new object of the class.
      */
-    private DBConnection() {
+    private DBConnection() throws ClassNotFoundException, SQLException {
         this.host = "localhost";
         this.port = "3306";
         this.dbNavn = "annetteprojekt";
@@ -42,19 +42,11 @@ public class DBConnection {
      *
      * @return a boolean based on connection - true if connected, false if not.
      */
-    private boolean connection() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connect = (Connection) DriverManager.getConnection(db, user, pass);
-            state = (Statement) connect.createStatement();
-            isConnected = true;
-        } catch (SQLException ex) {
-            System.out.println("Could not connect: " + db + " , " + user + " , " + pass);
-            System.out.println(ex.getLocalizedMessage());
-        } catch (ClassNotFoundException ex) {
-            System.out.println("No driver found");
-            System.out.println(ex.getLocalizedMessage());
-        }
+    private boolean connection() throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+        connect = (Connection) DriverManager.getConnection(db, user, pass);
+        state = (Statement) connect.createStatement();
+        isConnected = true;
         return isConnected;
     }
 
@@ -64,7 +56,7 @@ public class DBConnection {
      *
      * @return an instance of this class
      */
-    public static DBConnection getInstance() {
+    public static DBConnection getInstance() throws ClassNotFoundException, SQLException {
         if (connection == null) {
             connection = new DBConnection();
         }

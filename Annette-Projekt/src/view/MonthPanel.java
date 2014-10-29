@@ -7,6 +7,7 @@ package view;
 
 import controller.Calendar_Ct;
 import java.awt.Color;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +36,19 @@ public class MonthPanel extends javax.swing.JPanel {
     private JFrame jFrame;
 
     public MonthPanel(JFrame jFrame) {
-        cc = Calendar_Ct.getInstance();
+        try {
+            cc = Calendar_Ct.getInstance();
+        } catch (ClassNotFoundException ex) {
+            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
+                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+        } catch (SQLException ex) {
+            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
+                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+        }
         this.jFrame = jFrame;
         iconSizeHeight = 40;
         iconSizeWidth = 40;
@@ -53,16 +66,42 @@ public class MonthPanel extends javax.swing.JPanel {
         listOfDays.clear();
         jPanel_calender.removeAll();
         jPanel_calender.repaint();
-
-        // ArrayList - her skal info ind om optaget dage.
-        ArrayList<String> days = cc.getDates();
+        try {
+            // ArrayList - her skal info ind om optaget dage.
+            ArrayList<String> days = cc.getDates();
+        } catch (SQLException ex) {
+            new ErrorPopup("Der kunne ikke hentes datoer fra databasen. "
+                    + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+        }
 
         int daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
         for (int i = 0; i < daysInMonth; i++) {
             listOfDays.add(new DayPanel(i + 1, cal, jFrame));
         }
-        int count = 0;
+        int count = 0;        listOfDays.clear();
+        jPanel_calender.removeAll();
+        jPanel_calender.repaint();
+
+        // ArrayList - her skal info ind om optaget dage.
+        ArrayList<String> days = null;
+        try {
+            days = cc.getDates();
+        } catch (SQLException ex) {
+           new ErrorPopup("Der kunne ikke hentes datoer fra databasen. "
+                    + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+        }
+
+        daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        for (int i = 0; i < daysInMonth; i++) {
+            listOfDays.add(new DayPanel(i + 1, cal, jFrame));
+        }
+        count = 0;
         for (int i = 0; i < daysInMonth; i++) {
             if (i == 0) {
                 Calendar dayCheck = Calendar.getInstance();

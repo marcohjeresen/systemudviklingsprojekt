@@ -6,6 +6,7 @@
 package controller;
 
 import handler.CalendarHandler;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,7 +27,7 @@ public class Calendar_Ct {
     private String lastDayofWeek;
     private CalendarHandler ch;
 
-    private Calendar_Ct() {
+    private Calendar_Ct() throws ClassNotFoundException, SQLException {
         listener = Listeners.getList();
         cal = Calendar.getInstance();
         ch = CalendarHandler.getInstance();
@@ -71,7 +72,7 @@ public class Calendar_Ct {
         return days;
     }
     
-    public ArrayList<Event> getEventsOfWeek(){
+    public ArrayList<Event> getEventsOfWeek() throws SQLException{
         ArrayList<Event> calList = ch.getEventFromDB(firstDayOfWeeek, lastDayofWeek);
         return calList;
     }
@@ -80,15 +81,14 @@ public class Calendar_Ct {
         return callList;
     }
 
-    public static Calendar_Ct getInstance() {
+    public static Calendar_Ct getInstance() throws ClassNotFoundException, SQLException {
         if (cc == null) {
             cc = new Calendar_Ct();
         }
         return cc;
     }
     
-    public ArrayList<String> getDates(){
+    public ArrayList<String> getDates() throws SQLException{
         return ch.getDates();
     }
-
 }

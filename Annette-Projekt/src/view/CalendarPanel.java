@@ -9,6 +9,7 @@ import controller.Calendar_Ct;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,7 +33,19 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
      * Creates new form WeekPanel
      */
     public CalendarPanel() {
-        cc = Calendar_Ct.getInstance();
+        try {
+            cc = Calendar_Ct.getInstance();
+        } catch (ClassNotFoundException ex) {
+            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
+                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+        } catch (SQLException ex) {
+            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
+                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+        }
         listener = Listeners.getList();
         chosenPanel = 0;
         initComponents();
@@ -82,7 +95,15 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
     public void fillItUp() {
 
         removeFromJp();
-        ArrayList<Event> calList = cc.getEventsOfWeek();
+        ArrayList<Event> calList = null;
+        try {
+            calList = cc.getEventsOfWeek();
+        } catch (SQLException ex) {
+            new ErrorPopup("Der kunne ikke hentes aftaler for denne uge. "
+                    + "<br/>Programmet kan godt bruges,men anbefales ikke.<br/> "
+                    + "Kontakt Annette, for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage());
+        }
         int monCount = 0;
         int tueCount = 0;
         int wedCount = 0;
