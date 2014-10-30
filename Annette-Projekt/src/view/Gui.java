@@ -82,7 +82,7 @@ public class Gui extends javax.swing.JFrame {
         getContentPane().add(jButton1);
         jButton1.setBounds(0, 0, 110, 23);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/calendar background.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/smoke_cloud.jpg"))); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 1360, 670);
 

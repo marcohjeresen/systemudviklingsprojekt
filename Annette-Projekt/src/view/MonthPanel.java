@@ -184,7 +184,7 @@ public class MonthPanel extends javax.swing.JPanel {
             // her tjekker den efter om der er et event på selve dagen inden den tilføjer den til panelet
             for (int j = 0; j < days.size(); j++) {
                 if (days.get(j).equals(da)) {
-                    listOfDays.get(i).setBackground(new Color(62, 79, 88));
+                    listOfDays.get(i).setBackground(new Color(69,96,123));
                     erder = true;
                 }
 
@@ -198,7 +198,7 @@ public class MonthPanel extends javax.swing.JPanel {
             }
 
             if (!erder) {
-                listOfDays.get(i).setBackground(new Color(92, 143, 154));
+                listOfDays.get(i).setBackground(new Color(106,140,168));
             }
             jPanel_calender.add(listOfDays.get(i));
             listOfDays.get(i).setVisible(true);
@@ -254,7 +254,7 @@ public class MonthPanel extends javax.swing.JPanel {
         add(jLabel_monht);
         jLabel_monht.setBounds(90, 10, 120, 20);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/month background.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/month_bkgr.png"))); // NOI18N
         add(jLabel1);
         jLabel1.setBounds(0, 0, 300, 300);
     }// </editor-fold>//GEN-END:initComponents

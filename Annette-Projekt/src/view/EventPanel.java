@@ -287,7 +287,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         choosePanel.add(jBGrill);
         jBGrill.setBounds(43, 71, 146, 23);
 
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/event background.png"))); // NOI18N
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/event_bkgr.png"))); // NOI18N
         choosePanel.add(jLabel11);
         jLabel11.setBounds(0, 0, 242, 140);
 
@@ -381,7 +381,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         massagePanel.add(jBCreateMassage);
         jBCreateMassage.setBounds(70, 270, 130, 23);
 
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/massage background.png"))); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/massage_bkgr.png"))); // NOI18N
         massagePanel.add(jLabel9);
         jLabel9.setBounds(0, 0, 290, 340);
 

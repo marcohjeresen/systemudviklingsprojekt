@@ -324,29 +324,29 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
             .addGap(0, 501, Short.MAX_VALUE)
         );
 
-        jLabel1.setForeground(new java.awt.Color(0, 70, 70));
+        jLabel1.setForeground(new java.awt.Color(18, 27, 36));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jLabel2.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel2.setForeground(new java.awt.Color(51, 70, 87));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jLabel3.setForeground(new java.awt.Color(0, 153, 153));
+        jLabel3.setForeground(new java.awt.Color(62, 86, 114));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("jLabel3");
 
-        jLabel4.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel4.setForeground(new java.awt.Color(90, 120, 146));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("jLabel4");
 
-        jLabel5.setForeground(new java.awt.Color(153, 255, 255));
+        jLabel5.setForeground(new java.awt.Color(149, 166, 182));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("jLabel5");
 
-        jLabel6.setForeground(new java.awt.Color(204, 255, 255));
+        jLabel6.setForeground(new java.awt.Color(182, 199, 215));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("jLabel6");
 
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setForeground(new java.awt.Color(241, 246, 252));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("jLabel7");
 

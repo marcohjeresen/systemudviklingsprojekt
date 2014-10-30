@@ -58,8 +58,9 @@ public class EventOfDayPanel extends javax.swing.JPanel {
         jLEndTime = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(92, 143, 154));
+        setBackground(new java.awt.Color(106, 140, 168));
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        setToolTipText("");
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);

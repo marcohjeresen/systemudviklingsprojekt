@@ -151,7 +151,7 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
         jPanel1.add(jButton3);
         jButton3.setBounds(70, 230, 53, 29);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/receipt_background.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/receipt_bkgr.png"))); // NOI18N
         jPanel1.add(jLabel2);
         jLabel2.setBounds(0, 0, 270, 410);
 
