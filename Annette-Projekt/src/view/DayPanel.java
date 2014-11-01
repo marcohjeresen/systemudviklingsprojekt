@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package view;
 
 import controller.Calendar_Ct;
@@ -17,42 +16,47 @@ import javax.swing.JLabel;
  * @author markh_000
  */
 public class DayPanel extends javax.swing.JPanel {
-private int day;
-private Calendar cal;
-private JFrame jFrame;
-private Calendar_Ct cc;
-private JLabel label;
+
+    private int day;
+    private Calendar cal;
+    private JFrame jFrame;
+    private Calendar_Ct cc;
+    private JLabel label;
+
     /**
      * Creates new form NewJPanel
      */
     public DayPanel(int day, Calendar cal, JFrame jFrame) {
-        
+
         this.day = day;
         this.cal = cal;
         this.jFrame = jFrame;
-    try {
-        cc = Calendar_Ct.getInstance();
-    } catch (ClassNotFoundException ex) {
-        new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
+        try {
+            cc = Calendar_Ct.getInstance();
+        } catch (ClassNotFoundException ex) {
+            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
                     + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
                     + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
             System.out.println(ex.getLocalizedMessage());
-    } catch (SQLException ex) {
-        new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
+        } catch (SQLException ex) {
+            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
                     + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
                     + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
             System.out.println(ex.getLocalizedMessage());
-    }
+        }
         initComponents();
         label = jLabel1;
         jLabel1.setText("" + day);
     }
-    
-    public JLabel getLabel(){
+
+    public JLabel getLabel() {
         return label;
     }
 
-    public void mouseClicked(){
+    /**
+     * Method, når man klikker på panelet så sætter den Calendar_Control.setCal til det Calendar objekt den har.
+     */
+    public void mouseClicked() {
         Calendar cl = cal;
         cl.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), day);
         cc.setCal(cal);
