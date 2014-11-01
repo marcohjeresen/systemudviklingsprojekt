@@ -63,10 +63,9 @@ public class MonthPanel extends javax.swing.JPanel {
     }
 
     /**
-     * Method, bruges til at tegne og finde evt optaget dage i den måned som
-     * vises.
+     * Method, used to draw and identify any busy days in the month.
      *
-     * Tegner alle JPanel's med dato'er.
+     * Draws all JPanel with dates.
      */
     private void drawDays() {
         x = 0;
