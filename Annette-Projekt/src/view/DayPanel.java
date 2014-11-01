@@ -26,7 +26,7 @@ private JLabel label;
      * Creates new form NewJPanel
      */
     public DayPanel(int day, Calendar cal, JFrame jFrame) {
-        label = jLabel1;
+        
         this.day = day;
         this.cal = cal;
         this.jFrame = jFrame;
@@ -44,7 +44,12 @@ private JLabel label;
             System.out.println(ex.getLocalizedMessage());
     }
         initComponents();
+        label = jLabel1;
         jLabel1.setText("" + day);
+    }
+    
+    public JLabel getLabel(){
+        return label;
     }
 
     public void mouseClicked(){

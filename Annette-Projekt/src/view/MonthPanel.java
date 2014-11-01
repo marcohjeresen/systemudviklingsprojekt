@@ -31,7 +31,7 @@ public class MonthPanel extends javax.swing.JPanel {
     private static JPanel jPanel;
     private int iconSizeHeight;
     private int iconSizeWidth;
-    private ArrayList<JPanel> listOfDays;
+    private ArrayList<DayPanel> listOfDays;
     private Calendar_Ct cc;
     private JFrame jFrame;
 
@@ -81,7 +81,8 @@ public class MonthPanel extends javax.swing.JPanel {
         for (int i = 0; i < daysInMonth; i++) {
             listOfDays.add(new DayPanel(i + 1, cal, jFrame));
         }
-        int count = 0;        listOfDays.clear();
+        int count = 0;
+        listOfDays.clear();
         jPanel_calender.removeAll();
         jPanel_calender.repaint();
 
@@ -90,7 +91,7 @@ public class MonthPanel extends javax.swing.JPanel {
         try {
             days = cc.getDates();
         } catch (SQLException ex) {
-           new ErrorPopup("Der kunne ikke hentes datoer fra databasen. "
+            new ErrorPopup("Der kunne ikke hentes datoer fra databasen. "
                     + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
                     + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
             System.out.println(ex.getLocalizedMessage());
@@ -184,21 +185,25 @@ public class MonthPanel extends javax.swing.JPanel {
             // her tjekker den efter om der er et event på selve dagen inden den tilføjer den til panelet
             for (int j = 0; j < days.size(); j++) {
                 if (days.get(j).equals(da)) {
-                    listOfDays.get(i).setBackground(new Color(69,96,123));
+                    listOfDays.get(i).setBackground(new Color(69, 96, 123));
                     erder = true;
                 }
 
             }
 // her laver den dagen om
             if (da.equals(todayString)) {
-                if (listOfDays.get(i).getComponent(0) instanceof JLabel) {
-                    JLabel jl = (JLabel) listOfDays.get(i).getComponent(0);
+
+                JLabel jl = (JLabel) listOfDays.get(i).getLabel();
+                if (jl != null) {
                     jl.setForeground(Color.red);
+                } else {
+                    System.out.println(da+"\t "+listOfDays.get(i)+"\t has no Label!!!");
                 }
+
             }
 
             if (!erder) {
-                listOfDays.get(i).setBackground(new Color(106,140,168));
+                listOfDays.get(i).setBackground(new Color(106, 140, 168));
             }
             jPanel_calender.add(listOfDays.get(i));
             listOfDays.get(i).setVisible(true);
@@ -207,6 +212,7 @@ public class MonthPanel extends javax.swing.JPanel {
     }
 
     // bruges til at gå frem og tilbage i månederne
+
     public void rollMonth(int days) {
         cal.roll(cal.MONTH, days);
         jLabel_monht.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
