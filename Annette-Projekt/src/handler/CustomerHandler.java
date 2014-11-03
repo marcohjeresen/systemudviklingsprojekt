@@ -19,10 +19,11 @@ public class CustomerHandler {
 
     private DBConnection db;
     private static CustomerHandler ch;
+    private String sql;
 
     private CustomerHandler() throws ClassNotFoundException, SQLException {
         db = DBConnection.getInstance();
-
+        sql = "";
     }
 
     public static CustomerHandler getInstance() throws ClassNotFoundException, SQLException {
@@ -34,7 +35,6 @@ public class CustomerHandler {
 
     public ArrayList<Customer> getSpecificCustomerFromDb(String phone, boolean phoneSearch) throws SQLException {
         ArrayList<Customer> cus = new ArrayList<>();
-        String sql = "";
         if (!"".equals(phone)) {
             if (phoneSearch) {
                 sql = "select * from customer where cus_phone like '" + phone + "%'";
@@ -50,7 +50,11 @@ public class CustomerHandler {
     }
     
     public void saveCustomer(Customer customer) throws SQLException{
-        String sql = "insert into customer values ('"+customer.getPhone()+"', '"+customer.getName()+"', '"+customer.getHomeAddress()+"', '"+customer.getAddress()+"');";
+        sql = "insert into customer values ('"+customer.getPhone()+"', '"+customer.getName()+"', '"+customer.getHomeAddress()+"', '"+customer.getAddress()+"');";
             db.execute(sql);
+    }
+    
+    public String getSql() {
+        return sql;
     }
 }

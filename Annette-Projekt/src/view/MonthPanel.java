@@ -82,14 +82,31 @@ public class MonthPanel extends javax.swing.JPanel {
             new ErrorPopup("Der kunne ikke hentes datoer fra databasen. "
                     + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
                     + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println(ex.getLocalizedMessage()+"\n"+cc.getCh().getSql());
         }
 
         //her kører vi alle dagene på selve måneden igennem og tjekker for event og om dagen er i dag
         for (int i = 0; i < daysInMonth; i++) {
             listOfDays.add(new DayPanel(i + 1, cal, jFrame));
 
-            //Hvis i er 0  er det den første dag i måneden og vi skal så finde ud af hvad plads den skal have
+        // ArrayList - her skal info ind om optaget dage.
+        ArrayList<String> days = null;
+        try {
+            days = cc.getDates();
+        } catch (SQLException ex) {
+           new ErrorPopup("Der kunne ikke hentes datoer fra databasen. "
+                    + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(ex.getLocalizedMessage()+"\n"+cc.getCh().getSql());
+        }
+
+        daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        for (int i = 0; i < daysInMonth; i++) {
+            listOfDays.add(new DayPanel(i + 1, cal, jFrame));
+        }
+        count = 0;
+        for (int i = 0; i < daysInMonth; i++) {
             if (i == 0) {
                 Calendar dayCheck = Calendar.getInstance();
                 dayCheck.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), i + 1);
@@ -148,7 +165,7 @@ public class MonthPanel extends javax.swing.JPanel {
             listOfDays.get(i).setVisible(true);
         }
         jPanel_calender.repaint();
-    }
+    }}
 
     /**
      * Method, Tjekker hvad dag dato'en er. er sætter x og count til den værdi

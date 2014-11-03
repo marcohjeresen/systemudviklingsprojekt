@@ -91,4 +91,10 @@ public class Calendar_Ct {
     public ArrayList<String> getDates() throws SQLException{
         return ch.getDates();
     }
+
+    public CalendarHandler getCh() {
+        return ch;
+    }
+    
+    
 }

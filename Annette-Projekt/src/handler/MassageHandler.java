@@ -23,10 +23,14 @@ public class MassageHandler {
     private DBConnection db;
     private static MassageHandler mh;
     private Listeners listener;
+    private String sql;
+    private String sqlCal;
 
     private MassageHandler() throws ClassNotFoundException, SQLException {
         listener = Listeners.getList();
         db = DBConnection.getInstance();
+        sql = "";
+        sqlCal = "";
     }
 
     public static MassageHandler getInstance() throws ClassNotFoundException, SQLException {
@@ -54,13 +58,13 @@ public class MassageHandler {
             while (rs.next()) {
                 id = rs.getInt("max(m_id)") + 1;
             }
-        String sql = "insert into massage values (" + id + ",'"
+        sql = "insert into massage values (" + id + ",'"
                 + massage.getComment() + "','" + massage.getStartTime()
                 + "'," + massage.getType().getId() + ");";
         int month = cal.getDate().get(Calendar.MONTH) + 1;
         String date = cal.getDate().get(Calendar.YEAR) + "-" + month + "-" + cal.getDate().get(Calendar.DAY_OF_MONTH);
         date = date + " " + massage.getStartTime();
-        String sqlCal = "insert into calendar values ('" + date + "','"
+        sqlCal = "insert into calendar values ('" + date + "','"
                 + cal.getCustomer().getPhone() + "'," + id + ");";
             db.execute(sql);
             db.execute(sqlCal);
@@ -74,20 +78,30 @@ public class MassageHandler {
     }
 
     public void updateMassage(Event event, Calendar cal) throws SQLException {
-        String sqlMas = "update massage set m_comment='" + event.getMassage().getComment()
+        sql = "update massage set m_comment='" + event.getMassage().getComment()
                 + "', m_startTime='" + event.getMassage().getStartTime() + "', m_type_id="
                 + event.getMassage().getType().getId() + " where m_id=" + event.getMassage().getId() + ";";
         int month = cal.get(Calendar.MONTH) + 1;
         String date = cal.get(Calendar.YEAR) + "-" + month + "-" + cal.get(Calendar.DAY_OF_MONTH);
         date = date + " " + event.getMassage().getStartTime();
-        String sqlCal = "update calendar set c_date='" + date + "' where c_date='" + cal.getTime() + "';";
-            db.execute(sqlMas);
+        sqlCal = "update calendar set c_date='" + date + "' where c_date='" + cal.getTime() + "';";
+            db.execute(sql);
             db.execute(sqlCal);
     }
 
     public void deleteMassage(Event event) throws SQLException {
-        String sqlMas = "delete from massage where m_id=" + event.getMassage().getId() + ";";
-            db.execute(sqlMas);
+            sql = "delete from massage where m_id=" + event.getMassage().getId() + ";";
+            db.execute(sql);
             listener.notifyListeners("New Event Created");
     }
+    
+    public String getSql() {
+        return sql;
+    }
+
+    public String getSqlCal() {
+        return sqlCal;
+    }
+    
+    
 }

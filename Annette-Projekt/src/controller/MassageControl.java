@@ -57,4 +57,10 @@ public class MassageControl {
     public void deleteMassage(Event event) throws SQLException{
         mh.deleteMassage(event);
     }
+
+    public MassageHandler getMh() {
+        return mh;
+    }
+    
+    
 }

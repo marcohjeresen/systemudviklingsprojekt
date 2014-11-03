@@ -174,7 +174,7 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
         } catch (SQLException ex) {
             new ErrorPopup("Aftalen kunne ikke slettes. <br/> Kontakt Annette, "
                     + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println(ex.getLocalizedMessage()+"\n"+mc.getMh().getSql()+"\n"+mc.getMh().getSqlCal());
         }
         frame.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed

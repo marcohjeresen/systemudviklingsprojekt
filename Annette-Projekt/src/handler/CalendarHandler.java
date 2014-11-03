@@ -23,9 +23,11 @@ public class CalendarHandler {
 
     private DBConnection db;
     private static CalendarHandler ch;
+    private String sql;
 
     private CalendarHandler() throws ClassNotFoundException, SQLException {
         db = DBConnection.getInstance();
+        sql = "";
     }
 
     public static CalendarHandler getInstance() throws ClassNotFoundException, SQLException {
@@ -38,7 +40,7 @@ public class CalendarHandler {
     public ArrayList<Event> getEventFromDB(String firstDate, String lastDate) throws SQLException {
         DateFormatTools dt = new DateFormatTools();
         ArrayList<Event> eventList = new ArrayList<>();
-        String sql = "select * from calendar, massage, customer, massagetype "
+        sql = "select * from calendar, massage, customer, massagetype "
                 + "where c_massage_id = m_id and c_customer_number = cus_phone "
                 + "and m_type_id = mt_id and (c_date between '" + firstDate + "%' and '" + lastDate + "%') order by c_date;";
             ResultSet rs = db.getResult(sql);
@@ -55,11 +57,17 @@ public class CalendarHandler {
 
     public ArrayList<String> getDates() throws SQLException {
         ArrayList<String> dates = new ArrayList<>();
-        String sql = "select c_date from calendar;";
+        sql = "select c_date from calendar;";
             ResultSet rs = db.getResult(sql);
             while (rs.next()) {
                 dates.add(rs.getString("c_date").substring(0, 10));
             }
         return dates;
     }
+
+    public String getSql() {
+        return sql;
+    }
+    
+    
 }

@@ -102,7 +102,7 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
             new ErrorPopup("Der kunne ikke hentes aftaler for denne uge. "
                     + "<br/>Programmet kan godt bruges,men anbefales ikke.<br/> "
                     + "Kontakt Annette, for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println(ex.getLocalizedMessage()+"\n"+cc.getCh().getSql());
         }
         int monCount = 0;
         int tueCount = 0;
