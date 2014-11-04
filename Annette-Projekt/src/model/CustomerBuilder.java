@@ -42,6 +42,12 @@ public class CustomerBuilder {
         } else if (name.equals("")) {
             throw new IllegalStateException("Cannot create customer without name");
         }
+        if (homeAddress == null) {
+            homeAddress = "";
+        }
+        if (address == null) {
+            address = "";
+        }
         return new Customer(phone, name, homeAddress, address);
     }
     

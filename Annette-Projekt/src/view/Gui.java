@@ -88,7 +88,7 @@ public class Gui extends javax.swing.JFrame {
 
         jMenu1.setText("File");
 
-        jMenuItem1.setText("jMenuItem1");
+        jMenuItem1.setText("Rediger Info For Massage");
         jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);

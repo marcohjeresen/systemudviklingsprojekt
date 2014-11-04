@@ -50,12 +50,12 @@ public class Calendar_Ct {
         String day = new SimpleDateFormat("EEEE").format(cal.getTime());
         firstDayOfWeeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
         while (!day.equals("mandag")) {
-            cal.roll(Calendar.DAY_OF_YEAR, -1);
             day = new SimpleDateFormat("EEEE").format(cal.getTime());
             cal.roll(Calendar.DAY_OF_YEAR, -1);
-            firstDayOfWeeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
-            cal.roll(Calendar.DAY_OF_YEAR, 1);
         }
+        cal.roll(Calendar.DAY_OF_YEAR, 1);
+        firstDayOfWeeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+        System.out.println("dagen " + day + "Datoen " + firstDayOfWeeek);
         SimpleDateFormat format = new SimpleDateFormat("EEEE, dd.MMM.yyyy");
         int delta = -cal.get(Calendar.DAY_OF_WEEK) + 2; //add 2 if your week start on monday
         cal.add(Calendar.DAY_OF_MONTH, delta);

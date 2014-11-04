@@ -104,7 +104,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     new ErrorPopup("Der kunne ikke hentes massagetyper fra databasen. "
                             + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
                             + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-                    System.out.println(ex.getLocalizedMessage()+"\n"+mc.getMh().getSql()+"\n"+mc.getMh().getSqlCal());
+                    System.out.println(ex.getLocalizedMessage() + "\n" + mc.getMh().getSql() + "\n" + mc.getMh().getSqlCal());
                 }
                 jFrame.setLocation(550, 150);
                 jFrame.setSize(new Dimension(300, 370));
@@ -121,7 +121,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     new ErrorPopup("Der kunne ikke hentes massagetyper fra databasen. "
                             + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
                             + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-                    System.out.println(ex.getLocalizedMessage()+"\n"+mc.getMh().getSql()+"\n"+mc.getMh().getSqlCal());
+                    System.out.println(ex.getLocalizedMessage() + "\n" + mc.getMh().getSql() + "\n" + mc.getMh().getSqlCal());
                 }
                 event = mc.getEvent();
                 jFrame.setLocation(550, 150);
@@ -181,7 +181,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             new ErrorPopup("Der kunne ikke hentes kunder fra databasen. "
                     + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
                     + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage()+cc.getCh().getSql());
+            System.out.println(ex.getLocalizedMessage() + cc.getCh().getSql());
         }
         if (!cus.isEmpty() && cus.size() <= 1) {
             jTPhone.setText(cus.get(0).getPhone());
@@ -206,6 +206,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     }
 
     public void saveCustomer() {
+        customer = null;
         if (jTPhone.getText().length() != 0 && jTName.getText().length() != 0) {
             if (customer == null) {
                 cb.setPhone(jTPhone.getText());
@@ -215,11 +216,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     cc.saveCustomer(customer);
                 } catch (SQLException ex) {
                     new ErrorPopup("Kunden kunne ikke gemmes i databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage()+"\n"+cc.getCh().getSql());
+                            + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                            + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+                    System.out.println(ex.getLocalizedMessage() + "\n" + cc.getCh().getSql());
                 }
-                customer = null;
+
             }
         }
     }
@@ -345,6 +346,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 jTPhoneFocusLost(evt);
             }
         });
+        jTPhone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTPhoneActionPerformed(evt);
+            }
+        });
         massagePanel.add(jTPhone);
         jTPhone.setBounds(10, 60, 111, 20);
 
@@ -449,7 +455,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     new ErrorPopup("Aftalen kunne ikke redigeres. "
                             + "<br/> Kontakt Annette, for få dette fixet<br/>"
                             + "(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage()+"\n"+mc.getMh().getSql()+"\n"+mc.getMh().getSqlCal());
+                    System.out.println(ex.getLocalizedMessage() + "\n" + mc.getMh().getSql() + "\n" + mc.getMh().getSqlCal());
                 }
                 listener.notifyListeners("New Event Created");
                 jFrame.dispose();
@@ -478,6 +484,10 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         phoneSearch = false;
         findCustomer(phoneSearch);
     }//GEN-LAST:event_jTNameFocusLost
+
+    private void jTPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTPhoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTPhoneActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
