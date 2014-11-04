@@ -82,7 +82,7 @@ public class MonthPanel extends javax.swing.JPanel {
             new ErrorPopup("Der kunne ikke hentes datoer fra databasen. "
                     + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
                     + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
+            System.out.println(ex.getLocalizedMessage()+cc.getCh().getSql());
         }
 
         //her kører vi alle dagene på selve måneden igennem og tjekker for event og om dagen er i dag
