@@ -49,14 +49,15 @@ public class Calendar_Ct {
         ArrayList<String> days = new ArrayList<>();
         String day = new SimpleDateFormat("EEEE").format(cal.getTime());
         firstDayOfWeeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+        cal.roll(Calendar.DAY_OF_YEAR, -1);
         while (!day.equals("mandag")) {
             day = new SimpleDateFormat("EEEE").format(cal.getTime());
             cal.roll(Calendar.DAY_OF_YEAR, -1);
         }
-        if (day.equals("mandag")) {
-            cal.roll(Calendar.DAY_OF_YEAR, +1);
-        }
-//        
+//        if (day.equals("mandag")) {
+//            cal.roll(Calendar.DAY_OF_YEAR, +1);
+//        }
+        cal.roll(Calendar.DAY_OF_YEAR, +1);
         firstDayOfWeeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
         SimpleDateFormat format = new SimpleDateFormat("EEEE, dd.MMM.yyyy");
 //        cal.roll(Calendar.DAY_OF_YEAR, 1);
@@ -74,7 +75,7 @@ public class Calendar_Ct {
             
             
         }
-        cal.roll(Calendar.DAY_OF_YEAR, -1);
+//        cal.roll(Calendar.DAY_OF_YEAR, -1);
         lastDayofWeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
         
         return days;
