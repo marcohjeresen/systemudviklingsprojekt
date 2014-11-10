@@ -53,11 +53,13 @@ public class Calendar_Ct {
             day = new SimpleDateFormat("EEEE").format(cal.getTime());
             cal.roll(Calendar.DAY_OF_YEAR, -1);
         }
-        
+        if (day.equals("mandag")) {
+            cal.roll(Calendar.DAY_OF_YEAR, +1);
+        }
+//        
         firstDayOfWeeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
-        System.out.println("dagen " + day + "Datoen " + firstDayOfWeeek);
         SimpleDateFormat format = new SimpleDateFormat("EEEE, dd.MMM.yyyy");
-        cal.roll(Calendar.DAY_OF_YEAR, 1);
+//        cal.roll(Calendar.DAY_OF_YEAR, 1);
         int delta = -cal.get(Calendar.DAY_OF_WEEK) + 2; //add 2 if your week start on monday
         cal.add(Calendar.DAY_OF_MONTH, delta);
         for (int i = 0; i < 7; i++) {
@@ -66,14 +68,20 @@ public class Calendar_Ct {
             days.add(dateToUpper.substring(0, 1).toUpperCase() + dateToUpper.substring(1));
             callList.add(dag);
             cal.add(Calendar.DAY_OF_MONTH, 1);
-            cal.roll(Calendar.DAY_OF_YEAR, 1);
-            lastDayofWeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
-            cal.roll(Calendar.DAY_OF_YEAR, -1);
+            
+//            cal.roll(Calendar.DAY_OF_YEAR, 1);
+            
+            
+            
         }
+        cal.roll(Calendar.DAY_OF_YEAR, -1);
+        lastDayofWeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+        
         return days;
     }
     
     public ArrayList<Event> getEventsOfWeek() throws SQLException{
+        System.out.println("-----vvvvvv  " + firstDayOfWeeek + "    ------    "  +lastDayofWeek);
         ArrayList<Event> calList = ch.getEventFromDB(firstDayOfWeeek, lastDayofWeek);
         return calList;
     }
