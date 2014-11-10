@@ -78,6 +78,7 @@ public class MonthPanel extends javax.swing.JPanel {
         try {
             // ArrayList - her skal info ind om optaget dage.
             days = cc.getDates();
+            
         } catch (SQLException ex) {
             new ErrorPopup("Der kunne ikke hentes datoer fra databasen. "
                     + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
@@ -121,12 +122,15 @@ public class MonthPanel extends javax.swing.JPanel {
                 daysOnPanel = "" + day;
             }
             String dayOnPanel = cal.get(Calendar.YEAR) + "-" + month + "-" + daysOnPanel;
+            
 
             String todayString = toDayStringToCheck();
             boolean erder = false;
             // her tjekker den efter om der er et event på selve dagen inden den tilføjer den til panelet hvis der er for den en mørkere baggrund
             for (int j = 0; j < days.size(); j++) {
                 if (days.get(j).equals(dayOnPanel)) {
+                    System.out.println(dayOnPanel);
+                    System.out.println(days.get(j));
                     listOfDays.get(i).setBackground(new Color(69, 96, 123));
                     erder = true;
                 }
