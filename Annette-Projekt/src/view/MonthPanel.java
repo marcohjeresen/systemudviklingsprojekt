@@ -124,7 +124,7 @@ public class MonthPanel extends javax.swing.JPanel {
             String dayOnPanel = cal.get(Calendar.YEAR) + "-" + month + "-" + daysOnPanel;
             
 
-            String todayString = toDayStringToCheck();
+            String todayString = todayStringToCheck();
             boolean erder = false;
             // her tjekker den efter om der er et event på selve dagen inden den tilføjer den til panelet hvis der er for den en mørkere baggrund
             for (int j = 0; j < days.size(); j++) {
@@ -200,7 +200,7 @@ public class MonthPanel extends javax.swing.JPanel {
      *
      * @return en String med dagen i dag.
      */
-    public String toDayStringToCheck() {
+    public String todayStringToCheck() {
         Calendar today = Calendar.getInstance();
         int todayMo = today.get(Calendar.MONTH) + 1;
         int todayDay = today.get(Calendar.DAY_OF_MONTH);

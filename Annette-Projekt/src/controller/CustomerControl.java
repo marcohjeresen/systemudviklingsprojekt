@@ -8,7 +8,6 @@ package controller;
 import handler.CustomerHandler;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 import model.Customer;
 import util.Listeners;
 

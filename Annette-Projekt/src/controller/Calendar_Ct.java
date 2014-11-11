@@ -22,8 +22,8 @@ public class Calendar_Ct {
     private static Calendar_Ct cc;
     private Listeners listener;
     private Calendar cal;
-    private ArrayList<Integer> callList;
-    private String firstDayOfWeeek; 
+    private ArrayList<Integer> calList;
+    private String firstDayOfWeek; 
     private String lastDayofWeek;
     private CalendarHandler ch;
 
@@ -31,7 +31,7 @@ public class Calendar_Ct {
         listener = Listeners.getList();
         cal = Calendar.getInstance();
         ch = CalendarHandler.getInstance();
-        callList = new ArrayList<>();
+        calList = new ArrayList<>();
     }
 
     public void setCal(Calendar cal) {
@@ -45,50 +45,39 @@ public class Calendar_Ct {
 
     //den finder den uge som den valgte dato ligger i og retunere et ArrayList med dem
     public ArrayList<String> getWeek() {
-        callList.removeAll(callList);
+        calList.removeAll(calList);
         ArrayList<String> days = new ArrayList<>();
         String day = new SimpleDateFormat("EEEE").format(cal.getTime());
-        firstDayOfWeeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+        firstDayOfWeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
         cal.roll(Calendar.DAY_OF_YEAR, -1);
         while (!day.equals("mandag")) {
             day = new SimpleDateFormat("EEEE").format(cal.getTime());
             cal.roll(Calendar.DAY_OF_YEAR, -1);
         }
-//        if (day.equals("mandag")) {
-//            cal.roll(Calendar.DAY_OF_YEAR, +1);
-//        }
         cal.roll(Calendar.DAY_OF_YEAR, +1);
-        firstDayOfWeeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+        firstDayOfWeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
         SimpleDateFormat format = new SimpleDateFormat("EEEE, dd.MMM.yyyy");
-//        cal.roll(Calendar.DAY_OF_YEAR, 1);
         int delta = -cal.get(Calendar.DAY_OF_WEEK) + 2; //add 2 if your week start on monday
         cal.add(Calendar.DAY_OF_MONTH, delta);
         for (int i = 0; i < 7; i++) {
             int dag = cal.get(Calendar.DAY_OF_YEAR);
             String dateToUpper = format.format(cal.getTime());
             days.add(dateToUpper.substring(0, 1).toUpperCase() + dateToUpper.substring(1));
-            callList.add(dag);
+            calList.add(dag);
             cal.add(Calendar.DAY_OF_MONTH, 1);
-            
-//            cal.roll(Calendar.DAY_OF_YEAR, 1);
-            
-            
-            
         }
-//        cal.roll(Calendar.DAY_OF_YEAR, -1);
         lastDayofWeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
         
         return days;
     }
     
     public ArrayList<Event> getEventsOfWeek() throws SQLException{
-        System.out.println("-----vvvvvv  " + firstDayOfWeeek + "    ------    "  +lastDayofWeek);
-        ArrayList<Event> calList = ch.getEventFromDB(firstDayOfWeeek, lastDayofWeek);
+        ArrayList<Event> calList = ch.getEventFromDB(firstDayOfWeek, lastDayofWeek);
         return calList;
     }
 
-    public ArrayList<Integer> getCallList(){
-        return callList;
+    public ArrayList<Integer> getCalList(){
+        return calList;
     }
 
     public static Calendar_Ct getInstance() throws ClassNotFoundException, SQLException {

@@ -11,7 +11,6 @@ public class MassageBuilder {
     private String comment;
     private String startTime;
     private MassageType type;
-    private Customer customer; 
 
     public MassageBuilder() {
     }

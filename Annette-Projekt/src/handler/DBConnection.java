@@ -18,7 +18,7 @@ public class DBConnection {
     private static DBConnection connection;
     private final String host;
     private final String port;
-    private final String dbNavn;
+    private final String dbName;
     private final String user;
     private final String pass;
     private final String db;
@@ -29,10 +29,10 @@ public class DBConnection {
     private DBConnection() throws ClassNotFoundException, SQLException {
         this.host = "localhost";
         this.port = "3306";
-        this.dbNavn = "annetteprojekt";
+        this.dbName = "annetteprojekt";
         this.user = "root";
         this.pass = "root";
-        this.db = "jdbc:mysql://" + host + ":" + port + "/" + dbNavn;
+        this.db = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
         isConnected = false;
         connection();
     }
