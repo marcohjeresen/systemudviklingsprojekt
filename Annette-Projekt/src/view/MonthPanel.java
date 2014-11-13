@@ -78,12 +78,12 @@ public class MonthPanel extends javax.swing.JPanel {
         try {
             // ArrayList - her skal info ind om optaget dage.
             days = cc.getDates();
-            
+
         } catch (SQLException ex) {
             new ErrorPopup("Der kunne ikke hentes datoer fra databasen. "
                     + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
                     + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage()+cc.getCh().getSql());
+            System.out.println(ex.getLocalizedMessage() + cc.getCh().getSql());
         }
 
         //her kører vi alle dagene på selve måneden igennem og tjekker for event og om dagen er i dag
@@ -122,15 +122,12 @@ public class MonthPanel extends javax.swing.JPanel {
                 daysOnPanel = "" + day;
             }
             String dayOnPanel = cal.get(Calendar.YEAR) + "-" + month + "-" + daysOnPanel;
-            
 
             String todayString = todayStringToCheck();
             boolean erder = false;
             // her tjekker den efter om der er et event på selve dagen inden den tilføjer den til panelet hvis der er for den en mørkere baggrund
             for (int j = 0; j < days.size(); j++) {
                 if (days.get(j).equals(dayOnPanel)) {
-                    System.out.println(dayOnPanel);
-                    System.out.println(days.get(j));
                     listOfDays.get(i).setBackground(new Color(69, 96, 123));
                     erder = true;
                 }
@@ -224,8 +221,8 @@ public class MonthPanel extends javax.swing.JPanel {
 
     // bruges til at gå frem og tilbage i månederne
     /**
-     * Method, Bruges til at gå en måned frem eller tilbage.
-     * og kalder drawDays() efterfølgene så den kan tegne Panelerne forfra
+     * Method, Bruges til at gå en måned frem eller tilbage. og kalder
+     * drawDays() efterfølgene så den kan tegne Panelerne forfra
      *
      * @param days
      */
@@ -282,10 +279,12 @@ public class MonthPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_forwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_forwardActionPerformed
+//        
         rollMonth(1);
     }//GEN-LAST:event_jButton_forwardActionPerformed
 
     private void jButton_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_backActionPerformed
+       
         rollMonth(-1);
     }//GEN-LAST:event_jButton_backActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
