@@ -227,7 +227,24 @@ public class MonthPanel extends javax.swing.JPanel {
      * @param days
      */
     public void rollMonth(int days) {
-        cal.roll(cal.MONTH, days);
+        if (days == 1) {
+            String month = new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase();
+            if (month.equals("DECEMBER")) {
+                cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) +1);
+                cal.roll(Calendar.MONTH, days);
+            }else {
+                cal.roll(Calendar.MONTH, days);
+            }
+        }else if (days == -1){
+            String month = new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase();
+            if (month.equals("JANUAR")) {
+                cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) -1);
+                cal.roll(Calendar.MONTH, days);
+            }else {
+                cal.roll(Calendar.MONTH, days);
+            }
+        }
+        
         jLabel_monht.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
         drawDays();
     }

@@ -46,11 +46,20 @@ public class Calendar_Ct {
     //den finder den uge som den valgte dato ligger i og retunere et ArrayList med dem
     public ArrayList<String> getWeek() {
         calList.removeAll(calList);
+        String day2 = "";
         ArrayList<String> days = new ArrayList<>();
         String day = new SimpleDateFormat("EEEE").format(cal.getTime());
         firstDayOfWeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+        day2 = new SimpleDateFormat("dd.MM").format(cal.getTime());
+        if (day2.equals("01.01")) {
+            cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 1);
+        }
         cal.roll(Calendar.DAY_OF_YEAR, -1);
         while (!day.equals("mandag")) {
+            day2 = new SimpleDateFormat("dd.MM").format(cal.getTime());
+            if (day2.equals("01.01")) {
+                cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 1);
+            }
             day = new SimpleDateFormat("EEEE").format(cal.getTime());
             cal.roll(Calendar.DAY_OF_YEAR, -1);
         }
@@ -67,7 +76,6 @@ public class Calendar_Ct {
             cal.add(Calendar.DAY_OF_MONTH, 1);
         }
         lastDayofWeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
-        
         return days;
     }
     
@@ -86,14 +94,13 @@ public class Calendar_Ct {
         }
         return cc;
     }
-    
-    public ArrayList<String> getDates() throws SQLException{
+
+    public ArrayList<String> getDates() throws SQLException {
         return ch.getDates();
     }
 
     public CalendarHandler getCh() {
         return ch;
     }
-    
-    
+
 }
