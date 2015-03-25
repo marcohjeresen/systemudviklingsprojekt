@@ -33,13 +33,13 @@ public class CustomerHandler {
         return ch;
     }
 
-    public ArrayList<Customer> getSpecificCustomerFromDb(String phone, boolean phoneSearch) throws SQLException {
+    public ArrayList<Customer> getSpecificCustomerFromDb(String search, boolean phoneSearch) throws SQLException {
         ArrayList<Customer> cus = new ArrayList<>();
-        if (!"".equals(phone)) {
+        if (!"".equals(search)) {
             if (phoneSearch) {
-                sql = "select * from customer where cus_phone like '" + phone + "%'";
+                sql = "select * from customer where cus_phone like '" + search + "%'";
             } else {
-                sql = "select * from customer where cus_name like '" + phone + "%'";
+                sql = "select * from customer where cus_name like '" + search + "%'";
             }
                 ResultSet rs = db.getResult(sql);
                 while (rs.next()) {
