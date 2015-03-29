@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package model;
 
 import java.text.SimpleDateFormat;
@@ -14,6 +13,7 @@ import java.util.Calendar;
  * @author Annette
  */
 public class Event {
+
     private Calendar date;
     private Customer customer;
     private Massage massage;
@@ -52,9 +52,8 @@ public class Event {
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        
-        return "Sund Massage\n\n\n" + customer +"\n\n"+ dateFormat.format(date.getTime()) +"\t\t"+ massage.getStartTime() +"\n\n"+ massage + "\n\nDorthe Sund Petersen\nFysiurgisk massør\n\nVallensved Bygade 11\n4700 Næstved\n\n22387172";
+
+        return "Sund Massage\n\n\n" + customer + "\n\n" + dateFormat.format(date.getTime()) + "\t\t" + massage.getStartTime() + "\n\n" + massage + "\n\nDorthe Sund Petersen\nFysiurgisk massør\n\nVallensved Bygade 11\n4700 Næstved\n\nTlf: 22387172";
     }
-    
-     
+
 }

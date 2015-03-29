@@ -39,12 +39,12 @@ public class EditMassage extends javax.swing.JPanel {
             count++;
             panelList.add(editMP);
         }
-        jFrame.setSize(editMP.getWidth()+15, ((editMP.getHeight() + 5) * (count+1)) + jButton1.getHeight());
+        jFrame.setSize(editMP.getWidth() + 15, ((editMP.getHeight() + 5) * (count + 1)) + jButton1.getHeight());
         jPanel1.setSize(editMP.getWidth(), (editMP.getHeight() + 5) * count);
         jButton1.setLocation(5, (editMP.getHeight() + 5) * count);
         jFrame.revalidate();
         jFrame.repaint();
-        jFrame.setLocation((1366 - jFrame.getWidth())/2, (730 - jFrame.getHeight())/2);
+        jFrame.setLocation((1366 - jFrame.getWidth()) / 2, (730 - jFrame.getHeight()) / 2);
     }
 
     /**

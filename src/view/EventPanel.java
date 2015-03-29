@@ -457,9 +457,10 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         }
         if (goodToGo) {
             if (editing) {
+                String startTime = event.getMassage().getStartTime() + ":00";
                 event.getMassage().setStartTime(jCStartTime.getSelectedItem().toString());
                 try {
-                    mc.updateMassage(event, cal);
+                    mc.updateMassage(event, startTime);
                 } catch (SQLException ex) {
                     new ErrorPopup("Aftalen kunne ikke redigeres. "
                             + "<br/> Kontakt Annette, for få dette fixet<br/>"
@@ -483,6 +484,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     if (ex.getLocalizedMessage().length() == 55) {
                         jBCreateMassage.setText("Tid Optaget");
                         jBCreateMassage.setBackground(Color.red);
+                    } else {
+                        new ErrorPopup("Aftalen kunne ikke redigeres. "
+                                + "<br/> Kontakt Annette, for få dette fixet<br/>"
+                                + "(Husk at have maden klar;)!)!");
+                        System.out.println(ex.getLocalizedMessage());
                     }
                 }
             }

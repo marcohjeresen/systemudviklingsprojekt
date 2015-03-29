@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author Mark
  */
 public class Barbercue {
-    
+
     private int id;
     private int settings;
     private ArrayList<Grill> grillList;
@@ -28,7 +28,5 @@ public class Barbercue {
         this.saladList = new ArrayList<>();
         this.accompanimentsList = new ArrayList<>();
     }
-    
-    
-    
+
 }

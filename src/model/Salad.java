@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @author Mark
  */
 public class Salad {
+
     private int id;
     private String type;
     private int pricePerHead;
@@ -60,12 +61,9 @@ public class Salad {
     public String toString() {
         String toString = "Salad{" + "id=" + id + ", type=" + type + ", pricePerHead=" + pricePerHead + ", vegetableList /n";
         for (Vegetable vegetableList1 : vegetableList) {
-            toString = toString + vegetableList1.toString()+"/n";
+            toString = toString + vegetableList1.toString() + "/n";
         }
         return toString;
     }
-    
-    
-    
-    
+
 }

@@ -63,21 +63,21 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
                 jPanel1.setSize(280, 437);
                 jLabel2.setSize(300, 480);
                 jScrollPane1.setSize(new Dimension(270, 400));
-                jButton1.setLocation(jScrollPane1.getX(), (jPanel1.getHeight()- jButton1.getHeight()-3));
-                jButton2.setLocation((jScrollPane1.getX()+jScrollPane1.getWidth())-jButton2.getWidth(), (jPanel1.getHeight()-jButton2.getHeight() - 3));
+                jButton1.setLocation(jScrollPane1.getX(), (jPanel1.getHeight() - jButton1.getHeight() - 3));
+                jButton2.setLocation((jScrollPane1.getX() + jScrollPane1.getWidth()) - jButton2.getWidth(), (jPanel1.getHeight() - jButton2.getHeight() - 3));
                 jButton3.setSize(23, 23);
-                jButton3.setLocation((jPanel1.getWidth()/2)-(jButton3.getWidth()/2), jButton1.getY());
+                jButton3.setLocation((jPanel1.getWidth() / 2) - (jButton3.getWidth() / 2), jButton1.getY());
                 frame.setLocation(533, 125);
                 createReceipt();
                 cl.show(this, "kvittering");
                 break;
         }
     }
-    
-    public void createReceipt(){
+
+    public void createReceipt() {
         jTextArea1.setText(event.toString());
     }
-    
+
     @Override
     public int print(Graphics g, PageFormat pf, int page) throws PrinterException {
         int printResult;
@@ -178,7 +178,7 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
         } catch (SQLException ex) {
             new ErrorPopup("Aftalen kunne ikke slettes. <br/> Kontakt Annette, "
                     + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage()+"\n"+mc.getMh().getSql()+"\n"+mc.getMh().getSqlCal());
+            System.out.println(ex.getLocalizedMessage() + "\n" + mc.getMh().getSql() + "\n" + mc.getMh().getSqlCal());
         }
         frame.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -192,7 +192,7 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
             try {
                 job.print();
             } catch (PrinterException ex) {
-                System.out.println("Exception occured in ReceiptPanel - JButton3 - print "+ex.getLocalizedMessage());
+                System.out.println("Exception occured in ReceiptPanel - JButton3 - print " + ex.getLocalizedMessage());
             }
         }
     }//GEN-LAST:event_jButton3ActionPerformed

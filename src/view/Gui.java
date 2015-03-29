@@ -32,7 +32,7 @@ public class Gui extends javax.swing.JFrame {
         jPanel1.add(cp);
         cp.setVisible(true);
         jPanel1.repaint();
-        
+
     }
 
     //bruges til at vise måneds panelet
@@ -136,7 +136,7 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-       try {
+        try {
             MassageControl m = MassageControl.getInstance();
             JFrame jframe = new JFrame("Edit Massage");
             jframe.add(new EditMassage(jframe, m.getMTypeList()));
