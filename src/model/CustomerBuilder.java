@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package model;
 
-
 public class CustomerBuilder {
+
     private String phone;
     private String name;
     private String homeAddress;
@@ -50,5 +49,5 @@ public class CustomerBuilder {
         }
         return new Customer(phone, name, homeAddress, address);
     }
-    
+
 }

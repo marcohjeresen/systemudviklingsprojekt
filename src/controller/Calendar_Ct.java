@@ -24,7 +24,7 @@ public class Calendar_Ct {
     private Calendar cal;
     private ArrayList<Integer> calList;
     private ArrayList<Integer> yearList;
-    private String firstDayOfWeek; 
+    private String firstDayOfWeek;
     private String lastDayofWeek;
     private CalendarHandler ch;
 
@@ -83,17 +83,17 @@ public class Calendar_Ct {
         lastDayofWeek = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
         return days;
     }
-    
-    public ArrayList<Event> getEventsOfWeek() throws SQLException{
+
+    public ArrayList<Event> getEventsOfWeek() throws SQLException {
         ArrayList<Event> calList = ch.getEventFromDB(firstDayOfWeek, lastDayofWeek);
         return calList;
     }
 
-    public ArrayList<Integer> getCalList(){
+    public ArrayList<Integer> getCalList() {
         return calList;
     }
-    
-    public ArrayList<Integer> getYearList(){
+
+    public ArrayList<Integer> getYearList() {
         return yearList;
     }
 

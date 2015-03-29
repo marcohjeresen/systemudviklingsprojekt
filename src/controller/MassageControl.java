@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controller;
 
 import handler.MassageHandler;
@@ -19,6 +18,7 @@ import model.MassageType;
  * @author Annette
  */
 public class MassageControl {
+
     private MassageHandler mh;
     private static MassageControl mc;
     private Event event = null;
@@ -26,19 +26,19 @@ public class MassageControl {
     private MassageControl() throws ClassNotFoundException, SQLException {
         mh = MassageHandler.getInstance();
     }
-    
-    public static MassageControl getInstance() throws ClassNotFoundException, SQLException{
-        if(mc == null){
+
+    public static MassageControl getInstance() throws ClassNotFoundException, SQLException {
+        if (mc == null) {
             mc = new MassageControl();
         }
         return mc;
     }
-    
-    public void saveMassage(Massage massage, Event cal) throws SQLException{
+
+    public void saveMassage(Massage massage, Event cal) throws SQLException {
         mh.saveMassage(massage, cal);
     }
-    
-    public ArrayList<MassageType> getMTypeList() throws SQLException{
+
+    public ArrayList<MassageType> getMTypeList() throws SQLException {
         return mh.getMTypeList();
     }
 
@@ -49,22 +49,21 @@ public class MassageControl {
     public void setEvent(Event event) {
         this.event = event;
     }
-    
-    public void updateMassage(Event event, Calendar cal) throws SQLException{
-        mh.updateMassage(event, cal);
+
+    public void updateMassage(Event event, String startTime) throws SQLException {
+        mh.updateMassage(event, startTime);
     }
-    
-    public void deleteMassage(Event event) throws SQLException{
+
+    public void deleteMassage(Event event) throws SQLException {
         mh.deleteMassage(event);
     }
 
     public MassageHandler getMh() {
         return mh;
     }
-    
-    public void editMassageType(int id, int price, int duration) throws SQLException{
+
+    public void editMassageType(int id, int price, int duration) throws SQLException {
         mh.editMassageType(id, price, duration);
     }
-    
-    
+
 }
