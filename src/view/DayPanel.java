@@ -54,8 +54,7 @@ public class DayPanel extends javax.swing.JPanel {
     }
 
     /**
-     * Method, når man klikker på panelet så sætter den Calendar_Control.setCal
-     * til det Calendar objekt den har.
+     * Method, når man klikker på panelet så sætter den Calendar_Control.setCal til det Calendar objekt den har.
      */
     public void mouseClicked() {
         Calendar cl = cal;

@@ -57,10 +57,10 @@ public class Massage {
 
     @Override
     public String toString() {
-        if (comment.equals("null")) {
-            comment = "";
+        if(comment.equals("null")){
+            comment ="";
         }
-        return type + "\n\nEvt. Kommentarer:\n" + comment + "\n\nPris:\t\tDKK " + type.getPrice();
+        return  type + "\n\nEvt. Kommentarer:\n" + comment + "\n\nPris:\t\tDKK " + type.getPrice();
     }
 
 }

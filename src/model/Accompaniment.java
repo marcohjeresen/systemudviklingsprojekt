@@ -10,7 +10,7 @@ package model;
  * @author Mark
  */
 public class Accompaniment {
-
+    
     private int id;
     private String type;
     private String dish;
@@ -59,5 +59,6 @@ public class Accompaniment {
     public String toString() {
         return "Accompaniment{" + "id=" + id + ", type=" + type + ", dish=" + dish + ", pricePerHead=" + pricePerHead + '}';
     }
-
+    
+    
 }

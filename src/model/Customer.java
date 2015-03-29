@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package model;
 
 /**
@@ -10,7 +11,6 @@ package model;
  * @author Annette
  */
 public class Customer {
-
     private String phone;
     private String name;
     private String homeAddress;
@@ -59,5 +59,6 @@ public class Customer {
     public String toString() {
         return name + "\nTlf.: " + phone;
     }
-
+    
+    
 }

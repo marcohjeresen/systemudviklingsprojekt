@@ -31,7 +31,7 @@ public class CustomerControl {
         if (cc == null) {
             cc = new CustomerControl();
         }
-        return cc;
+        return cc; 
     }
 
     public ArrayList<Customer> getSpecificCustomer(String phone, boolean phoneSearch) throws SQLException {
@@ -46,13 +46,14 @@ public class CustomerControl {
     public Customer getCustomer() {
         return customer;
     }
-
-    public void saveCustomer(Customer customer) throws SQLException {
+    
+    public void saveCustomer(Customer customer) throws SQLException{
         ch.saveCustomer(customer);
     }
 
     public CustomerHandler getCh() {
         return ch;
     }
-
+    
+    
 }

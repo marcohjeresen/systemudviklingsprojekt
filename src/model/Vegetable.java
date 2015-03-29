@@ -10,7 +10,7 @@ package model;
  * @author Mark
  */
 public class Vegetable {
-
+    
     private int id;
     private String type;
     private int pricePerHead;
@@ -49,5 +49,7 @@ public class Vegetable {
     public String toString() {
         return "Vegetable{" + "id=" + id + ", type=" + type + ", pricePerHead=" + pricePerHead + '}';
     }
-
+    
+    
+    
 }

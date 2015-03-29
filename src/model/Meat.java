@@ -10,7 +10,7 @@ package model;
  * @author Mark
  */
 public class Meat {
-
+    
     private int id;
     private String type;
     private int pricePerKilo;
@@ -49,5 +49,7 @@ public class Meat {
     public String toString() {
         return "Meat{" + "id=" + id + ", type=" + type + ", pricePerKilo=" + pricePerKilo + '}';
     }
-
+    
+    
+    
 }

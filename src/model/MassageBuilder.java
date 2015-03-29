@@ -5,8 +5,8 @@
  */
 package model;
 
-public class MassageBuilder {
 
+public class MassageBuilder {
     private int id;
     private String comment;
     private String startTime;
@@ -38,5 +38,5 @@ public class MassageBuilder {
     public Massage createMassage() {
         return new Massage(id, comment, startTime, type);
     }
-
+    
 }

@@ -230,21 +230,21 @@ public class MonthPanel extends javax.swing.JPanel {
         if (days == 1) {
             String month = new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase();
             if (month.equals("DECEMBER")) {
-                cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
+                cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) +1);
                 cal.roll(Calendar.MONTH, days);
-            } else {
+            }else {
                 cal.roll(Calendar.MONTH, days);
             }
-        } else if (days == -1) {
+        }else if (days == -1){
             String month = new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase();
             if (month.equals("JANUAR")) {
-                cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 1);
+                cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) -1);
                 cal.roll(Calendar.MONTH, days);
-            } else {
+            }else {
                 cal.roll(Calendar.MONTH, days);
             }
         }
-
+        
         jLabel_monht.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
         drawDays();
     }
@@ -301,7 +301,7 @@ public class MonthPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton_forwardActionPerformed
 
     private void jButton_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_backActionPerformed
-
+       
         rollMonth(-1);
     }//GEN-LAST:event_jButton_backActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

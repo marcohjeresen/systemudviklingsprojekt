@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package model;
 
 /**
@@ -10,7 +11,6 @@ package model;
  * @author Annette
  */
 public class MassageType {
-
     private int id;
     private int price;
     private String type;
@@ -59,5 +59,6 @@ public class MassageType {
     public String toString() {
         return type + "\t" + duration + " min.";
     }
-
+    
+    
 }
