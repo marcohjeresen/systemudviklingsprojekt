@@ -17,6 +17,7 @@ import java.util.Calendar;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import model.Event;
+import util.ImageExample;
 import util.Listeners;
 
 /**
@@ -64,6 +65,7 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
     }
 
     public void fillLabels() {
+        ImageExample im = new ImageExample();
         ArrayList<String> list = cc.getWeek();
         fillItUp();
         jLabel1.setText(list.get(0));
