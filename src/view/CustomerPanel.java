@@ -15,16 +15,18 @@ import model.Customer;
 public class CustomerPanel extends javax.swing.JPanel {
 
     private ArrayList<Customer> customers;
+    private boolean isMassage;
 
     /**
      * Creates new form CustomerPanel
      */
-    public CustomerPanel(ArrayList<Customer> customers) {
+    public CustomerPanel(ArrayList<Customer> customers, boolean isMassage) {
         this.customers = customers;
+        this.isMassage = isMassage;
         initComponents();
         int y = 0;
         for (Customer customer : customers) {
-            CustomerButton button = new CustomerButton(customer, this);
+            CustomerButton button = new CustomerButton(customer, this, isMassage);
             button.setLocation(0, y);
             button.setVisible(true);
             add(button);

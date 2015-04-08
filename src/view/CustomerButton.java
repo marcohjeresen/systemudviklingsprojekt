@@ -24,10 +24,12 @@ public class CustomerButton extends JButton {
     private Listeners listener;
     private Customer customer;
     private CustomerPanel panel;
+    private boolean isMassage;
 
-    public CustomerButton(final Customer customer, final CustomerPanel panel) {
+    public CustomerButton(final Customer customer, final CustomerPanel panel, final boolean isMassage) {
         this.customer = customer;
         this.panel = panel;
+        this.isMassage = isMassage;
         try {
             cc = CustomerControl.getInstance();
         } catch (ClassNotFoundException ex) {
@@ -50,7 +52,7 @@ public class CustomerButton extends JButton {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                cc.setCustomer(customer);
+                cc.setCustomer(customer, isMassage);
                 panel.setVisible(false);
             }
         });

@@ -38,9 +38,14 @@ public class CustomerControl {
         return ch.getSpecificCustomerFromDb(phone, phoneSearch);
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(Customer customer, boolean isMassage) {
         this.customer = customer;
-        listener.notifyListeners("Customer Chosen");
+        if (isMassage) {
+            listener.notifyListeners("Mas Customer Chosen");
+        } else {
+            listener.notifyListeners("BBQ Customer Chosen");
+        }
+        
     }
 
     public Customer getCustomer() {

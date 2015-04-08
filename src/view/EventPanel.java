@@ -50,6 +50,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private boolean editing;
     private Calendar startTime;
     private final Border redLineBorder;
+    private boolean isMassage;
 
     /**
      * Creates new form EventPanel
@@ -81,9 +82,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         dateFormatTools = new DateFormatTools();
         initComponents();
         listener.addListener(this);
+        
         cl = (CardLayout) getLayout();
         cl.addLayoutComponent(choosePanel, "vælg");
         cl.addLayoutComponent(massagePanel, "massage");
+        cl.addLayoutComponent(bbqPanel, "bbq");
         showPage(panel);
     }
 
@@ -140,6 +143,16 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 fillComboStartTime();
                 fillMassage();
                 break;
+            case ("bbq"):
+                customer = null;
+                jFrame.setLocation(10, 10);
+                jFrame.setSize(new Dimension(500, 500));
+                jFrame.setTitle(dateFormatTools.getDayLetters(cal));
+                height = Toolkit.getDefaultToolkit().getScreenSize().height - jFrame.getHeight();
+                widht = Toolkit.getDefaultToolkit().getScreenSize().width - jFrame.getWidth();
+                jFrame.setLocation(widht / 2, height / 2);
+                cl.show(this, "bbq");
+                break;
         }
         jFrame.revalidate();
         jFrame.repaint();
@@ -178,13 +191,22 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         }
     }
 
-    public void findCustomer(boolean phoneSearch) {
+    public void findCustomer(String search) {
+        System.out.println("inde");
         ArrayList<Customer> cus = new ArrayList<>();
         try {
-            if (phoneSearch) {
+            if (search.equals("masPhone")) {
+                phoneSearch = true;
                 cus = cc.getSpecificCustomer(jTPhone.getText(), phoneSearch);
-            } else {
+            } else if (search.equals("masName")) {
+                phoneSearch = false;
                 cus = cc.getSpecificCustomer(jTName.getText(), phoneSearch);
+            } else if (search.equals("bbqPhone")) {
+                phoneSearch = true;
+                cus = cc.getSpecificCustomer(jTBBQPhone.getText(), phoneSearch);
+            } else if (search.equals("bbqName")) {
+                phoneSearch = false;
+                cus = cc.getSpecificCustomer(jTBBQName.getText(), phoneSearch);
             }
         } catch (SQLException ex) {
             new ErrorPopup("Der kunne ikke hentes kunder fra databasen. "
@@ -192,44 +214,84 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
             System.out.println(ex.getLocalizedMessage() + cc.getCh().getSql());
         }
-        if (!cus.isEmpty() && cus.size() <= 1) {
-            jTPhone.setText(cus.get(0).getPhone());
-            jTName.setText(cus.get(0).getName());
-            if (editing) {
-                event.setCustomer(cus.get(0));
-            } else {
-                customer = cus.get(0);
-            }
+        if (search.equals("masPhone") || search.equals("masName")) {
+            if (!cus.isEmpty() && cus.size() <= 1) {
+                jTPhone.setText(cus.get(0).getPhone());
+                jTName.setText(cus.get(0).getName());
+                if (editing) {
+                    event.setCustomer(cus.get(0));
+                } else {
+                    customer = cus.get(0);
+                }
 
-        } else if (!cus.isEmpty() && cus.size() >= 2) {
-            CustomerPanel cp = new CustomerPanel(cus);
-            cp.setSize(260, 20);
-            cp.setVisible(true);
-            cp.setLocation(10, 80);
-            cp.setSize(256, cus.size() * cp.getHeight());
-            massagePanel.add(cp);
-            massagePanel.setComponentZOrder(cp, 0);
+            } else if (!cus.isEmpty() && cus.size() >= 2) {
+                CustomerPanel cp = new CustomerPanel(cus, isMassage);
+                cp.setSize(260, 20);
+                cp.setVisible(true);
+                cp.setLocation(10, 80);
+                cp.setSize(256, cus.size() * cp.getHeight());
+                massagePanel.add(cp);
+                massagePanel.setComponentZOrder(cp, 0);
+            }
+        } else {
+            if (!cus.isEmpty() && cus.size() <= 1) {
+                jTBBQPhone.setText(cus.get(0).getPhone());
+                jTBBQName.setText(cus.get(0).getName());
+                jTBBQCusAddress.setText(cus.get(0).getHomeAddress());
+                if (editing) {
+                    event.setCustomer(cus.get(0));
+                } else {
+                    customer = cus.get(0);
+                }
+            } else if (!cus.isEmpty() && cus.size() >= 2) {
+                CustomerPanel cp = new CustomerPanel(cus, isMassage);
+                cp.setSize(260, 20);
+                cp.setVisible(true);
+                cp.setLocation(10, 80);
+                cp.setSize(256, cus.size() * cp.getHeight());
+                bbqPanel.add(cp);
+                bbqPanel.setComponentZOrder(cp, 0);
+            }
         }
         revalidate();
         repaint();
     }
 
-    public void saveCustomer() {
+    public void saveCustomer(boolean isMasssage) {
         customer = null;
-        if (jTPhone.getText().length() != 0 && jTName.getText().length() != 0) {
-            if (customer == null) {
-                cb.setPhone(jTPhone.getText());
-                cb.setName(jTName.getText());
-                customer = cb.createCustomer();
-                try {
-                    cc.saveCustomer(customer);
-                } catch (SQLException ex) {
-                    new ErrorPopup("Kunden kunne ikke gemmes i databasen. "
-                            + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                            + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-                    System.out.println(ex.getLocalizedMessage() + "\n" + cc.getCh().getSql());
+        cb = new CustomerBuilder();
+        if (isMasssage) {
+            if (jTPhone.getText().length() != 0 && jTName.getText().length() != 0) {
+                if (customer == null) {
+                    cb.setPhone(jTPhone.getText());
+                    cb.setName(jTName.getText());
+                    customer = cb.createCustomer();
+                    try {
+                        cc.saveCustomer(customer);
+                    } catch (SQLException ex) {
+                        new ErrorPopup("Kunden kunne ikke gemmes i databasen. "
+                                + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                                + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+                        System.out.println(ex.getLocalizedMessage() + "\n" + cc.getCh().getSql());
+                    }
                 }
-
+            }
+        } else {
+            if (!jTBBQName.getText().isEmpty() && !jTBBQPhone.getText().isEmpty() && !jTBBQCusAddress.getText().isEmpty()) {
+                if (customer == null) {
+                    cb.setPhone(jTBBQPhone.getText());
+                    cb.setName(jTBBQName.getText());
+                    cb.setHomeAddress(jTBBQCusAddress.getText());
+                    customer = cb.createCustomer();
+                    try {
+                        cc.saveCustomer(customer);
+                    } catch (SQLException ex) {
+                        new ErrorPopup("Kunden kunne ikke gemmes i databasen. "
+                                + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                                + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+                        System.out.println(ex.getLocalizedMessage() + "\n" + cc.getCh().getSql());
+                    }
+                }
             }
         }
     }
@@ -274,6 +336,16 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jCStartTime = new javax.swing.JComboBox();
         jBCreateMassage = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        bbqPanel = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jTBBQName = new javax.swing.JTextField();
+        jTBBQPhone = new javax.swing.JTextField();
+        jTBBQCusAddress = new javax.swing.JTextField();
+        jTBBQEventAddress = new javax.swing.JTextField();
+        jTBBQDishes = new javax.swing.JTextField();
+        jTBBQKm = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setLayout(new java.awt.CardLayout());
 
@@ -294,12 +366,17 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jBMassage.setBounds(43, 42, 146, 23);
 
         jBGrill.setText("Grill");
+        jBGrill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBGrillActionPerformed(evt);
+            }
+        });
         choosePanel.add(jBGrill);
         jBGrill.setBounds(43, 71, 146, 23);
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/event_bkgr.png"))); // NOI18N
         choosePanel.add(jLabel11);
-        jLabel11.setBounds(0, 0, 242, 140);
+        jLabel11.setBounds(0, 0, 0, 140);
 
         add(choosePanel, "card2");
 
@@ -401,6 +478,99 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jLabel9.setBounds(0, 0, 290, 340);
 
         add(massagePanel, "card3");
+
+        bbqPanel.setLayout(null);
+
+        jLabel8.setText("Kunde");
+        bbqPanel.add(jLabel8);
+        jLabel8.setBounds(10, 10, 140, 14);
+
+        jTBBQName.setText("Navn");
+        jTBBQName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTBBQNameFocusLost(evt);
+            }
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTBBQNameFocusGained(evt);
+            }
+        });
+        bbqPanel.add(jTBBQName);
+        jTBBQName.setBounds(10, 30, 180, 20);
+
+        jTBBQPhone.setText("Telefonnummer");
+        jTBBQPhone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTBBQPhoneFocusLost(evt);
+            }
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTBBQPhoneFocusGained(evt);
+            }
+        });
+        bbqPanel.add(jTBBQPhone);
+        jTBBQPhone.setBounds(10, 60, 180, 20);
+
+        jTBBQCusAddress.setText("Adresse");
+        jTBBQCusAddress.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTBBQCusAddressFocusLost(evt);
+            }
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTBBQCusAddressFocusGained(evt);
+            }
+        });
+        bbqPanel.add(jTBBQCusAddress);
+        jTBBQCusAddress.setBounds(10, 90, 180, 20);
+
+        jTBBQEventAddress.setText("Adresse");
+        jTBBQEventAddress.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTBBQEventAddressFocusLost(evt);
+            }
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTBBQEventAddressFocusGained(evt);
+            }
+        });
+        bbqPanel.add(jTBBQEventAddress);
+        jTBBQEventAddress.setBounds(200, 30, 170, 20);
+
+        jTBBQDishes.setText("Kuverter");
+        jTBBQDishes.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTBBQDishesFocusLost(evt);
+            }
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTBBQDishesFocusGained(evt);
+            }
+        });
+        bbqPanel.add(jTBBQDishes);
+        jTBBQDishes.setBounds(200, 60, 170, 20);
+
+        jTBBQKm.setText("Km");
+        jTBBQKm.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTBBQKmFocusLost(evt);
+            }
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTBBQKmFocusGained(evt);
+            }
+        });
+        bbqPanel.add(jTBBQKm);
+        jTBBQKm.setBounds(200, 90, 170, 20);
+
+        jLabel10.setText("Arrangement");
+        bbqPanel.add(jLabel10);
+        jLabel10.setBounds(200, 10, 140, 14);
+
+        jButton1.setText("Opret");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        bbqPanel.add(jButton1);
+        jButton1.setBounds(150, 140, 90, 23);
+
+        add(bbqPanel, "card4");
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBMassageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMassageActionPerformed
@@ -436,8 +606,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     }//GEN-LAST:event_jTCommentFocusLost
 
     private void jTPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTPhoneFocusLost
-        phoneSearch = true;
-        findCustomer(phoneSearch);
+        findCustomer("masPhone");
     }//GEN-LAST:event_jTPhoneFocusLost
 
     private void jBCreateMassageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCreateMassageActionPerformed
@@ -470,7 +639,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 jFrame.dispose();
             } else {
                 if (customer == null) {
-                    saveCustomer();
+                    saveCustomer(true);
                 }
                 massage.setStartTime(jCStartTime.getSelectedItem().toString());
                 Massage mas = massage.createMassage();
@@ -490,24 +659,112 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     }//GEN-LAST:event_jBCreateMassageActionPerformed
 
     private void jTNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTNameFocusLost
-        phoneSearch = false;
-        findCustomer(phoneSearch);
+        findCustomer("masName");
     }//GEN-LAST:event_jTNameFocusLost
 
     private void jTPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTPhoneActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTPhoneActionPerformed
 
+    private void jTBBQNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQNameFocusGained
+        if (jTBBQName.getText().equals("Navn")) {
+            jTBBQName.setText("");
+        }
+    }//GEN-LAST:event_jTBBQNameFocusGained
+
+    private void jTBBQPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQPhoneFocusGained
+        if (jTBBQPhone.getText().equals("Telefonnummer")) {
+            jTBBQPhone.setText("");
+        }
+    }//GEN-LAST:event_jTBBQPhoneFocusGained
+
+    private void jTBBQCusAddressFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQCusAddressFocusGained
+        if (jTBBQCusAddress.getText().equals("Adresse")) {
+            jTBBQCusAddress.setText("");
+        }
+    }//GEN-LAST:event_jTBBQCusAddressFocusGained
+
+    private void jTBBQEventAddressFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQEventAddressFocusGained
+        if (jTBBQEventAddress.getText().equals("Adresse")) {
+            jTBBQEventAddress.setText("");
+        }
+    }//GEN-LAST:event_jTBBQEventAddressFocusGained
+
+    private void jTBBQDishesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQDishesFocusGained
+        if (jTBBQDishes.getText().equals("Kuverter")) {
+            jTBBQDishes.setText("");
+        }
+    }//GEN-LAST:event_jTBBQDishesFocusGained
+
+    private void jTBBQKmFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQKmFocusGained
+        if (jTBBQKm.getText().equals("Km")) {
+            jTBBQKm.setText("");
+        }
+    }//GEN-LAST:event_jTBBQKmFocusGained
+
+    private void jTBBQNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQNameFocusLost
+        if (jTBBQName.getText().isEmpty()) {
+            jTBBQName.setText("Navn");
+        } else {
+            findCustomer("bbqName");
+        }
+    }//GEN-LAST:event_jTBBQNameFocusLost
+
+    private void jTBBQPhoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQPhoneFocusLost
+        if (jTBBQPhone.getText().isEmpty()) {
+            jTBBQPhone.setText("Telefonnummer");
+        } else {
+            findCustomer("bbqPhone");
+        }
+    }//GEN-LAST:event_jTBBQPhoneFocusLost
+
+    private void jTBBQCusAddressFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQCusAddressFocusLost
+        if (jTBBQCusAddress.getText().isEmpty()) {
+            jTBBQCusAddress.setText("Adresse");
+        }
+    }//GEN-LAST:event_jTBBQCusAddressFocusLost
+
+    private void jTBBQEventAddressFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQEventAddressFocusLost
+        if (jTBBQEventAddress.getText().isEmpty()) {
+            jTBBQEventAddress.setText("Adresse");
+        }
+    }//GEN-LAST:event_jTBBQEventAddressFocusLost
+
+    private void jTBBQDishesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQDishesFocusLost
+        if (jTBBQDishes.getText().isEmpty()) {
+            jTBBQDishes.setText("Kuverter");
+        }
+    }//GEN-LAST:event_jTBBQDishesFocusLost
+
+    private void jTBBQKmFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQKmFocusLost
+        if (jTBBQKm.getText().isEmpty()) {
+            jTBBQKm.setText("Km");
+        }
+    }//GEN-LAST:event_jTBBQKmFocusLost
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (customer == null) {
+            saveCustomer(false);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jBGrillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGrillActionPerformed
+        showPage("bbq");
+    }//GEN-LAST:event_jBGrillActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bbqPanel;
     private javax.swing.JPanel choosePanel;
     private javax.swing.JButton jBCreateMassage;
     private javax.swing.JButton jBGrill;
     private javax.swing.JButton jBMassage;
+    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCHalf;
     private javax.swing.JComboBox jCStartTime;
     private javax.swing.JCheckBox jCWhole;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -515,8 +772,15 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTBBQCusAddress;
+    private javax.swing.JTextField jTBBQDishes;
+    private javax.swing.JTextField jTBBQEventAddress;
+    private javax.swing.JTextField jTBBQKm;
+    private javax.swing.JTextField jTBBQName;
+    private javax.swing.JTextField jTBBQPhone;
     private javax.swing.JTextArea jTComment;
     private javax.swing.JTextField jTName;
     private javax.swing.JTextField jTPhone;
@@ -526,13 +790,23 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "Customer Chosen":
+            case "Mas Customer Chosen":
                 if (editing) {
                     event.setCustomer(cc.getCustomer());
                 } else {
                     customer = cc.getCustomer();
                     jTPhone.setText(customer.getPhone());
                     jTName.setText(customer.getName());
+                }
+                break;
+            case "BBQ Customer Chosen":
+                if (editing) {
+
+                } else {
+                    customer = cc.getCustomer();
+                    jTBBQName.setText(customer.getName());
+                    jTBBQPhone.setText(customer.getPhone());
+                    jTBBQCusAddress.setText(customer.getHomeAddress());
                 }
                 break;
         }
