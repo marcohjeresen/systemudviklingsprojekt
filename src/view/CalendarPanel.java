@@ -17,6 +17,7 @@ import java.util.Calendar;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import model.Event;
+import util.ImageExample;
 import util.Listeners;
 
 /**
@@ -64,6 +65,7 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
     }
 
     public void fillLabels() {
+        ImageExample im = new ImageExample();
         ArrayList<String> list = cc.getWeek();
         fillItUp();
         jLabel1.setText(list.get(0));
@@ -107,7 +109,7 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
             new ErrorPopup("Der kunne ikke hentes aftaler for denne uge. "
                     + "<br/>Programmet kan godt bruges,men anbefales ikke.<br/> "
                     + "Kontakt Annette, for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage()+"\n"+cc.getCh().getSql());
+            System.out.println(ex.getLocalizedMessage() + "\n" + cc.getCh().getSql());
         }
         int monCount = 0;
         int tueCount = 0;
@@ -153,7 +155,7 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         }
     }
 
-    public void createEventOnPanel(JPanel jpanel, int count, Event event){
+    public void createEventOnPanel(JPanel jpanel, int count, Event event) {
         EventOfDayPanel eodp;
         int x = 2;
         int y = 15;

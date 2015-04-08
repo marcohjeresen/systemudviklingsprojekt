@@ -10,7 +10,7 @@ package model;
  * @author Mark
  */
 public class Grill {
-    
+
     private int id;
     private String type;
     private int coalPrice;
@@ -49,7 +49,5 @@ public class Grill {
     public String toString() {
         return "Grill{" + "id=" + id + ", type=" + type + ", coalPrice=" + coalPrice + '}';
     }
-    
-    
-    
+
 }
