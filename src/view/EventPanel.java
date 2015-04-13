@@ -111,7 +111,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 } catch (SQLException ex) {
                     new ErrorPopup("Der kunne ikke hentes massagetyper fra databasen. "
                             + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                            + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+                            + "for få dette fixet.<br/>(Husk at have maden klar;)!)!");
                     System.out.println(ex.getLocalizedMessage() + "\n" + mc.getMh().getSql() + "\n" + mc.getMh().getSqlCal());
                 }
                 setJFrame(300, 370, "massage", dateFormatTools.getDayLetters(cal));
