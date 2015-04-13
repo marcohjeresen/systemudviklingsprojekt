@@ -135,7 +135,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 break;
             case ("bbq"):
                 customer = null;
-                setJFrame(500, 500, "bbq", dateFormatTools.getDayLetters(cal));
+                setJFrame(668, 500, "bbq", dateFormatTools.getDayLetters(cal));
                 break;
         }
         jFrame.revalidate();
@@ -298,7 +298,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        jLabel8 = new javax.swing.JLabel();
         choosePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jBMassage = new javax.swing.JButton();
@@ -330,6 +332,12 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jTBBQKm = new javax.swing.JTextField();
         jTBBQDishes = new javax.swing.JTextField();
         jTBBQEventAddress = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+
+        jLabel8.setText("jLabel8");
 
         setLayout(new java.awt.CardLayout());
 
@@ -472,9 +480,10 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             }
         });
         bbqPanel.add(jButton1);
-        jButton1.setBounds(810, 90, 90, 23);
+        jButton1.setBounds(480, 420, 90, 23);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Kunde"));
+        jPanel1.setOpaque(false);
         jPanel1.setLayout(null);
 
         jTBBQPhone.setText("Telefonnummer");
@@ -522,6 +531,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jPanel1.setBounds(0, 0, 200, 120);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Arrangement"));
+        jPanel2.setOpaque(false);
         jPanel2.setLayout(null);
 
         jTBBQKm.setText("Km");
@@ -563,7 +573,36 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         bbqPanel.add(jPanel2);
         jPanel2.setBounds(200, 0, 200, 120);
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Valgmuligheder"));
+        jPanel3.setOpaque(false);
+        jPanel3.setLayout(null);
+        bbqPanel.add(jPanel3);
+        jPanel3.setBounds(0, 120, 200, 340);
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Valgte"));
+        jPanel4.setOpaque(false);
+        jPanel4.setLayout(null);
+        bbqPanel.add(jPanel4);
+        jPanel4.setBounds(200, 120, 200, 340);
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Kurv"));
+        jPanel5.setOpaque(false);
+        jPanel5.setLayout(null);
+        bbqPanel.add(jPanel5);
+        jPanel5.setBounds(400, 0, 250, 390);
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/bbq_bkgr.jpg"))); // NOI18N
+        jLabel10.setText("jLabel10");
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, bbqPanel, org.jdesktop.beansbinding.ELProperty.create("${background}"), jLabel10, org.jdesktop.beansbinding.BeanProperty.create("background"));
+        bindingGroup.addBinding(binding);
+
+        bbqPanel.add(jLabel10);
+        jLabel10.setBounds(0, -30, 660, 520);
+
         add(bbqPanel, "card4");
+
+        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBMassageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMassageActionPerformed
@@ -767,6 +806,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private javax.swing.JComboBox jCStartTime;
     private javax.swing.JCheckBox jCWhole;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -774,9 +814,13 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTBBQCusAddress;
     private javax.swing.JTextField jTBBQDishes;
@@ -788,6 +832,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private javax.swing.JTextField jTName;
     private javax.swing.JTextField jTPhone;
     private javax.swing.JPanel massagePanel;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
     @Override
