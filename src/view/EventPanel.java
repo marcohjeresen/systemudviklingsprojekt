@@ -67,27 +67,32 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         try {
             cc = CustomerControl.getInstance();
             mc = MassageControl.getInstance();
-        } catch (ClassNotFoundException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
                     + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
                     + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
             System.out.println(ex.getLocalizedMessage());
         }
-
         dateFormatTools = new DateFormatTools();
         initComponents();
         listener.addListener(this);
-        
         cl = (CardLayout) getLayout();
         cl.addLayoutComponent(choosePanel, "vælg");
         cl.addLayoutComponent(massagePanel, "massage");
         cl.addLayoutComponent(bbqPanel, "bbq");
         showPage(panel);
+    }
+
+    public void setJFrame(int xSize, int ySize, String showPanel, String title) {
+        int height = 0;
+        int widht = 0;
+        jFrame.setLocation(550, 150);
+        jFrame.setSize(new Dimension(xSize, ySize));
+        jFrame.setTitle(title);
+        height = Toolkit.getDefaultToolkit().getScreenSize().height - jFrame.getHeight();
+        widht = Toolkit.getDefaultToolkit().getScreenSize().width - jFrame.getWidth();
+        jFrame.setLocation(widht / 2, height / 2);
+        cl.show(this, showPanel);
     }
 
     //bruges til at navigere i vores CardLayout
@@ -96,10 +101,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         int widht = 0;
         switch (panel) {
             case ("vælg"):
-                jFrame.setSize(new Dimension(242, 150));
-                jFrame.setLocation(575, 250);
-                jFrame.setTitle(dateFormatTools.getDayLetters(cal));
-                cl.show(this, "vælg");
+                setJFrame(242, 150, "vælg", dateFormatTools.getDayLetters(cal));
                 break;
             case ("massage"):
                 massage = new MassageBuilder();
@@ -112,13 +114,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                             + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
                     System.out.println(ex.getLocalizedMessage() + "\n" + mc.getMh().getSql() + "\n" + mc.getMh().getSqlCal());
                 }
-                jFrame.setLocation(550, 150);
-                jFrame.setSize(new Dimension(300, 370));
-                jFrame.setTitle(dateFormatTools.getDayLetters(cal));
-                height = Toolkit.getDefaultToolkit().getScreenSize().height - jFrame.getHeight();
-                widht = Toolkit.getDefaultToolkit().getScreenSize().width - jFrame.getWidth();
-                jFrame.setLocation(widht / 2, height / 2);
-                cl.show(this, "massage");
+                setJFrame(300, 370, "massage", dateFormatTools.getDayLetters(cal));
                 fillComboStartTime();
                 break;
             case ("rediger massage"):
@@ -133,25 +129,13 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     System.out.println(ex.getLocalizedMessage() + "\n" + mc.getMh().getSql() + "\n" + mc.getMh().getSqlCal());
                 }
                 event = mc.getEvent();
-                jFrame.setLocation(550, 150);
-                jFrame.setSize(new Dimension(300, 370));
-                jFrame.setTitle(dateFormatTools.getDayLetters(cal));
-                height = Toolkit.getDefaultToolkit().getScreenSize().height - jFrame.getHeight();
-                widht = Toolkit.getDefaultToolkit().getScreenSize().width - jFrame.getWidth();
-                jFrame.setLocation(widht / 2, height / 2);
-                cl.show(this, "massage");
+                setJFrame(300, 370, "massage", dateFormatTools.getDayLetters(cal));
                 fillComboStartTime();
                 fillMassage();
                 break;
             case ("bbq"):
                 customer = null;
-                jFrame.setLocation(10, 10);
-                jFrame.setSize(new Dimension(500, 500));
-                jFrame.setTitle(dateFormatTools.getDayLetters(cal));
-                height = Toolkit.getDefaultToolkit().getScreenSize().height - jFrame.getHeight();
-                widht = Toolkit.getDefaultToolkit().getScreenSize().width - jFrame.getWidth();
-                jFrame.setLocation(widht / 2, height / 2);
-                cl.show(this, "bbq");
+                setJFrame(500, 500, "bbq", dateFormatTools.getDayLetters(cal));
                 break;
         }
         jFrame.revalidate();
@@ -192,7 +176,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     }
 
     public void findCustomer(String search) {
-        System.out.println("inde");
         ArrayList<Customer> cus = new ArrayList<>();
         try {
             if (search.equals("masPhone")) {
@@ -223,8 +206,8 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 } else {
                     customer = cus.get(0);
                 }
-
             } else if (!cus.isEmpty() && cus.size() >= 2) {
+                isMassage = true;
                 CustomerPanel cp = new CustomerPanel(cus, isMassage);
                 cp.setSize(260, 20);
                 cp.setVisible(true);
@@ -244,6 +227,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     customer = cus.get(0);
                 }
             } else if (!cus.isEmpty() && cus.size() >= 2) {
+                isMassage = false;
                 CustomerPanel cp = new CustomerPanel(cus, isMassage);
                 cp.setSize(260, 20);
                 cp.setVisible(true);
@@ -337,15 +321,15 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jBCreateMassage = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         bbqPanel = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jTBBQName = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jTBBQPhone = new javax.swing.JTextField();
         jTBBQCusAddress = new javax.swing.JTextField();
-        jTBBQEventAddress = new javax.swing.JTextField();
-        jTBBQDishes = new javax.swing.JTextField();
+        jTBBQName = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
         jTBBQKm = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jTBBQDishes = new javax.swing.JTextField();
+        jTBBQEventAddress = new javax.swing.JTextField();
 
         setLayout(new java.awt.CardLayout());
 
@@ -376,7 +360,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/event_bkgr.png"))); // NOI18N
         choosePanel.add(jLabel11);
-        jLabel11.setBounds(0, 0, 0, 140);
+        jLabel11.setBounds(0, 0, 242, 140);
 
         add(choosePanel, "card2");
 
@@ -481,33 +465,29 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
 
         bbqPanel.setLayout(null);
 
-        jLabel8.setText("Kunde");
-        bbqPanel.add(jLabel8);
-        jLabel8.setBounds(10, 10, 140, 14);
-
-        jTBBQName.setText("Navn");
-        jTBBQName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTBBQNameFocusLost(evt);
-            }
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTBBQNameFocusGained(evt);
+        jButton1.setText("Opret");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
-        bbqPanel.add(jTBBQName);
-        jTBBQName.setBounds(10, 30, 180, 20);
+        bbqPanel.add(jButton1);
+        jButton1.setBounds(810, 90, 90, 23);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Kunde"));
+        jPanel1.setLayout(null);
 
         jTBBQPhone.setText("Telefonnummer");
         jTBBQPhone.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTBBQPhoneFocusLost(evt);
-            }
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTBBQPhoneFocusGained(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTBBQPhoneFocusLost(evt);
+            }
         });
-        bbqPanel.add(jTBBQPhone);
-        jTBBQPhone.setBounds(10, 60, 180, 20);
+        jPanel1.add(jTBBQPhone);
+        jTBBQPhone.setBounds(10, 50, 180, 20);
 
         jTBBQCusAddress.setText("Adresse");
         jTBBQCusAddress.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -518,8 +498,55 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 jTBBQCusAddressFocusGained(evt);
             }
         });
-        bbqPanel.add(jTBBQCusAddress);
-        jTBBQCusAddress.setBounds(10, 90, 180, 20);
+        jPanel1.add(jTBBQCusAddress);
+        jTBBQCusAddress.setBounds(10, 80, 180, 20);
+
+        jTBBQName.setText("Navn");
+        jTBBQName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTBBQNameActionPerformed(evt);
+            }
+        });
+        jTBBQName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTBBQNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTBBQNameFocusLost(evt);
+            }
+        });
+        jPanel1.add(jTBBQName);
+        jTBBQName.setBounds(10, 20, 180, 20);
+
+        bbqPanel.add(jPanel1);
+        jPanel1.setBounds(0, 0, 200, 120);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Arrangement"));
+        jPanel2.setLayout(null);
+
+        jTBBQKm.setText("Km");
+        jTBBQKm.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTBBQKmFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTBBQKmFocusLost(evt);
+            }
+        });
+        jPanel2.add(jTBBQKm);
+        jTBBQKm.setBounds(10, 80, 180, 20);
+
+        jTBBQDishes.setText("Kuverter");
+        jTBBQDishes.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTBBQDishesFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTBBQDishesFocusLost(evt);
+            }
+        });
+        jPanel2.add(jTBBQDishes);
+        jTBBQDishes.setBounds(10, 50, 180, 20);
 
         jTBBQEventAddress.setText("Adresse");
         jTBBQEventAddress.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -530,45 +557,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 jTBBQEventAddressFocusGained(evt);
             }
         });
-        bbqPanel.add(jTBBQEventAddress);
-        jTBBQEventAddress.setBounds(200, 30, 170, 20);
+        jPanel2.add(jTBBQEventAddress);
+        jTBBQEventAddress.setBounds(10, 20, 180, 20);
 
-        jTBBQDishes.setText("Kuverter");
-        jTBBQDishes.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTBBQDishesFocusLost(evt);
-            }
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTBBQDishesFocusGained(evt);
-            }
-        });
-        bbqPanel.add(jTBBQDishes);
-        jTBBQDishes.setBounds(200, 60, 170, 20);
-
-        jTBBQKm.setText("Km");
-        jTBBQKm.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTBBQKmFocusLost(evt);
-            }
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTBBQKmFocusGained(evt);
-            }
-        });
-        bbqPanel.add(jTBBQKm);
-        jTBBQKm.setBounds(200, 90, 170, 20);
-
-        jLabel10.setText("Arrangement");
-        bbqPanel.add(jLabel10);
-        jLabel10.setBounds(200, 10, 140, 14);
-
-        jButton1.setText("Opret");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        bbqPanel.add(jButton1);
-        jButton1.setBounds(150, 140, 90, 23);
+        bbqPanel.add(jPanel2);
+        jPanel2.setBounds(200, 0, 200, 120);
 
         add(bbqPanel, "card4");
     }// </editor-fold>//GEN-END:initComponents
@@ -758,6 +751,10 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         showPage("bbq");
     }//GEN-LAST:event_jBGrillActionPerformed
 
+    private void jTBBQNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBBQNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTBBQNameActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bbqPanel;
@@ -770,7 +767,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private javax.swing.JComboBox jCStartTime;
     private javax.swing.JCheckBox jCWhole;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -778,8 +774,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTBBQCusAddress;
     private javax.swing.JTextField jTBBQDishes;
@@ -807,7 +804,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 break;
             case "BBQ Customer Chosen":
                 if (editing) {
-
                 } else {
                     customer = cc.getCustomer();
                     jTBBQName.setText(customer.getName());
