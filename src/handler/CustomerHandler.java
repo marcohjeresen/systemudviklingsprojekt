@@ -54,6 +54,20 @@ public class CustomerHandler {
         db.execute(sql);
     }
 
+    public void alterCustomer(Customer customer, String cusNumber, boolean isMassage) throws SQLException {
+        if (isMassage) {
+            sql = "update customer set Cus_phone = " + customer.getPhone()
+                    + ", Cus_name = '" + customer.getName()
+                    + "' where cus_phone = " + cusNumber + "";
+        } else {
+            sql = "update customer set Cus_phone = " + customer.getPhone()
+                    + ", cus_name = '" + customer.getName() + "',"
+                    + " cus_homeAddress = '" + customer.getHomeAddress() + "'"
+                    + " where cus_phone = " + cusNumber + "";
+        }
+        db.execute(sql);
+    }
+
     public String getSql() {
         return sql;
     }

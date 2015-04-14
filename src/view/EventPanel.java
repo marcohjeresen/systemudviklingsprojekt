@@ -208,11 +208,12 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 }
             } else if (!cus.isEmpty() && cus.size() >= 2) {
                 isMassage = true;
-                CustomerPanel cp = new CustomerPanel(cus, isMassage);
+                int xSize = 256;
+                CustomerPanel cp = new CustomerPanel(cus, isMassage, xSize);
                 cp.setSize(260, 20);
                 cp.setVisible(true);
                 cp.setLocation(10, 80);
-                cp.setSize(256, cus.size() * cp.getHeight());
+                cp.setSize(xSize, cus.size() * cp.getHeight());
                 massagePanel.add(cp);
                 massagePanel.setComponentZOrder(cp, 0);
             }
@@ -228,11 +229,12 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 }
             } else if (!cus.isEmpty() && cus.size() >= 2) {
                 isMassage = false;
-                CustomerPanel cp = new CustomerPanel(cus, isMassage);
+                int xSize = 180;
+                CustomerPanel cp = new CustomerPanel(cus, isMassage, xSize);
                 cp.setSize(260, 20);
                 cp.setVisible(true);
-                cp.setLocation(10, 80);
-                cp.setSize(256, cus.size() * cp.getHeight());
+                cp.setLocation(10, 100);
+                cp.setSize(xSize, cus.size() * cp.getHeight());
                 bbqPanel.add(cp);
                 bbqPanel.setComponentZOrder(cp, 0);
             }
@@ -270,6 +272,12 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     try {
                         cc.saveCustomer(customer);
                     } catch (SQLException ex) {
+                        if (ex.toString().length() == 120) {
+                            new ErrorPopup("Kunden kunne ikke gemmes i databasen. "
+                                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+                        }
+                        System.out.println(ex.toString().length());
                         new ErrorPopup("Kunden kunne ikke gemmes i databasen. "
                                 + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
                                 + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
@@ -278,6 +286,29 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 }
             }
         }
+    }
+
+    public void alterCustomer(boolean isMassage) {
+        String cusPhoneNumber = "";
+        if (isMassage) {
+            cusPhoneNumber = customer.getPhone();
+            customer.setPhone(jTPhone.getText());
+            customer.setName(jTName.getText());
+        } else {
+            cusPhoneNumber = customer.getPhone();
+            customer.setPhone(jTBBQPhone.getText());
+            customer.setName(jTBBQName.getText());
+            customer.setHomeAddress(jTBBQCusAddress.getText());
+        }
+        try {
+            cc.alterCustomer(customer, cusPhoneNumber, isMassage);
+        } catch (SQLException exception) {
+            new ErrorPopup("Kunden kunne ikke ændres i databasen. "
+                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+            System.out.println(exception.getLocalizedMessage() + "\n" + cc.getCh().getSql());
+        }
+
     }
 
     public MassageType chooseMasType(String type) {
@@ -422,11 +453,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jTPhone.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTPhoneFocusLost(evt);
-            }
-        });
-        jTPhone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTPhoneActionPerformed(evt);
             }
         });
         massagePanel.add(jTPhone);
@@ -673,6 +699,12 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             } else {
                 if (customer == null) {
                     saveCustomer(true);
+                } else {
+                    if (!jTName.toString().equals(customer.getName()) || !jTPhone.toString().equals(customer.getPhone())) {
+                        alterCustomer(true);
+                    } else {
+                        saveCustomer(true);
+                    }
                 }
                 massage.setStartTime(jCStartTime.getSelectedItem().toString());
                 Massage mas = massage.createMassage();
@@ -699,10 +731,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private void jTNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTNameFocusLost
         findCustomer("masName");
     }//GEN-LAST:event_jTNameFocusLost
-
-    private void jTPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTPhoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTPhoneActionPerformed
 
     private void jTBBQNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQNameFocusGained
         if (jTBBQName.getText().equals("Navn")) {
@@ -783,6 +811,13 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (customer == null) {
             saveCustomer(false);
+        } else {
+            if (!jTBBQName.toString().equals(customer.getName()) || !jTBBQPhone.toString().equals(customer.getPhone())) {
+                alterCustomer(false);
+            } else {
+                saveCustomer(false);
+            }
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -55,6 +55,9 @@ public class CustomerControl {
     public void saveCustomer(Customer customer) throws SQLException {
         ch.saveCustomer(customer);
     }
+    public void alterCustomer(Customer customer, String cusNumber, boolean isMassage) throws SQLException {
+        ch.alterCustomer(customer, cusNumber, isMassage);
+    }
 
     public CustomerHandler getCh() {
         return ch;

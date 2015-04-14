@@ -5,6 +5,7 @@
  */
 package view;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import model.Customer;
 
@@ -20,7 +21,7 @@ public class CustomerPanel extends javax.swing.JPanel {
     /**
      * Creates new form CustomerPanel
      */
-    public CustomerPanel(ArrayList<Customer> customers, boolean isMassage) {
+    public CustomerPanel(ArrayList<Customer> customers, boolean isMassage, int xSize) {
         this.customers = customers;
         this.isMassage = isMassage;
         initComponents();
@@ -28,6 +29,7 @@ public class CustomerPanel extends javax.swing.JPanel {
         for (Customer customer : customers) {
             CustomerButton button = new CustomerButton(customer, this, isMassage);
             button.setLocation(0, y);
+            button.setSize(xSize, button.getHeight());
             button.setVisible(true);
             add(button);
             y += button.getHeight();
