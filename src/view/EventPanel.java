@@ -5,8 +5,10 @@
  */
 package view;
 
+import controller.CategoryControl;
 import controller.CustomerControl;
 import controller.MassageControl;
+import handler.CategoryHandler;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,9 +18,12 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
+import model.Category;
 import model.Event;
 import model.Customer;
 import model.CustomerBuilder;
@@ -51,6 +56,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private Calendar startTime;
     private final Border redLineBorder;
     private boolean isMassage;
+    private CategoryControl categoryControl;
 
     /**
      * Creates new form EventPanel
@@ -76,6 +82,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         dateFormatTools = new DateFormatTools();
         initComponents();
         listener.addListener(this);
+        try {
+            categoryControl = CategoryControl.getInstance();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         cl = (CardLayout) getLayout();
         cl.addLayoutComponent(choosePanel, "vælg");
         cl.addLayoutComponent(massagePanel, "massage");
@@ -136,6 +147,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             case ("bbq"):
                 customer = null;
                 setJFrame(668, 500, "bbq", dateFormatTools.getDayLetters(cal));
+                showCategories();
                 break;
         }
         jFrame.revalidate();
@@ -153,6 +165,8 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         }
         jCStartTime.setSelectedItem(event.getMassage().getStartTime());
     }
+    
+    
 
     public void fillComboStartTime() {
         jCStartTime.removeAllItems();
@@ -320,6 +334,30 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         }
         return mt;
     }
+    
+    public void showCategories(){
+        try {
+            int location = 0;
+            for (Category category : categoryControl.getCategoryList()) {
+                int xSize = 180;
+                OptionsButton ob = new OptionsButton(category.getName());
+                ob.setSize(130, 40);
+                ob.setVisible(true);
+                if (location == 0) {
+                    ob.setLocation( 10,(20) + (ob.getHeight() * location));
+                }else{
+                    ob.setLocation( 10,(5 * location+20) + (ob.getHeight() * location));
+                }
+                ob.setSize(jPCategory.getWidth()- 20);
+                ob.setSize(jPCategory.getWidth()- 20, 40);
+                jPCategory.add(ob);
+                jPCategory.setComponentZOrder(ob, 0);
+                location++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -363,7 +401,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jTBBQKm = new javax.swing.JTextField();
         jTBBQDishes = new javax.swing.JTextField();
         jTBBQEventAddress = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
+        jPCategory = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -599,11 +637,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         bbqPanel.add(jPanel2);
         jPanel2.setBounds(200, 0, 200, 120);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Valgmuligheder"));
-        jPanel3.setOpaque(false);
-        jPanel3.setLayout(null);
-        bbqPanel.add(jPanel3);
-        jPanel3.setBounds(0, 120, 200, 340);
+        jPCategory.setBorder(javax.swing.BorderFactory.createTitledBorder("Valgmuligheder"));
+        jPCategory.setOpaque(false);
+        jPCategory.setLayout(null);
+        bbqPanel.add(jPCategory);
+        jPCategory.setBounds(0, 120, 200, 340);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Valgte"));
         jPanel4.setOpaque(false);
@@ -624,7 +662,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         bindingGroup.addBinding(binding);
 
         bbqPanel.add(jLabel10);
-        jLabel10.setBounds(0, -30, 660, 520);
+        jLabel10.setBounds(0, 0, 650, 460);
 
         add(bbqPanel, "card4");
 
@@ -851,9 +889,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPCategory;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
@@ -890,6 +928,18 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     jTBBQPhone.setText(customer.getPhone());
                     jTBBQCusAddress.setText(customer.getAddress());
                 }
+                break;
+            case "Category Meat":
+                
+                break;
+            case "Category Accompaniment":
+                
+                break;
+            case "Category Salad":
+                
+                break;
+            case "Category Grill":
+                
                 break;
         }
     }

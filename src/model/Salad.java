@@ -17,7 +17,7 @@ public class Salad {
     private String type;
     private int pricePerHead;
     private Category category;
-    private ArrayList<Vegetable> vegetableList;
+    private ArrayList<VegetableToSalad> vegetableList;
 
     public Salad(int id, String type, int pricePerHead, Category category) {
         this.id = id;
@@ -59,18 +59,18 @@ public class Salad {
         this.category = category;
     }
 
-    public ArrayList<Vegetable> getVegetableList() {
+    public ArrayList<VegetableToSalad> getVegetableList() {
         return vegetableList;
     }
 
-    public void setVegetableList(ArrayList<Vegetable> vegetableList) {
-        this.vegetableList = vegetableList;
+    public void addToVegetableList(VegetableToSalad vegetableToSalad) {
+        this.vegetableList.add(vegetableToSalad);
     }
 
     @Override
     public String toString() {
         String toString = "Salad{" + "id=" + id + ", type=" + type + ", pricePerHead=" + pricePerHead + ", vegetableList /n";
-        for (Vegetable vegetableList1 : vegetableList) {
+        for (VegetableToSalad vegetableList1 : vegetableList) {
             toString = toString + vegetableList1.toString() + "/n";
         }
         return toString;
