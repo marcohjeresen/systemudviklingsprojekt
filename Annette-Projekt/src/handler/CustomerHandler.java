@@ -43,14 +43,14 @@ public class CustomerHandler {
             }
                 ResultSet rs = db.getResult(sql);
                 while (rs.next()) {
-                    cus.add(new CustomerBuilder().setPhone(rs.getString("cus_phone")).setName(rs.getString("cus_name")).setHomeAddress(rs.getString("cus_homeAddress")).setAddress(rs.getString("cus_address")).createCustomer());
+                    cus.add(new CustomerBuilder().setPhone(rs.getString("cus_phone")).setName(rs.getString("cus_name")).setAddress(rs.getString("cus_address")).setEmail(rs.getString("cus_email")).createCustomer());
                 }
         }
         return cus;
     }
     
     public void saveCustomer(Customer customer) throws SQLException{
-        sql = "insert into customer values ('"+customer.getPhone()+"', '"+customer.getName()+"', '"+customer.getHomeAddress()+"', '"+customer.getAddress()+"');";
+        sql = "insert into customer values ('"+customer.getPhone()+"', '"+customer.getName()+"', '"+customer.getAddress()+"', '"+customer.getEmail()+"');";
             db.execute(sql);
     }
     

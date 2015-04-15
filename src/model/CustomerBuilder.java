@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package model;
 
 
 public class CustomerBuilder {
     private String phone;
     private String name;
-    private String homeAddress;
     private String address;
+    private String email;
 
     public CustomerBuilder() {
     }
@@ -26,13 +25,13 @@ public class CustomerBuilder {
         return this;
     }
 
-    public CustomerBuilder setHomeAddress(String homeAddress) {
-        this.homeAddress = homeAddress;
+    public CustomerBuilder setAddress(String address) {
+        this.address = address;
         return this;
     }
 
-    public CustomerBuilder setAddress(String address) {
-        this.address = address;
+    public CustomerBuilder setEmail(String email) {
+        this.email = email;
         return this;
     }
 
@@ -42,13 +41,13 @@ public class CustomerBuilder {
         } else if (name.equals("")) {
             throw new IllegalStateException("Cannot create customer without name");
         }
-        if (homeAddress == null) {
-            homeAddress = "";
-        }
         if (address == null) {
             address = "";
         }
-        return new Customer(phone, name, homeAddress, address);
+        if (email == null) {
+            email = "";
+        }
+        return new Customer(phone, name, address, email);
     }
     
 }

@@ -15,12 +15,14 @@ public class Accompaniment {
     private String type;
     private String dish;
     private int pricePerHead;
+    private Category category;
 
-    public Accompaniment(int id, String type, String dish, int pricePerHead) {
+    public Accompaniment(int id, String type, String dish, int pricePerHead, Category category) {
         this.id = id;
         this.type = type;
         this.dish = dish;
         this.pricePerHead = pricePerHead;
+        this.category = category;
     }
 
     public int getId() {
@@ -53,6 +55,14 @@ public class Accompaniment {
 
     public void setPricePerHead(int pricePerHead) {
         this.pricePerHead = pricePerHead;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

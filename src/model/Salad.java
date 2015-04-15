@@ -16,12 +16,14 @@ public class Salad {
     private int id;
     private String type;
     private int pricePerHead;
+    private Category category;
     private ArrayList<Vegetable> vegetableList;
 
-    public Salad(int id, String type, int pricePerHead) {
+    public Salad(int id, String type, int pricePerHead, Category category) {
         this.id = id;
         this.type = type;
         this.pricePerHead = pricePerHead;
+        this.category = category;
         vegetableList = new ArrayList<>();
     }
 
@@ -47,6 +49,14 @@ public class Salad {
 
     public void setPricePerHead(int pricePerHead) {
         this.pricePerHead = pricePerHead;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public ArrayList<Vegetable> getVegetableList() {

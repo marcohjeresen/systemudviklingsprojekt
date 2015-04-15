@@ -46,7 +46,7 @@ public class CalendarHandler {
         ResultSet rs = db.getResult(sql);
         while (rs.next()) {
             MassageType mt = new MassageType(rs.getInt("mt_id"), rs.getInt("mt_price"), rs.getString("mt_type"), rs.getInt("mt_duration"));
-            Customer c = new CustomerBuilder().setPhone(rs.getString("cus_phone")).setName(rs.getString("cus_name")).setHomeAddress(rs.getString("cus_homeAddress")).setAddress(rs.getString("cus_address")).createCustomer();
+            Customer c = new CustomerBuilder().setPhone(rs.getString("cus_phone")).setName(rs.getString("cus_name")).setAddress(rs.getString("cus_address")).setEmail(rs.getString("cus_email")).createCustomer();
             Massage m = new Massage(rs.getInt("m_id"), rs.getString("m_comment"), rs.getString("m_startTime"), mt);
             String date = rs.getString("c_date").substring(0, 10);
             Event calC = new Event(dt.getDateFromString(date), c, m);

@@ -13,14 +13,14 @@ package model;
 public class Customer {
     private String phone;
     private String name;
-    private String homeAddress;
     private String address;
+    private String email;
 
-    public Customer(String phone, String name, String homeAddress, String address) {
+    public Customer(String phone, String name, String address, String email) {
         this.phone = phone;
         this.name = name;
-        this.homeAddress = homeAddress;
         this.address = address;
+        this.email = email;
     }
 
     public String getPhone() {
@@ -39,14 +39,6 @@ public class Customer {
         this.name = name;
     }
 
-    public String getHomeAddress() {
-        return homeAddress;
-    }
-
-    public void setHomeAddress(String homeAddress) {
-        this.homeAddress = homeAddress;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -54,6 +46,8 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
+    
+    
 
     @Override
     public String toString() {

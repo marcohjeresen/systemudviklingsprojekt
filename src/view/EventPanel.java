@@ -221,7 +221,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             if (!cus.isEmpty() && cus.size() <= 1) {
                 jTBBQPhone.setText(cus.get(0).getPhone());
                 jTBBQName.setText(cus.get(0).getName());
-                jTBBQCusAddress.setText(cus.get(0).getHomeAddress());
+                jTBBQCusAddress.setText(cus.get(0).getAddress());
                 if (editing) {
                     event.setCustomer(cus.get(0));
                 } else {
@@ -267,7 +267,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 if (customer == null) {
                     cb.setPhone(jTBBQPhone.getText());
                     cb.setName(jTBBQName.getText());
-                    cb.setHomeAddress(jTBBQCusAddress.getText());
+                    cb.setAddress(jTBBQCusAddress.getText());
                     customer = cb.createCustomer();
                     try {
                         cc.saveCustomer(customer);
@@ -298,7 +298,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             cusPhoneNumber = customer.getPhone();
             customer.setPhone(jTBBQPhone.getText());
             customer.setName(jTBBQName.getText());
-            customer.setHomeAddress(jTBBQCusAddress.getText());
+            customer.setAddress(jTBBQCusAddress.getText());
         }
         try {
             cc.alterCustomer(customer, cusPhoneNumber, isMassage);
@@ -888,7 +888,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     customer = cc.getCustomer();
                     jTBBQName.setText(customer.getName());
                     jTBBQPhone.setText(customer.getPhone());
-                    jTBBQCusAddress.setText(customer.getHomeAddress());
+                    jTBBQCusAddress.setText(customer.getAddress());
                 }
                 break;
         }

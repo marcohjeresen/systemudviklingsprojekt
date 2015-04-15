@@ -14,11 +14,13 @@ public class Meat {
     private int id;
     private String type;
     private int pricePerKilo;
+    private Category category;
 
-    public Meat(int id, String type, int pricePerKilo) {
+    public Meat(int id, String type, int pricePerKilo, Category category) {
         this.id = id;
         this.type = type;
         this.pricePerKilo = pricePerKilo;
+        this.category = category;
     }
 
     public int getId() {
@@ -43,6 +45,14 @@ public class Meat {
 
     public void setPricePerKilo(int pricePerKilo) {
         this.pricePerKilo = pricePerKilo;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
