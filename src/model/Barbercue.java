@@ -17,10 +17,10 @@ public class Barbercue {
     private int settings;
     private String address;
     private String foodReady;
-    private ArrayList<Grill> grillList;
-    private ArrayList<Meat> meatList;
-    private ArrayList<Salad> saladList;
-    private ArrayList<Accompaniment> accompanimentsList;
+    private ArrayList<GrillToBBQ> grillList;
+    private ArrayList<MeatToBBQ> meatList;
+    private ArrayList<SaladToBBQ> saladList;
+    private ArrayList<AccompanimentToBBQ> accompanimentsList;
 
     public Barbercue(int id, int settings, String address, String foodReady) {
         this.id = id;
