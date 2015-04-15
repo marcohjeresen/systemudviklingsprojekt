@@ -10,5 +10,29 @@ package model;
  * @author Annette
  */
 public class AccompanimentToBBQ {
+    private Accompaniment accompaniment;
+    private Barbercue barbercue;
+
+    public AccompanimentToBBQ(Accompaniment accompaniment, Barbercue barbercue) {
+        this.accompaniment = accompaniment;
+        this.barbercue = barbercue;
+    }
+
+    public Accompaniment getAccompaniment() {
+        return accompaniment;
+    }
+
+    public void setAccompaniment(Accompaniment accompaniment) {
+        this.accompaniment = accompaniment;
+    }
+
+    public Barbercue getBarbercue() {
+        return barbercue;
+    }
+
+    public void setBarbercue(Barbercue barbercue) {
+        this.barbercue = barbercue;
+    }
+    
     
 }
