@@ -16,15 +16,17 @@ public class Barbercue {
     private int id;
     private int settings;
     private String address;
+    private String foodReady;
     private ArrayList<Grill> grillList;
     private ArrayList<Meat> meatList;
     private ArrayList<Salad> saladList;
     private ArrayList<Accompaniment> accompanimentsList;
 
-    public Barbercue(int id, int settings, String address) {
+    public Barbercue(int id, int settings, String address, String foodReady) {
         this.id = id;
         this.settings = settings;
         this.address = address;
+        this.foodReady = foodReady;
         this.grillList = new ArrayList<>();
         this.meatList = new ArrayList<>();
         this.saladList = new ArrayList<>();

@@ -62,6 +62,7 @@ public class EventOfDayPanel extends javax.swing.JPanel {
         jLStartTime = new javax.swing.JLabel();
         jLEndTime = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(106, 140, 168));
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -71,50 +72,33 @@ public class EventOfDayPanel extends javax.swing.JPanel {
                 formMouseClicked(evt);
             }
         });
+        setLayout(null);
 
         jLEventType.setForeground(new java.awt.Color(255, 255, 255));
         jLEventType.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLEventType.setText("jLabel1");
+        add(jLEventType);
+        jLEventType.setBounds(30, 0, 141, 14);
 
         jLStartTime.setForeground(new java.awt.Color(255, 255, 255));
         jLStartTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLStartTime.setText("jLabel2");
+        add(jLStartTime);
+        jLStartTime.setBounds(20, 20, 58, 14);
 
         jLEndTime.setForeground(new java.awt.Color(255, 255, 255));
         jLEndTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLEndTime.setText("jLabel3");
+        add(jLEndTime);
+        jLEndTime.setBounds(110, 20, 67, 14);
 
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("-");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLEventType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLEndTime, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLEventType)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLStartTime)
-                    .addComponent(jLEndTime)
-                    .addComponent(jLabel4))
-                .addContainerGap())
-        );
+        add(jLabel4);
+        jLabel4.setBounds(90, 20, 20, 14);
+        add(jLabel1);
+        jLabel1.setBounds(2, 2, 70, 50);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -133,6 +117,7 @@ public class EventOfDayPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLEndTime;
     private javax.swing.JLabel jLEventType;
     private javax.swing.JLabel jLStartTime;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }
