@@ -22,15 +22,17 @@ public class Barbercue {
     private ArrayList<SaladToBBQ> saladList;
     private ArrayList<AccompanimentToBBQ> accompanimentsList;
 
-    public Barbercue(int id, int settings, String address, String foodReady) {
+    public Barbercue(int id, int settings, String address, String foodReady, ArrayList<GrillToBBQ> grillList, ArrayList<MeatToBBQ> meatList, ArrayList<SaladToBBQ> saladList, ArrayList<AccompanimentToBBQ> accompanimentsList) {
         this.id = id;
         this.settings = settings;
         this.address = address;
         this.foodReady = foodReady;
-        this.grillList = new ArrayList<>();
-        this.meatList = new ArrayList<>();
-        this.saladList = new ArrayList<>();
-        this.accompanimentsList = new ArrayList<>();
+        this.grillList = grillList;
+        this.meatList = meatList;
+        this.saladList = saladList;
+        this.accompanimentsList = accompanimentsList;
     }
+
+    
 
 }
