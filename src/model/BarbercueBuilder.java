@@ -84,5 +84,4 @@ public class BarbercueBuilder {
     public Barbercue createBarbercue() {
         return new Barbercue(id, settings, address, foodReady, grillList, meatList, saladList, accompanimentsList);
     }
-    
 }
