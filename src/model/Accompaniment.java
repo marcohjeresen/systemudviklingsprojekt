@@ -13,14 +13,12 @@ public class Accompaniment {
 
     private int id;
     private String type;
-    private String dish;
     private int pricePerHead;
     private Category category;
 
-    public Accompaniment(int id, String type, String dish, int pricePerHead, Category category) {
+    public Accompaniment(int id, String type, int pricePerHead, Category category) {
         this.id = id;
         this.type = type;
-        this.dish = dish;
         this.pricePerHead = pricePerHead;
         this.category = category;
     }
@@ -40,15 +38,7 @@ public class Accompaniment {
     public void setType(String type) {
         this.type = type;
     }
-
-    public String getDish() {
-        return dish;
-    }
-
-    public void setDish(String dish) {
-        this.dish = dish;
-    }
-
+    
     public int getPricePerHead() {
         return pricePerHead;
     }
@@ -67,7 +57,7 @@ public class Accompaniment {
 
     @Override
     public String toString() {
-        return "Accompaniment{" + "id=" + id + ", type=" + type + ", dish=" + dish + ", pricePerHead=" + pricePerHead + '}';
+        return "Accompaniment{" + "id=" + id + ", type=" + type + ", pricePerHead=" + pricePerHead + '}';
     }
 
 }
