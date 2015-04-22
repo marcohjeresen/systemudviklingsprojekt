@@ -13,20 +13,20 @@ import controller.CategoryControl;
  */
 public class OptionsButton extends javax.swing.JPanel {
     private CategoryControl cc;
+    private String option;
 
     /**
      * Creates new form OptionsButton
      */
     public OptionsButton(String option) {
         initComponents();
+        this.option = option;
         jButton1.setText(option);
 
         
     }
     public void setSize(int x){
         jButton1.setSize(x, 40);
-        
-        
     }
 
     /**
@@ -42,6 +42,11 @@ public class OptionsButton extends javax.swing.JPanel {
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setText("Tilbehør");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -54,6 +59,10 @@ public class OptionsButton extends javax.swing.JPanel {
             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        cc.setCategory(option);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
