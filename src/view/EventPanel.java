@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.BBQControl;
 import controller.CategoryControl;
 import controller.CustomerControl;
 import controller.MassageControl;
@@ -30,6 +31,7 @@ import model.CustomerBuilder;
 import model.Massage;
 import model.MassageBuilder;
 import model.MassageType;
+import model.MeatToBBQ;
 import util.DateFormatTools;
 import util.Listeners;
 
@@ -51,6 +53,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private MassageControl mc;
     private CategoryControl categoryControl;
     private MeatControl meatControl;
+    private BBQControl bbqControl;
     private CustomerBuilder cb;
     private MassageBuilder massage;
     private ArrayList<MassageType> masTypeList;
@@ -74,6 +77,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         try {
             cc = CustomerControl.getInstance();
             mc = MassageControl.getInstance();
+            categoryControl = CategoryControl.getInstance();
+            meatControl = MeatControl.getInstance();
+            bbqControl = BBQControl.getInstance();
         } catch (ClassNotFoundException | SQLException ex) {
             new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
                     + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
@@ -87,12 +93,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jScrollPane3.setOpaque(false);
         jScrollPane3.getViewport().setOpaque(false);
         listener.addListener(this);
-        try {
-            categoryControl = CategoryControl.getInstance();
-            meatControl = MeatControl.getInstance();
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
         cl = (CardLayout) getLayout();
         cl.addLayoutComponent(choosePanel, "vælg");
         cl.addLayoutComponent(massagePanel, "massage");
@@ -400,6 +400,30 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jPScrollChosen.repaint();
         jScrollPane2.revalidate();
         jScrollPane2.repaint();
+    }
+    
+    public void addToBasket(){
+        int location = 0;
+        jPScrollBasket.removeAll();
+        BasketItemPanel bip;
+        ArrayList<MeatToBBQ> meatList = bbqControl.getBuilder().getMeatList();
+        jPScrollBasket.setPreferredSize(new Dimension(0, 0));
+        if(meatList != null){
+            for (MeatToBBQ meat : meatList) {
+                bip = new BasketItemPanel((Object) meat);
+                if(location == 0){
+                    bip.setLocation(0, 10);
+                } else {
+                    bip.setLocation(0, (5*location+10)+(bip.getHeight()*location));
+                }
+                jPScrollBasket.add(bip);
+                bip.setVisible(true);
+                jPScrollBasket.setPreferredSize(new Dimension(bip.getWidth(), jPScrollBasket.getHeight()+bip.getHeight()));
+                location++;
+            }
+        }
+        jPScrollBasket.revalidate();
+        jPScrollBasket.repaint();
     }
 
     /**
@@ -1052,6 +1076,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 break;
             case "Category Grill":
 
+                break;
+            case "added to basket":
+                addToBasket();
                 break;
         }
     }

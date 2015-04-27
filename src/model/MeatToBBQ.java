@@ -20,6 +20,12 @@ public class MeatToBBQ {
         this.kilo = kilo;
     }
 
+    public int getTotalPrice() {
+        int totalPrice;
+        totalPrice = meat.getPricePerKilo() * kilo;
+        return totalPrice;
+    }
+
     public Meat getMeat() {
         return meat;
     }

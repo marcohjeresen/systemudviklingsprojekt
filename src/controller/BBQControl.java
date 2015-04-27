@@ -6,6 +6,8 @@
 package controller;
 
 import model.BarbercueBuilder;
+import model.Meat;
+import model.MeatToBBQ;
 import util.Listeners;
 
 /**
@@ -35,5 +37,11 @@ public class BBQControl {
     
     public void clearBBQBuilder(){
         builder = new BarbercueBuilder();
+    }
+    
+    public void addMeatToList(Meat meat, int kilo){
+        MeatToBBQ meatToBBQ = new MeatToBBQ(meat, null, kilo);
+        builder.addToMeatList(meatToBBQ);
+        listener.notifyListeners("added to basket");
     }
 }

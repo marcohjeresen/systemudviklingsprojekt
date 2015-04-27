@@ -14,19 +14,22 @@ import model.Meat;
  * @author Annette
  */
 public class CategoryButton extends javax.swing.JPanel {
+
     private Meat meat;
     private BBQControl bbqc;
     private CardLayout cl;
+
     /**
      * Creates new form CategoryButton
      */
     public CategoryButton(Object category) {
+        bbqc = BBQControl.getInstance();
         setSize(263, 30);
         initComponents();
         cl = (CardLayout) getLayout();
         cl.addLayoutComponent(jPOther, "Other");
         cl.addLayoutComponent(jPMeat, "Meat");
-        switch (category.getClass().getSimpleName()){
+        switch (category.getClass().getSimpleName()) {
             case "Meat":
                 meat = (Meat) category;
                 cl.show(this, "Meat");
@@ -50,7 +53,7 @@ public class CategoryButton extends javax.swing.JPanel {
         jPMeat = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jLMeatTitel = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTKilo = new javax.swing.JTextField();
 
         setOpaque(false);
         setLayout(new java.awt.CardLayout());
@@ -79,6 +82,11 @@ public class CategoryButton extends javax.swing.JPanel {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton2.setText("OK");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPMeat.add(jButton2);
         jButton2.setBounds(0, 30, 260, 31);
 
@@ -87,22 +95,37 @@ public class CategoryButton extends javax.swing.JPanel {
         jPMeat.add(jLMeatTitel);
         jLMeatTitel.setBounds(0, 0, 180, 28);
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextField1.setText("Antal Kilo");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTKilo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTKilo.setText("Antal Kilo");
+        jTKilo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTKiloActionPerformed(evt);
             }
         });
-        jPMeat.add(jTextField1);
-        jTextField1.setBounds(180, 0, 81, 28);
+        jTKilo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTKiloFocusGained(evt);
+            }
+        });
+        jPMeat.add(jTKilo);
+        jTKilo.setBounds(180, 0, 81, 28);
 
         add(jPMeat, "card4");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTKiloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTKiloActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTKiloActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        bbqc.addMeatToList(meat, Integer.parseInt(jTKilo.getText()));
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTKiloFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTKiloFocusGained
+        if (jTKilo.getText().equals("Antal Kilo")) {
+            jTKilo.setText("");
+        }
+    }//GEN-LAST:event_jTKiloFocusGained
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -111,6 +134,6 @@ public class CategoryButton extends javax.swing.JPanel {
     private javax.swing.JLabel jLMeatTitel;
     private javax.swing.JPanel jPMeat;
     private javax.swing.JPanel jPOther;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTKilo;
     // End of variables declaration//GEN-END:variables
 }
