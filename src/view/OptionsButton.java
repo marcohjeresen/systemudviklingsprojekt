@@ -6,12 +6,16 @@
 package view;
 
 import controller.CategoryControl;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Mark
  */
 public class OptionsButton extends javax.swing.JPanel {
+
     private CategoryControl cc;
     private String option;
 
@@ -22,10 +26,17 @@ public class OptionsButton extends javax.swing.JPanel {
         initComponents();
         this.option = option;
         jButton1.setText(option);
+        try {
+            cc = CategoryControl.getInstance();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(OptionsButton.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(OptionsButton.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        
     }
-    public void setSize(int x){
+
+    public void setSize(int x) {
         jButton1.setSize(x, 40);
     }
 
