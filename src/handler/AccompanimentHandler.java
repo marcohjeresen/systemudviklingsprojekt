@@ -38,10 +38,10 @@ public class AccompanimentHandler {
     public ArrayList<Accompaniment> getAccompanimentList() throws SQLException{
         ArrayList<Accompaniment> accList = new ArrayList<>();
         ResultSet rs;
-        rs = db.getResult("call getAccompaniment();");
+        rs = db.getResult("call getAccompaniments();");
         while(rs.next()){
             Category category = new Category(rs.getInt("c_id"), rs.getString("c_name"));
-            Accompaniment accompaniment = new Accompaniment(rs.getInt("a_id"), rs.getString("a_type"), rs.getInt("a_pricePrHead"), category);
+            Accompaniment accompaniment = new Accompaniment(rs.getInt("a_id"), rs.getString("a_type"), rs.getInt("a_pricePerHead"), category);
             accList.add(accompaniment);
         }
         return accList;

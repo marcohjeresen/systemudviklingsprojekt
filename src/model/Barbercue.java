@@ -33,6 +33,38 @@ public class Barbercue {
         this.accompanimentsList = accompanimentsList;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public int getSettings() {
+        return settings;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getFoodReady() {
+        return foodReady;
+    }
+
+    public ArrayList<GrillToBBQ> getGrillList() {
+        return grillList;
+    }
+
+    public ArrayList<MeatToBBQ> getMeatList() {
+        return meatList;
+    }
+
+    public ArrayList<SaladToBBQ> getSaladList() {
+        return saladList;
+    }
+
+    public ArrayList<AccompanimentToBBQ> getAccompanimentsList() {
+        return accompanimentsList;
+    }
+
     
 
 }

@@ -18,6 +18,10 @@ public class AccompanimentToBBQ {
         this.barbercue = barbercue;
     }
 
+    public int getTotalPrice(int settings){
+        return accompaniment.getPricePerHead() * settings;
+    }
+    
     public Accompaniment getAccompaniment() {
         return accompaniment;
     }

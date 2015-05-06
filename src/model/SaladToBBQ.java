@@ -33,6 +33,11 @@ public class SaladToBBQ {
     public void setBarbercue(Barbercue barbercue) {
         this.barbercue = barbercue;
     }
+
+    public int getTotalPrice(int settings) {
+    int temp = salad.getPricePerHead() * settings;
+    return temp;
+    }
     
     
 }

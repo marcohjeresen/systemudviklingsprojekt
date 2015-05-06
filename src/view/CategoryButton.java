@@ -6,8 +6,17 @@
 package view;
 
 import controller.BBQControl;
+import controller.SaladControl;
 import java.awt.CardLayout;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import model.Accompaniment;
+import model.Grill;
 import model.Meat;
+import model.Salad;
+import model.Vegetable;
 
 /**
  *
@@ -16,25 +25,68 @@ import model.Meat;
 public class CategoryButton extends javax.swing.JPanel {
 
     private Meat meat;
+    private Accompaniment accompaniment;
+    private Grill grill;
     private BBQControl bbqc;
+    private SaladControl saladControl;
     private CardLayout cl;
+    private Salad salad;
+    private Vegetable vegetable;
+    private boolean isStandardVegetable;
 
     /**
      * Creates new form CategoryButton
      */
-    public CategoryButton(Object category) {
+    public CategoryButton(Object category, boolean isStandardVegetable) {
         bbqc = BBQControl.getInstance();
+        try {
+            saladControl = SaladControl.getInstance();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(CategoryButton.class.getName()).log(Level.SEVERE, null, ex);
+        }
         setSize(263, 30);
         initComponents();
         cl = (CardLayout) getLayout();
         cl.addLayoutComponent(jPOther, "Other");
         cl.addLayoutComponent(jPMeat, "Meat");
+        cl.addLayoutComponent(jPVegetable, "Vegetable");
         switch (category.getClass().getSimpleName()) {
             case "Meat":
                 meat = (Meat) category;
                 cl.show(this, "Meat");
                 jLMeatTitel.setText(meat.getType());
                 setSize(263, 59);
+                break;
+            case "Accompaniment":
+                accompaniment = (Accompaniment) category;
+                cl.show(this, "Other");
+                jBType.setText(accompaniment.getType());
+                setSize(263, 30);
+                jBType.setSize(getWidth(), getHeight());
+                break;
+            case "Grill":
+                grill = (Grill) category;
+                cl.show(this, "Other");
+                jBType.setText(grill.getType());
+                setSize(263, 30);
+                jBType.setSize(getWidth(), getHeight());
+                break;
+            case "Salad":
+                salad = (Salad) category;
+                cl.show(this, "Other");
+                jBType.setText(salad.getType());
+                setSize(263, 30);
+                jBType.setSize(getWidth(), getHeight());
+                break;
+            case "Vegetable":
+                vegetable = (Vegetable) category;
+                cl.show(this, "Vegetable");
+                jToggleButton1.setText(vegetable.getType());
+                setSize(180, 32);
+                jToggleButton1.setSize(getWidth(), getHeight());
+                if (isStandardVegetable) {
+                    jToggleButton1.setSelected(isStandardVegetable);
+                }
                 break;
         }
     }
@@ -49,30 +101,33 @@ public class CategoryButton extends javax.swing.JPanel {
     private void initComponents() {
 
         jPOther = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jBType = new javax.swing.JButton();
         jPMeat = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jLMeatTitel = new javax.swing.JLabel();
         jTKilo = new javax.swing.JTextField();
+        jPVegetable = new javax.swing.JPanel();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         setOpaque(false);
         setLayout(new java.awt.CardLayout());
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jBType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jBType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBTypeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPOtherLayout = new javax.swing.GroupLayout(jPOther);
         jPOther.setLayout(jPOtherLayout);
         jPOtherLayout.setHorizontalGroup(
             jPOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPOtherLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jBType, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         jPOtherLayout.setVerticalGroup(
             jPOtherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPOtherLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jBType, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         add(jPOther, "card3");
@@ -111,6 +166,22 @@ public class CategoryButton extends javax.swing.JPanel {
         jTKilo.setBounds(180, 0, 81, 28);
 
         add(jPMeat, "card4");
+
+        jToggleButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jToggleButton1.setText("Grønsag");
+
+        javax.swing.GroupLayout jPVegetableLayout = new javax.swing.GroupLayout(jPVegetable);
+        jPVegetable.setLayout(jPVegetableLayout);
+        jPVegetableLayout.setHorizontalGroup(
+            jPVegetableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+        );
+        jPVegetableLayout.setVerticalGroup(
+            jPVegetableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+        );
+
+        add(jPVegetable, "card4");
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTKiloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTKiloActionPerformed
@@ -127,13 +198,38 @@ public class CategoryButton extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTKiloFocusGained
 
+    private void jBTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTypeActionPerformed
+        if (accompaniment != null) {
+            bbqc.addAccompanimentToList(accompaniment);
+        } else if (grill != null) {
+            bbqc.addGrillToList(grill);
+        } else if (salad != null) {
+            if (salad.getType().equals("Salatbar")) {
+                try {
+                    JFrame frame = new JFrame();
+                    SaladBarPanel saladBarPanel = new SaladBarPanel(frame, saladControl.getStandardVegetableList());
+                    frame.add(saladBarPanel);
+                    frame.setSize(587, 335);
+                    frame.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CategoryButton.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            } else {
+                bbqc.addSaladToList(salad);
+            }
+        }
+    }//GEN-LAST:event_jBTypeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBType;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLMeatTitel;
     private javax.swing.JPanel jPMeat;
     private javax.swing.JPanel jPOther;
+    private javax.swing.JPanel jPVegetable;
     private javax.swing.JTextField jTKilo;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

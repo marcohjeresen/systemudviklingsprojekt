@@ -7,6 +7,7 @@ package controller;
 
 import handler.AccompanimentHandler;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.Accompaniment;
 import util.Listeners;
 
@@ -32,6 +33,8 @@ public class AccompanimentControl {
         return ac;
     }
     
-    
+    public ArrayList<Accompaniment> getAccompanimentList() throws SQLException{
+        return ah.getAccompanimentList();
+    }
     
 }

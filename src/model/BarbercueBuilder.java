@@ -72,7 +72,7 @@ public class BarbercueBuilder {
         return saladList;
     }
 
-    public BarbercueBuilder setAccompanimentsList(AccompanimentToBBQ accompanimentToBBQ) {
+    public BarbercueBuilder addToAccompanimentsList(AccompanimentToBBQ accompanimentToBBQ) {
         accompanimentsList.add(accompanimentToBBQ);
         return this;
     }

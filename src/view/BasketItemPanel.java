@@ -5,8 +5,10 @@
  */
 package view;
 
-import model.Meat;
+import model.AccompanimentToBBQ;
+import model.GrillToBBQ;
 import model.MeatToBBQ;
+import model.SaladToBBQ;
 
 /**
  *
@@ -15,11 +17,16 @@ import model.MeatToBBQ;
 public class BasketItemPanel extends javax.swing.JPanel {
 
     private MeatToBBQ meatToBBQ;
+    private AccompanimentToBBQ accompanimentToBBQ;
+    private GrillToBBQ grillToBBQ;
+    private int settings;
+    private SaladToBBQ saladToBBQ;
 
     /**
      * Creates new form BasketItemPanel
      */
-    public BasketItemPanel(Object category) {
+    public BasketItemPanel(Object category, int settings) {
+        this.settings = settings;
         initComponents();
         switch (category.getClass().getSimpleName()) {
             case "MeatToBBQ":
@@ -29,6 +36,25 @@ public class BasketItemPanel extends javax.swing.JPanel {
                 jLPrice.setText(meatToBBQ.getTotalPrice() + " DKK");
                 setSize(263, 59);
                 break;
+            case "AccompanimentToBBQ":
+                accompanimentToBBQ = (AccompanimentToBBQ) category;
+                jLType.setText(accompanimentToBBQ.getAccompaniment().getType());
+                jLPrice.setText(accompanimentToBBQ.getTotalPrice(settings)+" DKK");
+                jLKilo.setText("");
+                setSize(263, 59);
+                break;
+            case "GrillToBBQ":
+                grillToBBQ = (GrillToBBQ) category;
+                jLType.setText(grillToBBQ.getGrill().getType());
+                jLPrice.setText(grillToBBQ.getGrill().getCoalPrice() + " DKK");
+                jLKilo.setText("");
+                setSize(263, 59);
+            case "SaladToBBQ":
+                saladToBBQ = (SaladToBBQ) category;
+                jLType.setText(saladToBBQ.getSalad().getType());
+                jLPrice.setText(saladToBBQ.getTotalPrice(settings)+ " DKK");
+                jLKilo.setText("");
+                setSize(263, 59);
         }
     }
 

@@ -5,9 +5,15 @@
  */
 package controller;
 
+import model.Accompaniment;
+import model.AccompanimentToBBQ;
 import model.BarbercueBuilder;
+import model.Grill;
+import model.GrillToBBQ;
 import model.Meat;
 import model.MeatToBBQ;
+import model.Salad;
+import model.SaladToBBQ;
 import util.Listeners;
 
 /**
@@ -42,6 +48,24 @@ public class BBQControl {
     public void addMeatToList(Meat meat, int kilo){
         MeatToBBQ meatToBBQ = new MeatToBBQ(meat, null, kilo);
         builder.addToMeatList(meatToBBQ);
+        listener.notifyListeners("added to basket");
+    }
+    
+    public  void addAccompanimentToList(Accompaniment accompaniment){
+        AccompanimentToBBQ accompanimentToBBQ = new AccompanimentToBBQ(accompaniment, null);
+        builder.addToAccompanimentsList(accompanimentToBBQ);
+        listener.notifyListeners("added to basket");
+    }
+    
+    public void addGrillToList(Grill grill){
+        GrillToBBQ grillToBBQ = new GrillToBBQ(grill, null);
+        builder.addToGrillList(grillToBBQ);
+        listener.notifyListeners("added to basket");
+    }
+
+    public void addSaladToList(Salad salad) {
+        SaladToBBQ saladToBBQ = new SaladToBBQ(salad, null);
+        builder.addToSaladList(saladToBBQ);
         listener.notifyListeners("added to basket");
     }
 }

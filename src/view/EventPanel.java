@@ -5,11 +5,14 @@
  */
 package view;
 
+import controller.AccompanimentControl;
 import controller.BBQControl;
 import controller.CategoryControl;
 import controller.CustomerControl;
+import controller.GrillControl;
 import controller.MassageControl;
 import controller.MeatControl;
+import controller.SaladControl;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,14 +27,17 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
+import model.AccompanimentToBBQ;
 import model.Category;
 import model.Event;
 import model.Customer;
 import model.CustomerBuilder;
+import model.GrillToBBQ;
 import model.Massage;
 import model.MassageBuilder;
 import model.MassageType;
 import model.MeatToBBQ;
+import model.SaladToBBQ;
 import util.DateFormatTools;
 import util.Listeners;
 
@@ -53,6 +59,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private MassageControl mc;
     private CategoryControl categoryControl;
     private MeatControl meatControl;
+    private AccompanimentControl accompanimentControl;
+    private GrillControl grillControl;
+    private SaladControl saladControl;
     private BBQControl bbqControl;
     private CustomerBuilder cb;
     private MassageBuilder massage;
@@ -79,6 +88,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             mc = MassageControl.getInstance();
             categoryControl = CategoryControl.getInstance();
             meatControl = MeatControl.getInstance();
+            accompanimentControl = AccompanimentControl.getInstance();
+            grillControl = GrillControl.getInstance();
+            saladControl = SaladControl.getInstance();
             bbqControl = BBQControl.getInstance();
         } catch (ClassNotFoundException | SQLException ex) {
             new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
@@ -366,6 +378,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     public void showCategoryItem(String category) {
         ArrayList<Object> temp = new ArrayList<>();
         int location = 0;
+        jPScrollChosen.removeAll();
         try {
             switch (category) {
                 case "Meat":
@@ -374,18 +387,29 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     }
                     break;
                 case "Accompaniment":
-                    break;
-                case "Salad":
+                    for (Object accompaniment : accompanimentControl.getAccompanimentList()) {
+                        temp.add(accompaniment);
+                    }
                     break;
                 case "Grill":
+                    for (Object grill : grillControl.getGrillList()) {
+                        temp.add(grill);
+                    }
                     break;
+                case "Salad":
+                    for (Object salad : saladControl.getSaladList()) {
+                        temp.add(salad);
+                    }
+    
+                    break;
+                
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         CategoryButton catButton = null;
         for (Object o : temp) {
-            catButton = new CategoryButton(o);
+            catButton = new CategoryButton(o, false);
             if (location == 0) {
                 catButton.setLocation(0, 10);
             } else {
@@ -404,13 +428,17 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     
     public void addToBasket(){
         int location = 0;
+        int basketPanelHeight = 0;
         jPScrollBasket.removeAll();
         BasketItemPanel bip;
         ArrayList<MeatToBBQ> meatList = bbqControl.getBuilder().getMeatList();
+        ArrayList<AccompanimentToBBQ> accList = bbqControl.getBuilder().getAccompanimentsList();
+        ArrayList<GrillToBBQ> grillList = bbqControl.getBuilder().getGrillList();
+        ArrayList<SaladToBBQ> saladList = bbqControl.getBuilder().getSaladList();
         jPScrollBasket.setPreferredSize(new Dimension(0, 0));
         if(meatList != null){
             for (MeatToBBQ meat : meatList) {
-                bip = new BasketItemPanel((Object) meat);
+                bip = new BasketItemPanel((Object) meat, Integer.parseInt(jTBBQDishes.getText()));
                 if(location == 0){
                     bip.setLocation(0, 10);
                 } else {
@@ -418,7 +446,54 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 }
                 jPScrollBasket.add(bip);
                 bip.setVisible(true);
-                jPScrollBasket.setPreferredSize(new Dimension(bip.getWidth(), jPScrollBasket.getHeight()+bip.getHeight()));
+                basketPanelHeight += 15+bip.getHeight();
+                jPScrollBasket.setPreferredSize(new Dimension(bip.getWidth(), basketPanelHeight));
+                location++;
+            }
+        } 
+        if(accList != null){
+            for (AccompanimentToBBQ acc : accList) {
+                bip = new BasketItemPanel((Object) acc, Integer.parseInt(jTBBQDishes.getText()));
+                if(location == 0){
+                    bip.setLocation(0, 15);
+                } else {
+                    bip.setLocation(0, (5*location+10)+(bip.getHeight()*location));
+                }
+                jPScrollBasket.add(bip);
+                bip.setVisible(true);
+                basketPanelHeight += 15+bip.getHeight();
+                jPScrollBasket.setPreferredSize(new Dimension(bip.getWidth(), basketPanelHeight));
+                location++;
+            }
+        }
+        if(grillList != null){
+            for (GrillToBBQ grill : grillList) {
+                bip = new BasketItemPanel((Object) grill, Integer.parseInt(jTBBQDishes.getText()));
+                if(location == 0){
+                    bip.setLocation(0, 15);
+                } else {
+                    bip.setLocation(0, (5*location+10)+(bip.getHeight()*location));
+                }
+                jPScrollBasket.add(bip);
+                bip.setVisible(true);
+                basketPanelHeight += 15+bip.getHeight();
+                jPScrollBasket.setPreferredSize(new Dimension(bip.getWidth(), basketPanelHeight));
+                location++;
+            }
+        }
+       
+                if(saladList != null){
+            for (SaladToBBQ saladToBBQ : saladList) {
+                bip = new BasketItemPanel((Object) saladToBBQ, Integer.parseInt(jTBBQDishes.getText()));
+                if(location == 0){
+                    bip.setLocation(0, 15);
+                } else {
+                    bip.setLocation(0, (5*location+10)+(bip.getHeight()*location));
+                }
+                jPScrollBasket.add(bip);
+                bip.setVisible(true);
+                basketPanelHeight += 15+bip.getHeight();
+                jPScrollBasket.setPreferredSize(new Dimension(bip.getWidth(), basketPanelHeight));
                 location++;
             }
         }
@@ -1069,13 +1144,13 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 showCategoryItem("Meat");
                 break;
             case "Category Accompaniment":
-
+                showCategoryItem("Accompaniment");
                 break;
             case "Category Salad":
-
+                showCategoryItem("Salad");
                 break;
             case "Category Grill":
-
+                showCategoryItem("Grill");
                 break;
             case "added to basket":
                 addToBasket();
