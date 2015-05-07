@@ -49,6 +49,14 @@ public class BarbercueBuilder {
         grillList.add(grillToBBQ);
         return this;
     }
+    
+    public void removeFromGrillList(GrillToBBQ grillToBBQ){
+        for (int i = 0; i < grillList.size(); i++) {
+            if(grillList.get(i).equals(grillToBBQ)){
+                grillList.remove(i);
+            }
+        }
+    }
 
     public ArrayList<GrillToBBQ> getGrillList() {
         return grillList;
@@ -57,6 +65,14 @@ public class BarbercueBuilder {
     public BarbercueBuilder addToMeatList(MeatToBBQ meatToBBQ) {
         meatList.add(meatToBBQ);
         return this;
+    }
+    
+    public void removeFromMeatList(MeatToBBQ meatToBBQ){
+        for (int i = 0; i < meatList.size(); i++) {
+            if(meatList.get(i).equals(meatToBBQ)){
+                meatList.remove(i);
+            }
+        }
     }
 
     public ArrayList<MeatToBBQ> getMeatList() {
@@ -67,6 +83,14 @@ public class BarbercueBuilder {
         saladList.add(saladToBBQ);
         return this;
     }
+    
+    public void removeFromSaladList(SaladToBBQ saladToBBQ){
+        for (int i = 0; i < saladList.size(); i++) {
+            if(saladList.get(i).equals(saladToBBQ)){
+                saladList.remove(i);
+            }
+        }
+    }
 
     public ArrayList<SaladToBBQ> getSaladList() {
         return saladList;
@@ -75,6 +99,14 @@ public class BarbercueBuilder {
     public BarbercueBuilder addToAccompanimentsList(AccompanimentToBBQ accompanimentToBBQ) {
         accompanimentsList.add(accompanimentToBBQ);
         return this;
+    }
+    
+    public void removeFromAccompanimentList(AccompanimentToBBQ accompanimentToBBQ){
+        for (int i = 0; i < accompanimentsList.size(); i++) {
+            if(accompanimentsList.get(i).equals(accompanimentToBBQ)){
+                accompanimentsList.remove(i);
+            }
+        }
     }
 
     public ArrayList<AccompanimentToBBQ> getAccompanimentsList() {

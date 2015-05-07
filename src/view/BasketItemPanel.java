@@ -5,6 +5,8 @@
  */
 package view;
 
+import controller.BBQControl;
+import javax.swing.JFrame;
 import model.AccompanimentToBBQ;
 import model.GrillToBBQ;
 import model.MeatToBBQ;
@@ -19,14 +21,16 @@ public class BasketItemPanel extends javax.swing.JPanel {
     private MeatToBBQ meatToBBQ;
     private AccompanimentToBBQ accompanimentToBBQ;
     private GrillToBBQ grillToBBQ;
-    private int settings;
     private SaladToBBQ saladToBBQ;
+    private BBQControl bbqc;
+    private int settings;
 
     /**
      * Creates new form BasketItemPanel
      */
     public BasketItemPanel(Object category, int settings) {
         this.settings = settings;
+        bbqc = BBQControl.getInstance();
         initComponents();
         switch (category.getClass().getSimpleName()) {
             case "MeatToBBQ":
@@ -39,7 +43,7 @@ public class BasketItemPanel extends javax.swing.JPanel {
             case "AccompanimentToBBQ":
                 accompanimentToBBQ = (AccompanimentToBBQ) category;
                 jLType.setText(accompanimentToBBQ.getAccompaniment().getType());
-                jLPrice.setText(accompanimentToBBQ.getTotalPrice(settings)+" DKK");
+                jLPrice.setText(accompanimentToBBQ.getTotalPrice(settings) + " DKK");
                 jLKilo.setText("");
                 setSize(263, 59);
                 break;
@@ -49,12 +53,14 @@ public class BasketItemPanel extends javax.swing.JPanel {
                 jLPrice.setText(grillToBBQ.getGrill().getCoalPrice() + " DKK");
                 jLKilo.setText("");
                 setSize(263, 59);
+                break;
             case "SaladToBBQ":
                 saladToBBQ = (SaladToBBQ) category;
                 jLType.setText(saladToBBQ.getSalad().getType());
-                jLPrice.setText(saladToBBQ.getTotalPrice(settings)+ " DKK");
+                jLPrice.setText(saladToBBQ.getTotalPrice(settings) + " DKK");
                 jLKilo.setText("");
                 setSize(263, 59);
+                break;
         }
     }
 
@@ -73,6 +79,11 @@ public class BasketItemPanel extends javax.swing.JPanel {
         jLPrice = new javax.swing.JLabel();
 
         setOpaque(false);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
         setLayout(null);
 
         jLType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -87,6 +98,11 @@ public class BasketItemPanel extends javax.swing.JPanel {
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setText("X");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         add(jButton1);
         jButton1.setBounds(210, 0, 50, 50);
 
@@ -95,6 +111,26 @@ public class BasketItemPanel extends javax.swing.JPanel {
         add(jLPrice);
         jLPrice.setBounds(116, 30, 90, 22);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        JFrame frame = new JFrame();
+        SaladBarPanel saladBarPanel = new SaladBarPanel(frame, saladToBBQ.getSalad(), true);
+        frame.add(saladBarPanel);
+        frame.setSize(587, 335);
+        frame.setVisible(true);
+    }//GEN-LAST:event_formMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(meatToBBQ != null){
+            bbqc.removeMeatFromList(meatToBBQ);
+        } else if(accompanimentToBBQ != null){
+            bbqc.removeAccompanimentFromList(accompanimentToBBQ);
+        } else if(grillToBBQ != null){
+            bbqc.removeGrillFromList(grillToBBQ);
+        } else if(saladToBBQ != null){
+            bbqc.removeSaladFromList(saladToBBQ);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

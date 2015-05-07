@@ -5,56 +5,82 @@
  */
 package view;
 
+import controller.BBQControl;
 import controller.SaladControl;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.JToggleButton;
+import model.Salad;
 import model.Vegetable;
+import model.VegetableToSalad;
+import util.Listeners;
 
 /**
  *
  * @author Annette
  */
-public class SaladBarPanel extends javax.swing.JPanel {
-
+public class SaladBarPanel extends javax.swing.JPanel implements ActionListener {
+    
     private ArrayList<Vegetable> vegetables;
     private ArrayList<String> standardVegetables;
     private SaladControl saladControl;
+    private BBQControl bbqc;
     private JFrame frame;
+    private Salad salad;
+    private boolean editing;
+    private Listeners listeners;
 
     /**
      * Creates new form SaladBarPanel
      */
-    public SaladBarPanel(JFrame frame, ArrayList<String> standardVegetables) {
+    public SaladBarPanel(JFrame frame, Salad salad, boolean editing) {
         try {
             this.frame = frame;
+            this.salad = salad;
+            this.editing = editing;
+            listeners = Listeners.getList();
+            listeners.addListener(this);
             saladControl = SaladControl.getInstance();
+            bbqc = BBQControl.getInstance();
             vegetables = saladControl.getVegetableList();
-            this.standardVegetables = standardVegetables;
+            this.standardVegetables = saladControl.getStandardVegetableList();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(SaladBarPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
+        saladControl.createSaladBar(salad);
         jScrollPane1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
         showVegetables();
     }
-
+    
     public void showVegetables() {
         int location = 0;
         int row = 0;
         int panelWidth = 0;
+        ArrayList<Vegetable> temporaryList = new ArrayList<>();
         for (Vegetable vegetable : vegetables) {
             boolean isStandardVegetable = false;
-            for (String standardVegetable : standardVegetables) {
-                if (vegetable.getType().equals(standardVegetable)) {
-                    isStandardVegetable = true;
+            if (saladControl.getSaladBar().getVegetableList().isEmpty()) {
+                for (String standardVegetable : standardVegetables) {
+                    if (vegetable.getType().equals(standardVegetable)) {
+                        isStandardVegetable = true;
+                        temporaryList.add(vegetable);
+                    }
+                }
+            } else {
+                for (VegetableToSalad selectedVegetable : saladControl.getSaladBar().getVegetableList()) {
+                    if (vegetable.getType().equals(selectedVegetable.getVegetable().getType())) {
+                        isStandardVegetable = true;
+                    }
                 }
             }
+            
             CategoryButton vegetableButton = new CategoryButton((Object) vegetable, isStandardVegetable);
             vegetableButton.setLocation((row * vegetableButton.getWidth()) + (5 * row), (5 * location + 10) + (vegetableButton.getHeight() * location));
             jPSaladBar.add(vegetableButton);
@@ -67,6 +93,7 @@ public class SaladBarPanel extends javax.swing.JPanel {
                 row++;
             }
         }
+        saladControl.getSaladBar().addVegetableListToSalad(temporaryList);
     }
 
     /**
@@ -113,12 +140,26 @@ public class SaladBarPanel extends javax.swing.JPanel {
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setText("OK");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1);
         jButton1.setBounds(240, 250, 110, 40);
 
         add(jPanel1);
         jPanel1.setBounds(0, 0, 570, 300);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (!editing) {
+            bbqc.addSaladToList(saladControl.getSaladBar());
+        }else{
+            listeners.notifyListeners("added to basket");
+        }
+        frame.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -128,4 +169,12 @@ public class SaladBarPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        switch (ae.getActionCommand()) {
+            case "salad bar updated":
+                showVegetables();
+        }
+    }
 }

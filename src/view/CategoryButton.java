@@ -8,6 +8,7 @@ package view;
 import controller.BBQControl;
 import controller.SaladControl;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -158,6 +159,9 @@ public class CategoryButton extends javax.swing.JPanel {
             }
         });
         jTKilo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTKiloFocusLost(evt);
+            }
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTKiloFocusGained(evt);
             }
@@ -169,6 +173,11 @@ public class CategoryButton extends javax.swing.JPanel {
 
         jToggleButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jToggleButton1.setText("Grønsag");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPVegetableLayout = new javax.swing.GroupLayout(jPVegetable);
         jPVegetable.setLayout(jPVegetableLayout);
@@ -189,7 +198,40 @@ public class CategoryButton extends javax.swing.JPanel {
     }//GEN-LAST:event_jTKiloActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        bbqc.addMeatToList(meat, Integer.parseInt(jTKilo.getText()));
+        int kilo = Integer.parseInt(jTKilo.getText());
+        if (jLMeatTitel.getText().equals("Hel gris 0-35 kg")) {
+            if (kilo >= 0 && kilo <= 35) {
+                bbqc.addMeatToList(meat, Integer.parseInt(jTKilo.getText()));
+                jButton2.setText("OK");
+                jButton2.setForeground(Color.black);
+            } else {
+                jButton2.setText("Forkert antal kilo!");
+                jButton2.setForeground(Color.red);
+            }
+        } else if (jLMeatTitel.getText().equals("Hel gris 35-50 kg")) {
+            if (kilo >= 35 && kilo <= 50) {
+                bbqc.addMeatToList(meat, Integer.parseInt(jTKilo.getText()));
+                jButton2.setText("OK");
+                jButton2.setForeground(Color.black);
+            } else {
+                jButton2.setText("Forkert antal kilo!");
+                jButton2.setForeground(Color.red);
+            }
+        } else if (jLMeatTitel.getText().equals("Hel gris 50-90 kg")) {
+            if (kilo >= 50) {
+                bbqc.addMeatToList(meat, Integer.parseInt(jTKilo.getText()));
+                jButton2.setText("OK");
+                jButton2.setForeground(Color.black);
+            } else {
+                jButton2.setText("Forkert antal kilo!");
+                jButton2.setForeground(Color.red);
+            }
+        } else {
+            bbqc.addMeatToList(meat, Integer.parseInt(jTKilo.getText()));
+            jButton2.setText("OK");
+            jButton2.setForeground(Color.black);
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTKiloFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTKiloFocusGained
@@ -205,21 +247,31 @@ public class CategoryButton extends javax.swing.JPanel {
             bbqc.addGrillToList(grill);
         } else if (salad != null) {
             if (salad.getType().equals("Salatbar")) {
-                try {
-                    JFrame frame = new JFrame();
-                    SaladBarPanel saladBarPanel = new SaladBarPanel(frame, saladControl.getStandardVegetableList());
-                    frame.add(saladBarPanel);
-                    frame.setSize(587, 335);
-                    frame.setVisible(true);
-                } catch (SQLException ex) {
-                    Logger.getLogger(CategoryButton.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                JFrame frame = new JFrame();
+                SaladBarPanel saladBarPanel = new SaladBarPanel(frame, salad, false);
+                frame.add(saladBarPanel);
+                frame.setSize(587, 335);
+                frame.setVisible(true);
 
             } else {
                 bbqc.addSaladToList(salad);
             }
         }
     }//GEN-LAST:event_jBTypeActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        if (jToggleButton1.isSelected()) {
+            saladControl.addToSaladBar(vegetable);
+        } else {
+            saladControl.removeFromSaladBar(vegetable);
+        }
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jTKiloFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTKiloFocusLost
+        if (jTKilo.getText().equals("")) {
+            jTKilo.setText("Antal Kilo");
+        }
+    }//GEN-LAST:event_jTKiloFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

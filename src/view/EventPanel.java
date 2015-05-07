@@ -360,9 +360,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 ob.setSize(130, 40);
                 ob.setVisible(true);
                 if (location == 0) {
-                    ob.setLocation(10, (20) + (ob.getHeight() * location));
+                    ob.setLocation(10, (30) + (ob.getHeight() * location));
                 } else {
-                    ob.setLocation(10, (5 * location + 20) + (ob.getHeight() * location));
+                    ob.setLocation(10, (5 * location + 30) + (ob.getHeight() * location));
                 }
                 ob.setSize(jPCategory.getWidth() - 20);
                 ob.setSize(jPCategory.getWidth() - 20, 40);
@@ -400,9 +400,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     for (Object salad : saladControl.getSaladList()) {
                         temp.add(salad);
                     }
-    
+
                     break;
-                
+
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -425,8 +425,8 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jScrollPane2.revalidate();
         jScrollPane2.repaint();
     }
-    
-    public void addToBasket(){
+
+    public void addToBasket() {
         int location = 0;
         int basketPanelHeight = 0;
         jPScrollBasket.removeAll();
@@ -436,63 +436,62 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         ArrayList<GrillToBBQ> grillList = bbqControl.getBuilder().getGrillList();
         ArrayList<SaladToBBQ> saladList = bbqControl.getBuilder().getSaladList();
         jPScrollBasket.setPreferredSize(new Dimension(0, 0));
-        if(meatList != null){
+        if (meatList != null) {
             for (MeatToBBQ meat : meatList) {
                 bip = new BasketItemPanel((Object) meat, Integer.parseInt(jTBBQDishes.getText()));
-                if(location == 0){
+                if (location == 0) {
                     bip.setLocation(0, 10);
                 } else {
-                    bip.setLocation(0, (5*location+10)+(bip.getHeight()*location));
+                    bip.setLocation(0, (5 * location + 10) + (bip.getHeight() * location));
                 }
                 jPScrollBasket.add(bip);
                 bip.setVisible(true);
-                basketPanelHeight += 15+bip.getHeight();
+                basketPanelHeight += 15 + bip.getHeight();
                 jPScrollBasket.setPreferredSize(new Dimension(bip.getWidth(), basketPanelHeight));
                 location++;
             }
-        } 
-        if(accList != null){
+        }
+        if (accList != null) {
             for (AccompanimentToBBQ acc : accList) {
                 bip = new BasketItemPanel((Object) acc, Integer.parseInt(jTBBQDishes.getText()));
-                if(location == 0){
+                if (location == 0) {
                     bip.setLocation(0, 15);
                 } else {
-                    bip.setLocation(0, (5*location+10)+(bip.getHeight()*location));
+                    bip.setLocation(0, (5 * location + 10) + (bip.getHeight() * location));
                 }
                 jPScrollBasket.add(bip);
                 bip.setVisible(true);
-                basketPanelHeight += 15+bip.getHeight();
+                basketPanelHeight += 15 + bip.getHeight();
                 jPScrollBasket.setPreferredSize(new Dimension(bip.getWidth(), basketPanelHeight));
                 location++;
             }
         }
-        if(grillList != null){
+        if (grillList != null) {
             for (GrillToBBQ grill : grillList) {
                 bip = new BasketItemPanel((Object) grill, Integer.parseInt(jTBBQDishes.getText()));
-                if(location == 0){
+                if (location == 0) {
                     bip.setLocation(0, 15);
                 } else {
-                    bip.setLocation(0, (5*location+10)+(bip.getHeight()*location));
+                    bip.setLocation(0, (5 * location + 10) + (bip.getHeight() * location));
                 }
                 jPScrollBasket.add(bip);
                 bip.setVisible(true);
-                basketPanelHeight += 15+bip.getHeight();
+                basketPanelHeight += 15 + bip.getHeight();
                 jPScrollBasket.setPreferredSize(new Dimension(bip.getWidth(), basketPanelHeight));
                 location++;
             }
         }
-       
-                if(saladList != null){
+        if (saladList != null) {
             for (SaladToBBQ saladToBBQ : saladList) {
                 bip = new BasketItemPanel((Object) saladToBBQ, Integer.parseInt(jTBBQDishes.getText()));
-                if(location == 0){
+                if (location == 0) {
                     bip.setLocation(0, 15);
                 } else {
-                    bip.setLocation(0, (5*location+10)+(bip.getHeight()*location));
+                    bip.setLocation(0, (5 * location + 10) + (bip.getHeight() * location));
                 }
                 jPScrollBasket.add(bip);
                 bip.setVisible(true);
-                basketPanelHeight += 15+bip.getHeight();
+                basketPanelHeight += 15 + bip.getHeight();
                 jPScrollBasket.setPreferredSize(new Dimension(bip.getWidth(), basketPanelHeight));
                 location++;
             }

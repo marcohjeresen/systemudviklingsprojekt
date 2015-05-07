@@ -10,6 +10,7 @@ package model;
  * @author Annette
  */
 public class SaladToBBQ {
+
     private Salad salad;
     private Barbercue barbercue;
 
@@ -35,9 +36,8 @@ public class SaladToBBQ {
     }
 
     public int getTotalPrice(int settings) {
-    int temp = salad.getPricePerHead() * settings;
-    return temp;
+        int temp = salad.getPricePerHead() * settings;
+        return temp;
     }
-    
-    
+
 }

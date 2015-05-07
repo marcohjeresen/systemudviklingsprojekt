@@ -44,6 +44,11 @@ public class Salad {
     }
 
     public int getPricePerHead() {
+        if(!vegetableList.isEmpty()){
+            for (VegetableToSalad vegetableToSalad : vegetableList) {
+                pricePerHead += vegetableToSalad.getVegetable().getPricePerHead();
+            }
+        }
         return pricePerHead;
     }
 
@@ -65,6 +70,21 @@ public class Salad {
 
     public void addToVegetableList(VegetableToSalad vegetableToSalad) {
         this.vegetableList.add(vegetableToSalad);
+    }
+    
+    public void addVegetableListToSalad(ArrayList<Vegetable> vegetables){
+        for (Vegetable vegetable : vegetables) {
+            VegetableToSalad toSalad = new VegetableToSalad(vegetable, this);
+            vegetableList.add(toSalad);
+        }
+    }
+    
+    public void removeFromVegetableList(Vegetable vegetable){
+        for (int i = 0; i < vegetableList.size(); i++) {
+            if (vegetableList.get(i).getVegetable().getType().equals(vegetable.getType())) {
+                vegetableList.remove(i);
+            }
+        }
     }
 
     @Override

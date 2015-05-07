@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Salad;
 import model.Vegetable;
+import model.VegetableToSalad;
 import util.Listeners;
 
 /**
@@ -17,31 +18,54 @@ import util.Listeners;
  * @author Annette
  */
 public class SaladControl {
+
     private SaladHandler saladHandler;
     private static SaladControl sc;
     private Listeners listeners;
-    
-    private SaladControl() throws ClassNotFoundException, SQLException{
+    private Salad salad;
+
+    private SaladControl() throws ClassNotFoundException, SQLException {
+        salad = null;
         saladHandler = SaladHandler.getInstance();
         listeners = Listeners.getList();
     }
-    
-    public static SaladControl getInstance() throws ClassNotFoundException, SQLException{
-        if(sc == null){
+
+    public static SaladControl getInstance() throws ClassNotFoundException, SQLException {
+        if (sc == null) {
             sc = new SaladControl();
         }
         return sc;
     }
-    
-    public ArrayList<Salad> getSaladList() throws SQLException{
+
+    public ArrayList<Salad> getSaladList() throws SQLException {
         return saladHandler.getSaladList();
     }
-    
-    public ArrayList<Vegetable> getVegetableList() throws SQLException{
+
+    public ArrayList<Vegetable> getVegetableList() throws SQLException {
         return saladHandler.getVegetableList();
     }
-            
-    public ArrayList<String> getStandardVegetableList() throws SQLException{
+
+    public ArrayList<String> getStandardVegetableList() throws SQLException {
         return saladHandler.getStandardVegetableList();
+    }
+
+    public void createSaladBar(Salad salad) {
+        this.salad = salad;
+        listeners.notifyListeners("salad bar updated");
+    }
+
+    public Salad getSaladBar() {
+        return salad;
+    }
+
+    public void addToSaladBar(Vegetable vegetable) {
+        VegetableToSalad toSalad = new VegetableToSalad(vegetable, salad);
+        salad.addToVegetableList(toSalad);
+        listeners.notifyListeners("salad bar updated");
+    }
+
+    public void removeFromSaladBar(Vegetable vegetable) {
+        salad.removeFromVegetableList(vegetable);
+        listeners.notifyListeners("salad bar updated");
     }
 }
