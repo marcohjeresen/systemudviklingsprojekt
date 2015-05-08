@@ -37,12 +37,7 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
     public CalendarPanel() {
         try {
             cc = Calendar_Ct.getInstance();
-        } catch (ClassNotFoundException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
                     + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
                     + "for få dette fixet<br/>(Husk at have maden klar;)!)!");

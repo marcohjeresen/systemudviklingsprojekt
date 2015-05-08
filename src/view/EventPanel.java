@@ -9,6 +9,7 @@ import controller.AccompanimentControl;
 import controller.BBQControl;
 import controller.CategoryControl;
 import controller.CustomerControl;
+import controller.ErrorControl;
 import controller.GrillControl;
 import controller.MassageControl;
 import controller.MeatControl;
@@ -63,6 +64,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private GrillControl grillControl;
     private SaladControl saladControl;
     private BBQControl bbqControl;
+    private ErrorControl errorControl;
     private CustomerBuilder cb;
     private MassageBuilder massage;
     private ArrayList<MassageType> masTypeList;
@@ -92,11 +94,13 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             grillControl = GrillControl.getInstance();
             saladControl = SaladControl.getInstance();
             bbqControl = BBQControl.getInstance();
+            errorControl = ErrorControl.getInstance();
         } catch (ClassNotFoundException | SQLException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
+            try {
+                errorControl.createErrorPopup("Der kunne ikke oprettet forbindelse til databasen.");
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
         dateFormatTools = new DateFormatTools();
         initComponents();

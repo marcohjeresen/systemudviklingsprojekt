@@ -1,0 +1,3 @@
+1. Ændre lidt på ErrorPopup så den selv indeholder alle de forskellige tekster vi skal bruge og så man bare kalder den med første del at fejlen.
+2. Lave en Database klasse til håndtering af fejl i programmet. og metoder til at gemme i programmet..
+3
