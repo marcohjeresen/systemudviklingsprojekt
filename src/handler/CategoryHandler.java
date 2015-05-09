@@ -42,7 +42,6 @@ public class CategoryHandler {
         while (rs.next()) {
             Category category = new Category(rs.getInt("c_id"), rs.getString("c_name"));
             catList.add(category);
-            System.out.println("bfiueafa");
         }
         return catList;
     }

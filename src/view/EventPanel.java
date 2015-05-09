@@ -375,7 +375,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 location++;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                errorControl.createErrorPopup("Fejl i hentning af categories.", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
     }
 
@@ -404,7 +408,6 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     for (Object salad : saladControl.getSaladList()) {
                         temp.add(salad);
                     }
-
                     break;
 
             }

@@ -74,6 +74,11 @@ public class ErrorModel {
             case "Fejl i at printe":
                 message = "Exception occured in ReceiptPanel - JButton3 - print ";
                 break;
+            case "Fejl i hentning af categories.":
+                message = "Der kunne ikke hentes categories fra databasen. "
+                        + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
+                        + "for få dette fixet<br/>(Husk at have maden klar;)!)!";
+                break;
             default:
                 message = "Fejl kendes ikke "
                         + "<br/> Kontakt Annette, for få dette fixet<br/>"
