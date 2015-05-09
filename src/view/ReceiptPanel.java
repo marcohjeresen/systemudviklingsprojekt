@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.ErrorControl;
 import controller.MassageControl;
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -31,6 +32,7 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
     private CardLayout cl;
     private Event event;
     private MassageControl mc;
+    private ErrorControl errorControl;
 
     /**
      * Creates new form ReceiptPanel
@@ -39,17 +41,14 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
         this.event = event;
         this.frame = frame;
         try {
+            errorControl = ErrorControl.getInstance();
             mc = MassageControl.getInstance();
-        } catch (ClassNotFoundException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
-        } catch (SQLException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
+        } catch (ClassNotFoundException | SQLException ex) {
+            try {
+                errorControl.createErrorPopup("Fejl i forbindelse til databasen.", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
         initComponents();
         cl = (CardLayout) getLayout();
@@ -176,9 +175,11 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
         try {
             mc.deleteMassage(event);
         } catch (SQLException ex) {
-            new ErrorPopup("Aftalen kunne ikke slettes. <br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage()+"\n"+mc.getMh().getSql()+"\n"+mc.getMh().getSqlCal());
+            try {
+                errorControl.createErrorPopup("Fejl i sletning af aftalen.", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
         frame.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -192,7 +193,11 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
             try {
                 job.print();
             } catch (PrinterException ex) {
-                System.out.println("Exception occured in ReceiptPanel - JButton3 - print "+ex.getLocalizedMessage());
+                try {
+                errorControl.createErrorPopup("Fejl i at printe", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
             }
         }
     }//GEN-LAST:event_jButton3ActionPerformed

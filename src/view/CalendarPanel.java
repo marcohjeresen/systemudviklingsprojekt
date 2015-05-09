@@ -6,6 +6,7 @@
 package view;
 
 import controller.Calendar_Ct;
+import controller.ErrorControl;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -30,20 +31,24 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
     private Listeners listener;
     private int chosenPanel;
     private ArrayList<JPanel> panelList;
+    private ErrorControl errorControl;
 
     /**
      * Creates new form WeekPanel
      */
     public CalendarPanel() {
         try {
+            errorControl = ErrorControl.getInstance();
             cc = Calendar_Ct.getInstance();
         } catch (ClassNotFoundException | SQLException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
+            try {
+                errorControl.createErrorPopup("Fejl i forbindelse til databasen.", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
         listener = Listeners.getList();
+        
         chosenPanel = 0;
         initComponents();
         listener.addListener(this);
@@ -101,10 +106,11 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         try {
             calList = cc.getEventsOfWeek();
         } catch (SQLException ex) {
-            new ErrorPopup("Der kunne ikke hentes aftaler for denne uge. "
-                    + "<br/>Programmet kan godt bruges,men anbefales ikke.<br/> "
-                    + "Kontakt Annette, for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage() + "\n" + cc.getCh().getSql());
+            try {
+                errorControl.createErrorPopup("Fejl i hentning af aftaler for ugen.", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
         int monCount = 0;
         int tueCount = 0;

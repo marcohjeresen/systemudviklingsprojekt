@@ -5,10 +5,13 @@
  */
 package view;
 
+import controller.ErrorControl;
 import controller.MassageControl;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -18,6 +21,7 @@ import javax.swing.JFrame;
 public class Gui extends javax.swing.JFrame {
 
     private CalendarPanel cp;
+    private ErrorControl errorControl;
 
     /**
      * Creates new form Gui
@@ -25,7 +29,11 @@ public class Gui extends javax.swing.JFrame {
     public Gui() {
 
         cp = new CalendarPanel();
-
+        try {
+            errorControl = ErrorControl.getInstance();
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
         initComponents();
         jPanel1.add(cp);
         cp.setVisible(true);
@@ -140,16 +148,12 @@ public class Gui extends javax.swing.JFrame {
             jframe.add(new EditMassage(jframe, m.getMTypeList()));
             jframe.setVisible(true);
             jframe.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        } catch (ClassNotFoundException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
-        } catch (SQLException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
+        } catch (ClassNotFoundException | SQLException ex) {
+            try {
+                errorControl.createErrorPopup("Fejl i forbindelse til databasen.", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 

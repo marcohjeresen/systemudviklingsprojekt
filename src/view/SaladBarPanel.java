@@ -80,7 +80,6 @@ public class SaladBarPanel extends javax.swing.JPanel implements ActionListener 
                     }
                 }
             }
-            
             CategoryButton vegetableButton = new CategoryButton((Object) vegetable, isStandardVegetable);
             vegetableButton.setLocation((row * vegetableButton.getWidth()) + (5 * row), (5 * location + 10) + (vegetableButton.getHeight() * location));
             jPSaladBar.add(vegetableButton);

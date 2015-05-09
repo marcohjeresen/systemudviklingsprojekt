@@ -6,6 +6,7 @@
 package view;
 
 import controller.Calendar_Ct;
+import controller.ErrorControl;
 import java.sql.SQLException;
 import java.util.Calendar;
 import javax.swing.JFrame;
@@ -22,6 +23,7 @@ public class DayPanel extends javax.swing.JPanel {
     private JFrame jFrame;
     private Calendar_Ct cc;
     private JLabel label;
+    private ErrorControl errorControl;
 
     /**
      * Creates new form NewJPanel
@@ -32,17 +34,14 @@ public class DayPanel extends javax.swing.JPanel {
         this.cal = cal;
         this.jFrame = jFrame;
         try {
+            errorControl = ErrorControl.getInstance();
             cc = Calendar_Ct.getInstance();
-        } catch (ClassNotFoundException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
-        } catch (SQLException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
+        } catch (ClassNotFoundException | SQLException ex) {
+            try {
+                errorControl.createErrorPopup("Fejl i forbindelse til databasen.", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
         initComponents();
         label = jLabel1;

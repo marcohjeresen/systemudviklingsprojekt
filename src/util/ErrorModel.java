@@ -27,45 +27,53 @@ public class ErrorModel {
     public String getMessage(String error) {
         String message = "";
         switch (error) {
-            case "Der kunne ikke oprettet forbindelse til databasen.":
+            case "Fejl i forbindelse til databasen.":
                 message = "Der kunne ikke oprettet forbindelse til databasen. "
                         + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
                         + "for få dette fixet<br/>(Husk at have maden klar;)!)!";
                 break;
-            case "Der kunne ikke hentes massagetyper fra databasen.":
+            case "Fejl i hentning af massagetyper.":
                 message = "Der kunne ikke hentes massagetyper fra databasen. "
                         + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
                         + "for få dette fixet.<br/>(Husk at have maden klar;)!)!";
                 break;
-            case "Der kunne ikke hentes kunder fra databasen.":
+            case "Fejl i hentning af kunder.":
                 message = "Der kunne ikke hentes kunder fra databasen. "
                         + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
                         + "for få dette fixet<br/>(Husk at have maden klar;)!)!";
                 break;
-            case "Kunden kunne ikke gemmes i databasen.":
+            case "Fejl i gemme kunder.":
                 message = "Kunden kunne ikke gemmes i databasen. "
                         + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
                         + "for få dette fixet<br/>(Husk at have maden klar;)!)!";
                 break;
-            case "Kunden kunne ikke ændres i databasen.":
+            case "Fejl i ændring af kunder.":
                 message = "Kunden kunne ikke ændres i databasen. "
                         + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
                         + "for få dette fixet<br/>(Husk at have maden klar;)!)!";
                 break;
-            case "Aftalen kunne ikke redigeres.":
+            case "Fejl i redigering af aftaler.":
                 message = "Aftalen kunne ikke redigeres. "
                         + "<br/> Kontakt Annette, for få dette fixet<br/>"
                         + "(Husk at have maden klar;)!)!";
                 break;
-            case "Der kunne ikke hentes aftaler for denne uge.":
+            case "Fejl i hentning af aftaler for ugen.":
                 message = "Der kunne ikke hentes aftaler for denne uge. "
-                    + "<br/>Programmet kan godt bruges,men anbefales ikke.<br/> "
-                    + "Kontakt Annette, for få dette fixet<br/>(Husk at have maden klar;)!)!";
+                        + "<br/>Programmet kan godt bruges,men anbefales ikke.<br/> "
+                        + "Kontakt Annette, for få dette fixet<br/>(Husk at have maden klar;)!)!";
                 break;
-                case "Aftalen kunne ikke slettes.":
-                    message = "Aftalen kunne ikke slettes. <br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!";
-                    break;
+            case "Fejl i sletning af aftalen.":
+                message = "Aftalen kunne ikke slettes. <br/> Kontakt Annette, "
+                        + "for få dette fixet<br/>(Husk at have maden klar;)!)!";
+                break;
+            case "Fejl i hentning af datoer.":
+                message = "Der kunne ikke hentes datoer fra databasen. "
+                        + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
+                        + "for få dette fixet<br/>(Husk at have maden klar;)!)!";
+                break;
+            case "Fejl i at printe":
+                message = "Exception occured in ReceiptPanel - JButton3 - print ";
+                break;
             default:
                 message = "Fejl kendes ikke "
                         + "<br/> Kontakt Annette, for få dette fixet<br/>"
@@ -73,6 +81,5 @@ public class ErrorModel {
         }
         return message;
     }
-
 
 }

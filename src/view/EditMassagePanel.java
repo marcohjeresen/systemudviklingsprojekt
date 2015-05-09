@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.ErrorControl;
 import controller.MassageControl;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -23,6 +24,7 @@ public class EditMassagePanel extends javax.swing.JPanel {
     private int price;
     private int duration;
     private Listeners listener;
+    private ErrorControl errorControl;
 
     /**
      * Creates new form EditMassagePanel
@@ -35,17 +37,14 @@ public class EditMassagePanel extends javax.swing.JPanel {
         this.duration = duration1;
         listener = Listeners.getList();
         try {
+            errorControl = ErrorControl.getInstance();
             masControl = MassageControl.getInstance();
-        } catch (ClassNotFoundException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
-        } catch (SQLException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
+        } catch (ClassNotFoundException | SQLException ex) {
+            try {
+                errorControl.createErrorPopup("Fejl i forbindelse til databasen.", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
         initComponents();
         jT_masType.setText(type);
@@ -60,10 +59,11 @@ public class EditMassagePanel extends javax.swing.JPanel {
         try {
             masControl.editMassageType(id, price, duration);
         } catch (SQLException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
+            try {
+                errorControl.createErrorPopup("Fejl i forbindelse til databasen.", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
         listener.notifyListeners("New Event Created");
     }

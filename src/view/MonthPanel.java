@@ -6,6 +6,7 @@
 package view;
 
 import controller.Calendar_Ct;
+import controller.ErrorControl;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -36,20 +37,18 @@ public class MonthPanel extends javax.swing.JPanel {
     private int x;
     private int y;
     private int count;
+    private ErrorControl errorControl;
 
     public MonthPanel(JFrame jFrame) {
         try {
+            errorControl = ErrorControl.getInstance();
             cc = Calendar_Ct.getInstance();
-        } catch (ClassNotFoundException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
-        } catch (SQLException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
+        } catch (ClassNotFoundException | SQLException ex) {
+            try {
+                errorControl.createErrorPopup("Fejl i forbindelse til databasen.", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
         this.jFrame = jFrame;
         iconSizeHeight = 40;
@@ -80,10 +79,11 @@ public class MonthPanel extends javax.swing.JPanel {
             days = cc.getDates();
 
         } catch (SQLException ex) {
-            new ErrorPopup("Der kunne ikke hentes datoer fra databasen. "
-                    + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage() + cc.getCh().getSql());
+            try {
+                errorControl.createErrorPopup("Fejl i hentning af datoer.", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
 
         //her kører vi alle dagene på selve måneden igennem og tjekker for event og om dagen er i dag
@@ -244,7 +244,6 @@ public class MonthPanel extends javax.swing.JPanel {
                 cal.roll(Calendar.MONTH, days);
             }
         }
-        
         jLabel_monht.setText(new SimpleDateFormat("MMMM").format(cal.getTime()).toUpperCase());
         drawDays();
     }

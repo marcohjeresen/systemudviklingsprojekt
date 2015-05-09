@@ -32,7 +32,7 @@ public class ErrorControl {
         return ec;
     }
     
-    public void createErrorPopup(String error) throws SQLException{
+    public void createErrorPopup(String error, String completeMessage) throws SQLException{
         ErrorPopup errorPopup = new ErrorPopup(errorModel.getMessage(error));
         eh.saveErrorMessage(errorModel.getMessage(error));
     }

@@ -86,6 +86,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         phoneSearch = true;
         listener = Listeners.getList();
         try {
+            errorControl = ErrorControl.getInstance();
             cc = CustomerControl.getInstance();
             mc = MassageControl.getInstance();
             categoryControl = CategoryControl.getInstance();
@@ -94,10 +95,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             grillControl = GrillControl.getInstance();
             saladControl = SaladControl.getInstance();
             bbqControl = BBQControl.getInstance();
-            errorControl = ErrorControl.getInstance();
         } catch (ClassNotFoundException | SQLException ex) {
             try {
-                errorControl.createErrorPopup("Der kunne ikke oprettet forbindelse til databasen.");
+                errorControl.createErrorPopup("Fejl i forbindelse til databasen.", ex.getLocalizedMessage());
             } catch (SQLException ex1) {
                 System.out.println(ex1.getLocalizedMessage());
             }
@@ -142,10 +142,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 try {
                     masTypeList = mc.getMTypeList();
                 } catch (SQLException ex) {
-                    new ErrorPopup("Der kunne ikke hentes massagetyper fra databasen. "
-                            + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                            + "for få dette fixet.<br/>(Husk at have maden klar;)!)!");
-                    System.out.println(ex.getLocalizedMessage() + "\n" + mc.getMh().getSql() + "\n" + mc.getMh().getSqlCal());
+                    try {
+                        errorControl.createErrorPopup("Fejl i hentning af massagetyper.", ex.getLocalizedMessage());
+                    } catch (SQLException ex1) {
+                        System.out.println(ex1.getLocalizedMessage());
+                    }
                 }
                 setJFrame(300, 370, "massage", dateFormatTools.getDayLetters(cal));
                 fillComboStartTime();
@@ -156,10 +157,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 try {
                     masTypeList = mc.getMTypeList();
                 } catch (SQLException ex) {
-                    new ErrorPopup("Der kunne ikke hentes massagetyper fra databasen. "
-                            + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                            + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-                    System.out.println(ex.getLocalizedMessage() + "\n" + mc.getMh().getSql() + "\n" + mc.getMh().getSqlCal());
+                    try {
+                        errorControl.createErrorPopup("Fejl i hentning af massagetyper.", ex.getLocalizedMessage());
+                    } catch (SQLException ex1) {
+                        System.out.println(ex1.getLocalizedMessage());
+                    }
                 }
                 event = mc.getEvent();
                 setJFrame(300, 370, "massage", dateFormatTools.getDayLetters(cal));
@@ -226,10 +228,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 cus = cc.getSpecificCustomer(jTBBQName.getText(), phoneSearch);
             }
         } catch (SQLException ex) {
-            new ErrorPopup("Der kunne ikke hentes kunder fra databasen. "
-                    + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage() + cc.getCh().getSql());
+            try {
+                errorControl.createErrorPopup("Fejl i hentning af kunder.", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
         if (search.equals("masPhone") || search.equals("masName")) {
             if (!cus.isEmpty() && cus.size() <= 1) {
@@ -289,10 +292,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     try {
                         cc.saveCustomer(customer);
                     } catch (SQLException ex) {
-                        new ErrorPopup("Kunden kunne ikke gemmes i databasen. "
-                                + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                                + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-                        System.out.println(ex.getLocalizedMessage() + "\n" + cc.getCh().getSql());
+                        try {
+                            errorControl.createErrorPopup("Fejl i gemme kunder.", ex.getLocalizedMessage());
+                        } catch (SQLException ex1) {
+                            System.out.println(ex1.getLocalizedMessage());
+                        }
                     }
                 }
             }
@@ -306,16 +310,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     try {
                         cc.saveCustomer(customer);
                     } catch (SQLException ex) {
-                        if (ex.toString().length() == 120) {
-                            new ErrorPopup("Kunden kunne ikke gemmes i databasen. "
-                                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
+                        try {
+                            errorControl.createErrorPopup("Fejl i gemme kunder.", ex.getLocalizedMessage());
+                        } catch (SQLException ex1) {
+                            System.out.println(ex1.getLocalizedMessage());
                         }
-                        System.out.println(ex.toString().length());
-                        new ErrorPopup("Kunden kunne ikke gemmes i databasen. "
-                                + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                                + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-                        System.out.println(ex.getLocalizedMessage() + "\n" + cc.getCh().getSql());
                     }
                 }
             }
@@ -336,11 +335,12 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         }
         try {
             cc.alterCustomer(customer, cusPhoneNumber, isMassage);
-        } catch (SQLException exception) {
-            new ErrorPopup("Kunden kunne ikke ændres i databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(exception.getLocalizedMessage() + "\n" + cc.getCh().getSql());
+        } catch (SQLException ex) {
+            try {
+                errorControl.createErrorPopup("Fejl i ændring af kunder.", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
 
     }
@@ -923,10 +923,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 try {
                     mc.updateMassage(event, startTime);
                 } catch (SQLException ex) {
-                    new ErrorPopup("Aftalen kunne ikke redigeres. "
-                            + "<br/> Kontakt Annette, for få dette fixet<br/>"
-                            + "(Husk at have maden klar;)!)!");
-                    System.out.println(ex.getLocalizedMessage() + "\n" + mc.getMh().getSql() + "\n" + mc.getMh().getSqlCal());
+                    try {
+                        errorControl.createErrorPopup("Fejl i redigering af aftaler.", ex.getLocalizedMessage());
+                    } catch (SQLException ex1) {
+                        System.out.println(ex1.getLocalizedMessage());
+                    }
                 }
                 listener.notifyListeners("New Event Created");
                 jFrame.dispose();
@@ -952,10 +953,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                         jBCreateMassage.setText("Tid Optaget");
                         jBCreateMassage.setBackground(Color.red);
                     } else {
-                        new ErrorPopup("Aftalen kunne ikke redigeres. "
-                                + "<br/> Kontakt Annette, for få dette fixet<br/>"
-                                + "(Husk at have maden klar;)!)!");
-                        System.out.println(ex.getLocalizedMessage());
+                        try {
+                            errorControl.createErrorPopup("Fejl i redigering af aftaler.", ex.getLocalizedMessage());
+                        } catch (SQLException ex1) {
+                            System.out.println(ex1.getLocalizedMessage());
+                        }
                     }
                 }
             }

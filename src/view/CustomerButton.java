@@ -6,6 +6,7 @@
 package view;
 
 import controller.CustomerControl;
+import controller.ErrorControl;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,23 +26,21 @@ public class CustomerButton extends JButton {
     private Customer customer;
     private CustomerPanel panel;
     private boolean isMassage;
+    private ErrorControl errorControl;
 
     public CustomerButton(final Customer customer, final CustomerPanel panel, final boolean isMassage) {
         this.customer = customer;
         this.panel = panel;
         this.isMassage = isMassage;
         try {
+            errorControl = ErrorControl.getInstance();
             cc = CustomerControl.getInstance();
-        } catch (ClassNotFoundException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
-        } catch (SQLException ex) {
-            new ErrorPopup("Der kunne ikke oprettet forbindelse til databasen. "
-                    + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
-                    + "for få dette fixet<br/>(Husk at have maden klar;)!)!");
-            System.out.println(ex.getLocalizedMessage());
+        } catch (ClassNotFoundException | SQLException ex) {
+            try {
+                errorControl.createErrorPopup("Fejl i forbindelse til databasen.", ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println(ex1.getLocalizedMessage());
+            }
         }
         listener = Listeners.getList();
         setBackground(Color.white);
