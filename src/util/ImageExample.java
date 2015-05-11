@@ -31,7 +31,7 @@ public class ImageExample {
             document.open();
 
             Image image1 = Image.getInstance("C:/Users/Mark/Documents/NetBeansProjects/JavaApplication1/src/pictures/event_bkgr.png");
-            image1.setAbsolutePosition(50, 700);
+            image1.setAbsolutePosition(50, 50);
             document.add(new Paragraph("A Hello World PDF document."));
             document.add(image1);
 
