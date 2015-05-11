@@ -451,9 +451,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             for (MeatToBBQ meat : meatList) {
                 bip = new BasketItemPanel((Object) meat, settings);
                 if (location == 0) {
-                    bip.setLocation(0, 10);
+                    bip.setLocation(0, 15);
                 } else {
-                    bip.setLocation(0, (5 * location + 10) + (bip.getHeight() * location));
+                    bip.setLocation(0, (5 * location + 15) + (bip.getHeight() * location));
                 }
                 jPScrollBasket.add(bip);
                 bip.setVisible(true);
@@ -468,7 +468,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 if (location == 0) {
                     bip.setLocation(0, 15);
                 } else {
-                    bip.setLocation(0, (5 * location + 10) + (bip.getHeight() * location));
+                    bip.setLocation(0, (5 * location + 15) + (bip.getHeight() * location));
                 }
                 jPScrollBasket.add(bip);
                 bip.setVisible(true);
@@ -483,7 +483,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 if (location == 0) {
                     bip.setLocation(0, 15);
                 } else {
-                    bip.setLocation(0, (5 * location + 10) + (bip.getHeight() * location));
+                    bip.setLocation(0, (5 * location + 15) + (bip.getHeight() * location));
                 }
                 jPScrollBasket.add(bip);
                 bip.setVisible(true);
@@ -498,7 +498,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 if (location == 0) {
                     bip.setLocation(0, 15);
                 } else {
-                    bip.setLocation(0, (5 * location + 10) + (bip.getHeight() * location));
+                    bip.setLocation(0, (5 * location + 15) + (bip.getHeight() * location));
                 }
                 jPScrollBasket.add(bip);
                 bip.setVisible(true);
@@ -513,7 +513,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             if (location == 0) {
                 bip.setLocation(0, 15);
             } else {
-                bip.setLocation(0, (5 * location + 10) + (bip.getHeight() * location));
+                bip.setLocation(0, (5 * location + 15) + (bip.getHeight() * location));
             }
             jPScrollBasket.add(bip);
             bip.setVisible(true);
@@ -527,7 +527,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         if (location == 0) {
             bip.setLocation(0, 15);
         } else {
-            bip.setLocation(0, (5 * location + 10) + (bip.getHeight() * location));
+            bip.setLocation(0, (5 * location + 15) + (bip.getHeight() * location));
         }
         jPScrollBasket.add(bip);
         bip.setVisible(true);
@@ -735,9 +735,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             }
         });
         bbqPanel.add(jButton1);
-        jButton1.setBounds(640, 640, 280, 31);
+        jButton1.setBounds(630, 640, 290, 31);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Kunde", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Kunde", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18), new java.awt.Color(18, 27, 36))); // NOI18N
         jPanel1.setOpaque(false);
         jPanel1.setLayout(null);
 
@@ -801,7 +801,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         bbqPanel.add(jPanel1);
         jPanel1.setBounds(0, 0, 310, 150);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Arrangement", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Arrangement", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18), new java.awt.Color(51, 70, 87))); // NOI18N
         jPanel2.setOpaque(false);
         jPanel2.setLayout(null);
 
@@ -865,13 +865,13 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         bbqPanel.add(jPanel2);
         jPanel2.setBounds(310, 0, 310, 150);
 
-        jPCategory.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Valgmuligheder", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+        jPCategory.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Valgmuligheder", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18), new java.awt.Color(18, 27, 36))); // NOI18N
         jPCategory.setOpaque(false);
         jPCategory.setLayout(null);
         bbqPanel.add(jPCategory);
         jPCategory.setBounds(0, 150, 310, 530);
 
-        jPChosen.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Valgte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+        jPChosen.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Valgte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18), new java.awt.Color(51, 70, 87))); // NOI18N
         jPChosen.setOpaque(false);
         jPChosen.setLayout(null);
 
@@ -890,7 +890,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         bbqPanel.add(jPChosen);
         jPChosen.setBounds(310, 150, 310, 530);
 
-        jPBasket.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Kurv", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+        jPBasket.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Kurv", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18), new java.awt.Color(149, 166, 182))); // NOI18N
         jPBasket.setOpaque(false);
         jPBasket.setLayout(null);
 
@@ -909,7 +909,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         bbqPanel.add(jPBasket);
         jPBasket.setBounds(620, 0, 310, 460);
 
-        jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Kommentarer", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+        jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Kommentarer", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18), new java.awt.Color(51, 70, 87))); // NOI18N
         jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane4.setOpaque(false);
 
@@ -927,7 +927,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         bbqPanel.add(jScrollPane4);
         jScrollPane4.setBounds(620, 460, 310, 110);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Total Pris", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Total Pris", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18), new java.awt.Color(18, 27, 36))); // NOI18N
         jPanel3.setOpaque(false);
         jPanel3.setLayout(null);
 

@@ -69,6 +69,10 @@ public class CategoryButton extends javax.swing.JPanel implements ActionListener
                 cl.show(this, "Meat");
                 jLMeatTitel.setText(meat.getType());
                 setSize(263, 59);
+                jButton2.setSize(this.getWidth(), jButton2.getHeight());
+                jButton2.setLocation(0, (this.getHeight()-jButton2.getHeight()));
+                this.repaint();
+                this.revalidate();
                 break;
             case "Accompaniment":
                 accompaniment = (Accompaniment) category;
@@ -125,7 +129,10 @@ public class CategoryButton extends javax.swing.JPanel implements ActionListener
         setOpaque(false);
         setLayout(new java.awt.CardLayout());
 
+        jBType.setBackground(new java.awt.Color(106, 140, 168));
         jBType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jBType.setForeground(new java.awt.Color(255, 255, 255));
+        jBType.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jBType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBTypeActionPerformed(evt);
@@ -145,7 +152,9 @@ public class CategoryButton extends javax.swing.JPanel implements ActionListener
 
         add(jPOther, "card3");
 
-        jPMeat.setOpaque(false);
+        jPMeat.setBackground(new java.awt.Color(106, 140, 168));
+        jPMeat.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPMeat.setForeground(new java.awt.Color(255, 255, 255));
         jPMeat.setLayout(null);
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -159,6 +168,7 @@ public class CategoryButton extends javax.swing.JPanel implements ActionListener
         jButton2.setBounds(0, 30, 260, 31);
 
         jLMeatTitel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLMeatTitel.setForeground(new java.awt.Color(255, 255, 255));
         jLMeatTitel.setText("Kød");
         jPMeat.add(jLMeatTitel);
         jLMeatTitel.setBounds(0, 0, 180, 28);
@@ -183,8 +193,11 @@ public class CategoryButton extends javax.swing.JPanel implements ActionListener
 
         add(jPMeat, "card4");
 
+        jToggleButton1.setBackground(new java.awt.Color(106, 140, 168));
         jToggleButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jToggleButton1.setForeground(new java.awt.Color(255, 255, 255));
         jToggleButton1.setText("Grønsag");
+        jToggleButton1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton1ActionPerformed(evt);

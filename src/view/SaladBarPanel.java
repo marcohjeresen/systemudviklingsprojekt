@@ -109,10 +109,11 @@ public class SaladBarPanel extends javax.swing.JPanel implements ActionListener 
         jScrollPane1 = new javax.swing.JScrollPane();
         jPSaladBar = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setLayout(null);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grønsager til Salatbar", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grønsager til Salatbar", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18), new java.awt.Color(18, 27, 36))); // NOI18N
         jPanel1.setOpaque(false);
         jPanel1.setLayout(null);
 
@@ -149,6 +150,10 @@ public class SaladBarPanel extends javax.swing.JPanel implements ActionListener 
 
         add(jPanel1);
         jPanel1.setBounds(0, 0, 570, 300);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/vegetable_bkgr.png"))); // NOI18N
+        add(jLabel2);
+        jLabel2.setBounds(0, 0, 580, 300);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -164,6 +169,7 @@ public class SaladBarPanel extends javax.swing.JPanel implements ActionListener 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPSaladBar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

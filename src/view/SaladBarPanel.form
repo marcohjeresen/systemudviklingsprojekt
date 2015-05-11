@@ -28,6 +28,7 @@
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder justification="2" title="Gr&#xf8;nsager til Salatbar">
               <Font PropertyName="font" name="Tahoma" size="18" style="0"/>
+              <Color PropertyName="color" blue="24" green="1b" red="12" type="rgb"/>
             </TitledBorder>
           </Border>
         </Property>
@@ -96,5 +97,17 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/pictures/vegetable_bkgr.png"/>
+        </Property>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="0" y="0" width="580" height="300"/>
+        </Constraint>
+      </Constraints>
+    </Component>
   </SubComponents>
 </Form>

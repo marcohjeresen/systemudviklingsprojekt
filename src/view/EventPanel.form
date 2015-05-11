@@ -295,7 +295,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="640" y="640" width="280" height="-1"/>
+              <AbsoluteConstraints x="630" y="640" width="290" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -305,6 +305,7 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Kunde">
                   <Font PropertyName="font" name="Tahoma" size="18" style="0"/>
+                  <Color PropertyName="color" blue="24" green="1b" red="12" type="rgb"/>
                 </TitledBorder>
               </Border>
             </Property>
@@ -397,6 +398,7 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Arrangement">
                   <Font PropertyName="font" name="Tahoma" size="18" style="0"/>
+                  <Color PropertyName="color" blue="57" green="46" red="33" type="rgb"/>
                 </TitledBorder>
               </Border>
             </Property>
@@ -489,6 +491,7 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Valgmuligheder">
                   <Font PropertyName="font" name="Tahoma" size="18" style="0"/>
+                  <Color PropertyName="color" blue="24" green="1b" red="12" type="rgb"/>
                 </TitledBorder>
               </Border>
             </Property>
@@ -510,6 +513,7 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Valgte">
                   <Font PropertyName="font" name="Tahoma" size="18" style="0"/>
+                  <Color PropertyName="color" blue="57" green="46" red="33" type="rgb"/>
                 </TitledBorder>
               </Border>
             </Property>
@@ -561,6 +565,7 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Kurv">
                   <Font PropertyName="font" name="Tahoma" size="18" style="0"/>
+                  <Color PropertyName="color" blue="b6" green="a6" red="95" type="rgb"/>
                 </TitledBorder>
               </Border>
             </Property>
@@ -612,6 +617,7 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Kommentarer">
                   <Font PropertyName="font" name="Tahoma" size="18" style="0"/>
+                  <Color PropertyName="color" blue="57" green="46" red="33" type="rgb"/>
                 </TitledBorder>
               </Border>
             </Property>
@@ -652,6 +658,7 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Total Pris">
                   <Font PropertyName="font" name="Tahoma" size="18" style="0"/>
+                  <Color PropertyName="color" blue="24" green="1b" red="12" type="rgb"/>
                 </TitledBorder>
               </Border>
             </Property>

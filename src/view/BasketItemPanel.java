@@ -7,7 +7,6 @@ package view;
 
 import controller.BBQControl;
 import javax.swing.JFrame;
-import javax.swing.plaf.basic.BasicComboBoxUI;
 import model.AccompanimentToBBQ;
 import model.GrillToBBQ;
 import model.MeatToBBQ;
@@ -87,6 +86,10 @@ public class BasketItemPanel extends javax.swing.JPanel {
                 setSize(263, 59);
                 break;
         }
+        jButton1.setLocation((this.getWidth()-this.getHeight()), 0);
+        jButton1.setSize(this.getHeight(), this.getHeight());
+        this.repaint();
+        this.revalidate();
     }
 
     /**
@@ -104,7 +107,9 @@ public class BasketItemPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jLPrice = new javax.swing.JLabel();
 
-        setOpaque(false);
+        setBackground(new java.awt.Color(106, 140, 168));
+        setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        setForeground(new java.awt.Color(255, 255, 255));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -136,11 +141,13 @@ public class BasketItemPanel extends javax.swing.JPanel {
         jTextField1.setBounds(110, 30, 100, 20);
 
         jLType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLType.setForeground(new java.awt.Color(255, 255, 255));
         jLType.setText("jLabel1");
         add(jLType);
         jLType.setBounds(0, 0, 210, 22);
 
         jLKilo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLKilo.setForeground(new java.awt.Color(255, 255, 255));
         jLKilo.setText("jLabel2");
         add(jLKilo);
         jLKilo.setBounds(0, 30, 110, 22);
@@ -156,6 +163,7 @@ public class BasketItemPanel extends javax.swing.JPanel {
         jButton1.setBounds(210, 0, 50, 50);
 
         jLPrice.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLPrice.setForeground(new java.awt.Color(255, 255, 255));
         jLPrice.setText("jLabel3");
         add(jLPrice);
         jLPrice.setBounds(116, 30, 90, 22);
