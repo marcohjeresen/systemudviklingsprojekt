@@ -104,6 +104,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         }
         dateFormatTools = new DateFormatTools();
         initComponents();
+        jTBBQTotalPrice.setText("");
         jScrollPane2.setOpaque(false);
         jScrollPane2.getViewport().setOpaque(false);
         jScrollPane3.setOpaque(false);
@@ -170,7 +171,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 break;
             case ("bbq"):
                 customer = null;
-                setJFrame(950, 530, "bbq", dateFormatTools.getDayLetters(cal));
+                setJFrame(950, 716, "bbq", dateFormatTools.getDayLetters(cal));
                 showCategories();
                 break;
         }
@@ -301,11 +302,13 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 }
             }
         } else {
-            if (!jTBBQName.getText().isEmpty() && !jTBBQPhone.getText().isEmpty() && !jTBBQCusAddress.getText().isEmpty()) {
+            if (!jTBBQName.getText().isEmpty() && !jTBBQPhone.getText().isEmpty() && 
+                    !jTBBQCusAddress.getText().isEmpty() && !jTBBQCusEmail.getText().isEmpty()) {
                 if (customer == null) {
                     cb.setPhone(jTBBQPhone.getText());
                     cb.setName(jTBBQName.getText());
                     cb.setAddress(jTBBQCusAddress.getText());
+                    cb.setEmail(jTBBQCusEmail.getText());
                     customer = cb.createCustomer();
                     try {
                         cc.saveCustomer(customer);
@@ -443,9 +446,10 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         ArrayList<GrillToBBQ> grillList = bbqControl.getBuilder().getGrillList();
         ArrayList<SaladToBBQ> saladList = bbqControl.getBuilder().getSaladList();
         jPScrollBasket.setPreferredSize(new Dimension(0, 0));
+        int settings = bbqControl.getBuilder().getSettings();
         if (meatList != null) {
             for (MeatToBBQ meat : meatList) {
-                bip = new BasketItemPanel((Object) meat, Integer.parseInt(jTBBQDishes.getText()));
+                bip = new BasketItemPanel((Object) meat, settings);
                 if (location == 0) {
                     bip.setLocation(0, 10);
                 } else {
@@ -460,7 +464,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         }
         if (accList != null) {
             for (AccompanimentToBBQ acc : accList) {
-                bip = new BasketItemPanel((Object) acc, Integer.parseInt(jTBBQDishes.getText()));
+                bip = new BasketItemPanel((Object) acc, settings);
                 if (location == 0) {
                     bip.setLocation(0, 15);
                 } else {
@@ -475,7 +479,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         }
         if (grillList != null) {
             for (GrillToBBQ grill : grillList) {
-                bip = new BasketItemPanel((Object) grill, Integer.parseInt(jTBBQDishes.getText()));
+                bip = new BasketItemPanel((Object) grill, settings);
                 if (location == 0) {
                     bip.setLocation(0, 15);
                 } else {
@@ -490,7 +494,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         }
         if (saladList != null) {
             for (SaladToBBQ saladToBBQ : saladList) {
-                bip = new BasketItemPanel((Object) saladToBBQ, Integer.parseInt(jTBBQDishes.getText()));
+                bip = new BasketItemPanel((Object) saladToBBQ, settings);
                 if (location == 0) {
                     bip.setLocation(0, 15);
                 } else {
@@ -503,6 +507,34 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 location++;
             }
         }
+        if (bbqControl.getBuilder().getTransport() != 0) {
+            int transportPrice = bbqControl.getBuilder().getTransport();
+            bip = new BasketItemPanel(transportPrice, settings);
+            if (location == 0) {
+                bip.setLocation(0, 15);
+            } else {
+                bip.setLocation(0, (5 * location + 10) + (bip.getHeight() * location));
+            }
+            jPScrollBasket.add(bip);
+            bip.setVisible(true);
+            basketPanelHeight += 15 + bip.getHeight();
+            jPScrollBasket.setPreferredSize(new Dimension(bip.getWidth(), basketPanelHeight));
+            location++;
+        }
+
+        String salary = bbqControl.getBuilder().getSalary()+"";
+        bip = new BasketItemPanel(salary, settings);
+        if (location == 0) {
+            bip.setLocation(0, 15);
+        } else {
+            bip.setLocation(0, (5 * location + 10) + (bip.getHeight() * location));
+        }
+        jPScrollBasket.add(bip);
+        bip.setVisible(true);
+        basketPanelHeight += 15 + bip.getHeight();
+        jPScrollBasket.setPreferredSize(new Dimension(bip.getWidth(), basketPanelHeight));
+        location++;
+
         jPScrollBasket.revalidate();
         jPScrollBasket.repaint();
     }
@@ -550,6 +582,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jTBBQKm = new javax.swing.JTextField();
         jTBBQDishes = new javax.swing.JTextField();
         jTBBQEventAddress = new javax.swing.JTextField();
+        jTStartTime = new javax.swing.JTextField();
         jPCategory = new javax.swing.JPanel();
         jPChosen = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -557,6 +590,10 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jPBasket = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jPScrollBasket = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTBBQComments = new javax.swing.JTextArea();
+        jPanel3 = new javax.swing.JPanel();
+        jTBBQTotalPrice = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
 
         jLabel8.setText("jLabel8");
@@ -698,7 +735,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             }
         });
         bbqPanel.add(jButton1);
-        jButton1.setBounds(700, 420, 90, 31);
+        jButton1.setBounds(640, 640, 280, 31);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Kunde", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
         jPanel1.setOpaque(false);
@@ -783,6 +820,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
 
         jTBBQDishes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTBBQDishes.setText("Kuverter");
+        jTBBQDishes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTBBQDishesActionPerformed(evt);
+            }
+        });
         jTBBQDishes.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTBBQDishesFocusGained(evt);
@@ -807,6 +849,19 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jPanel2.add(jTBBQEventAddress);
         jTBBQEventAddress.setBounds(10, 30, 290, 20);
 
+        jTStartTime.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTStartTime.setText("Tid");
+        jTStartTime.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTStartTimeFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTStartTimeFocusLost(evt);
+            }
+        });
+        jPanel2.add(jTStartTime);
+        jTStartTime.setBounds(10, 120, 290, 20);
+
         bbqPanel.add(jPanel2);
         jPanel2.setBounds(310, 0, 310, 150);
 
@@ -814,7 +869,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jPCategory.setOpaque(false);
         jPCategory.setLayout(null);
         bbqPanel.add(jPCategory);
-        jPCategory.setBounds(0, 150, 310, 340);
+        jPCategory.setBounds(0, 150, 310, 530);
 
         jPChosen.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Valgte", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
         jPChosen.setOpaque(false);
@@ -830,10 +885,10 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jScrollPane2.setViewportView(jPScrollChosen);
 
         jPChosen.add(jScrollPane2);
-        jScrollPane2.setBounds(10, 20, 290, 310);
+        jScrollPane2.setBounds(10, 20, 290, 500);
 
         bbqPanel.add(jPChosen);
-        jPChosen.setBounds(310, 150, 310, 340);
+        jPChosen.setBounds(310, 150, 310, 530);
 
         jPBasket.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Kurv", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
         jPBasket.setOpaque(false);
@@ -849,10 +904,40 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jScrollPane3.setViewportView(jPScrollBasket);
 
         jPBasket.add(jScrollPane3);
-        jScrollPane3.setBounds(10, 20, 290, 360);
+        jScrollPane3.setBounds(10, 20, 290, 430);
 
         bbqPanel.add(jPBasket);
-        jPBasket.setBounds(620, 0, 310, 390);
+        jPBasket.setBounds(620, 0, 310, 460);
+
+        jScrollPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Kommentarer", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+        jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane4.setOpaque(false);
+
+        jTBBQComments.setColumns(20);
+        jTBBQComments.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTBBQComments.setRows(5);
+        jTBBQComments.setBorder(null);
+        jTBBQComments.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTBBQCommentsFocusLost(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jTBBQComments);
+
+        bbqPanel.add(jScrollPane4);
+        jScrollPane4.setBounds(620, 460, 310, 110);
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Total Pris", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+        jPanel3.setOpaque(false);
+        jPanel3.setLayout(null);
+
+        jTBBQTotalPrice.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTBBQTotalPrice.setText("jTextField1");
+        jPanel3.add(jTBBQTotalPrice);
+        jTBBQTotalPrice.setBounds(10, 20, 290, 30);
+
+        bbqPanel.add(jPanel3);
+        jPanel3.setBounds(620, 570, 310, 60);
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pictures/bbq_bkgr.png"))); // NOI18N
         jLabel10.setText("jLabel10");
@@ -861,7 +946,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         bindingGroup.addBinding(binding);
 
         bbqPanel.add(jLabel10);
-        jLabel10.setBounds(0, 0, 940, 490);
+        jLabel10.setBounds(0, 0, 940, 680);
 
         add(bbqPanel, "card4");
 
@@ -946,7 +1031,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 }
                 massage.setStartTime(jCStartTime.getSelectedItem().toString());
                 Massage mas = massage.createMassage();
-                event = new Event(cal, customer, mas);
+                event = new Event(cal, customer, mas, null);
                 try {
                     mc.saveMassage(mas, event);
                     listener.notifyListeners("New Event Created");
@@ -1032,18 +1117,36 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private void jTBBQEventAddressFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQEventAddressFocusLost
         if (jTBBQEventAddress.getText().isEmpty()) {
             jTBBQEventAddress.setText("Adresse");
+        } else {
+            bbqControl.getBuilder().setAddress(jTBBQEventAddress.getText());
         }
     }//GEN-LAST:event_jTBBQEventAddressFocusLost
 
     private void jTBBQDishesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQDishesFocusLost
         if (jTBBQDishes.getText().isEmpty()) {
             jTBBQDishes.setText("Kuverter");
+            listener.notifyListeners("settings removed");
+            this.repaint();
+            this.revalidate();
+        }else {
+            bbqControl.getBuilder().setSettings(Integer.parseInt(jTBBQDishes.getText()));
+            listener.notifyListeners("settings added");
+            this.repaint();
+            this.revalidate();
         }
     }//GEN-LAST:event_jTBBQDishesFocusLost
 
     private void jTBBQKmFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQKmFocusLost
         if (jTBBQKm.getText().isEmpty()) {
             jTBBQKm.setText("Km");
+        } else {
+            try {
+                bbqControl.getBuilder().setTransport(Integer.parseInt(jTBBQKm.getText()));
+                listener.notifyListeners("added to basket");
+            } catch (Exception ex) {
+                System.out.println(ex);
+
+            }
         }
     }//GEN-LAST:event_jTBBQKmFocusLost
 
@@ -1056,8 +1159,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             } else {
                 saveCustomer(false);
             }
-
         }
+
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jBGrillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGrillActionPerformed
@@ -1080,6 +1184,28 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             jTBBQCusEmail.setText("Email");
         }
     }//GEN-LAST:event_jTBBQCusEmailFocusLost
+
+    private void jTStartTimeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTStartTimeFocusGained
+        if (jTStartTime.getText().equals("Tid")) {
+            jTStartTime.setText("");
+        }
+    }//GEN-LAST:event_jTStartTimeFocusGained
+
+    private void jTStartTimeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTStartTimeFocusLost
+        if (jTStartTime.getText().equals("")) {
+            jTStartTime.setText("Tid");
+        }else{
+            bbqControl.getBuilder().setFoodReady(jTStartTime.getText());
+        }
+    }//GEN-LAST:event_jTStartTimeFocusLost
+
+    private void jTBBQDishesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBBQDishesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTBBQDishesActionPerformed
+
+    private void jTBBQCommentsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQCommentsFocusLost
+        bbqControl.getBuilder().setComments(jTBBQComments.getText());
+    }//GEN-LAST:event_jTBBQCommentsFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1110,9 +1236,12 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private javax.swing.JPanel jPScrollChosen;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTextArea jTBBQComments;
     private javax.swing.JTextField jTBBQCusAddress;
     private javax.swing.JTextField jTBBQCusEmail;
     private javax.swing.JTextField jTBBQDishes;
@@ -1120,9 +1249,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private javax.swing.JTextField jTBBQKm;
     private javax.swing.JTextField jTBBQName;
     private javax.swing.JTextField jTBBQPhone;
+    private javax.swing.JTextField jTBBQTotalPrice;
     private javax.swing.JTextArea jTComment;
     private javax.swing.JTextField jTName;
     private javax.swing.JTextField jTPhone;
+    private javax.swing.JTextField jTStartTime;
     private javax.swing.JPanel massagePanel;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
@@ -1162,6 +1293,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 break;
             case "added to basket":
                 addToBasket();
+                jTBBQTotalPrice.setText(bbqControl.getBuilder().getTotalPrice() + "");
                 break;
         }
     }

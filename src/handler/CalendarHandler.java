@@ -49,7 +49,7 @@ public class CalendarHandler {
             Customer c = new CustomerBuilder().setPhone(rs.getString("cus_phone")).setName(rs.getString("cus_name")).setAddress(rs.getString("cus_address")).setEmail(rs.getString("cus_email")).createCustomer();
             Massage m = new Massage(rs.getInt("m_id"), rs.getString("m_comment"), rs.getString("m_startTime"), mt);
             String date = rs.getString("c_date").substring(0, 10);
-            Event calC = new Event(dt.getDateFromString(date), c, m);
+            Event calC = new Event(dt.getDateFromString(date), c, m,null);
             eventList.add(calC);
         }
         return eventList;

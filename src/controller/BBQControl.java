@@ -5,9 +5,13 @@
  */
 package controller;
 
+import java.util.Calendar;
 import model.Accompaniment;
 import model.AccompanimentToBBQ;
+import model.Barbercue;
 import model.BarbercueBuilder;
+import model.Customer;
+import model.Event;
 import model.Grill;
 import model.GrillToBBQ;
 import model.Meat;
@@ -25,6 +29,7 @@ public class BBQControl {
     private static BBQControl bbqc;
     private Listeners listener;
     private BarbercueBuilder builder;
+    private Barbercue barbercue;
 
     private BBQControl() {
         listener = Listeners.getList();
@@ -120,6 +125,12 @@ public class BBQControl {
     public void removeSaladFromList(SaladToBBQ saladToBBQ) {
         builder.removeFromSaladList(saladToBBQ);
         listener.notifyListeners("added to basket");
+    }
+    
+    public void createBarbecueEvent(BarbercueBuilder builder, Customer customer, Calendar date){
+        barbercue = builder.createBarbercue();
+        Event event = new Event(date, customer, null, barbercue);
+        
     }
 
 }

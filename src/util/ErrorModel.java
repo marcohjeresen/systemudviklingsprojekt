@@ -71,7 +71,7 @@ public class ErrorModel {
                         + "<br/>Programmet kan godt bruges, men anbefales ikke.<br/> Kontakt Annette, "
                         + "for få dette fixet<br/>(Husk at have maden klar;)!)!";
                 break;
-            case "Fejl i at printe":
+            case "Fejl i at printe.":
                 message = "Exception occured in ReceiptPanel - JButton3 - print ";
                 break;
             case "Fejl i hentning af categories.":
@@ -79,8 +79,10 @@ public class ErrorModel {
                         + "<br/>Programmet kan ikke bruges.<br/> Kontakt Annette, "
                         + "for få dette fixet<br/>(Husk at have maden klar;)!)!";
                 break;
+            case "Fejl i transport parsing.":
+                message = "Feltet km må kun indeholde tal";
             default:
-                message = "Fejl kendes ikke "
+                message = "Fejl kendes ikke."
                         + "<br/> Kontakt Annette, for få dette fixet<br/>"
                         + "(Husk at have maden klar;)!)!";
         }

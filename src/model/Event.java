@@ -17,11 +17,13 @@ public class Event {
     private Calendar date;
     private Customer customer;
     private Massage massage;
+    private Barbercue barbercue;
 
-    public Event(Calendar date, Customer customer, Massage massage) {
+    public Event(Calendar date, Customer customer, Massage massage, Barbercue barbercue) {
         this.date = date;
         this.customer = customer;
         this.massage = massage;
+        this.barbercue = barbercue;
     }
 
     public Calendar getDate() {
@@ -47,6 +49,16 @@ public class Event {
     public void setMassage(Massage massage) {
         this.massage = massage;
     }
+
+    public Barbercue getBarbercue() {
+        return barbercue;
+    }
+
+    public void setBarbercue(Barbercue barbercue) {
+        this.barbercue = barbercue;
+    }
+    
+    
 
     @Override
     public String toString() {

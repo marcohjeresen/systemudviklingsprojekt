@@ -9,6 +9,8 @@ import controller.BBQControl;
 import controller.SaladControl;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,12 +20,13 @@ import model.Grill;
 import model.Meat;
 import model.Salad;
 import model.Vegetable;
+import util.Listeners;
 
 /**
  *
  * @author Annette
  */
-public class CategoryButton extends javax.swing.JPanel {
+public class CategoryButton extends javax.swing.JPanel implements ActionListener {
 
     private Meat meat;
     private Accompaniment accompaniment;
@@ -33,6 +36,7 @@ public class CategoryButton extends javax.swing.JPanel {
     private CardLayout cl;
     private Salad salad;
     private Vegetable vegetable;
+    private Listeners listener;
     private boolean isStandardVegetable;
 
     /**
@@ -41,16 +45,24 @@ public class CategoryButton extends javax.swing.JPanel {
     public CategoryButton(Object category, boolean isStandardVegetable) {
         bbqc = BBQControl.getInstance();
         try {
+            listener = Listeners.getList();
             saladControl = SaladControl.getInstance();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(CategoryButton.class.getName()).log(Level.SEVERE, null, ex);
         }
         setSize(263, 30);
         initComponents();
+        listener.addListener(this);
         cl = (CardLayout) getLayout();
         cl.addLayoutComponent(jPOther, "Other");
         cl.addLayoutComponent(jPMeat, "Meat");
         cl.addLayoutComponent(jPVegetable, "Vegetable");
+
+        if (bbqc.getBuilder().getSettings() == 0) {
+            jBType.setEnabled(false);
+            jButton2.setEnabled(false);
+            jToggleButton1.setEnabled(false);
+        }
         switch (category.getClass().getSimpleName()) {
             case "Meat":
                 meat = (Meat) category;
@@ -252,6 +264,7 @@ public class CategoryButton extends javax.swing.JPanel {
                 frame.add(saladBarPanel);
                 frame.setSize(587, 335);
                 frame.setVisible(true);
+                System.out.println("sgsgseg");
 
             } else {
                 bbqc.addSaladToList(salad);
@@ -284,4 +297,20 @@ public class CategoryButton extends javax.swing.JPanel {
     private javax.swing.JTextField jTKilo;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        switch (ae.getActionCommand()) {
+            case "settings added":
+                jBType.setEnabled(true);
+                jButton2.setEnabled(true);
+                jToggleButton1.setEnabled(true);
+                break;
+            case "settings removed":
+                jBType.setEnabled(false);
+                jButton2.setEnabled(false);
+                jToggleButton1.setEnabled(false);
+                break;
+        }
+    }
 }

@@ -7,10 +7,12 @@ package view;
 
 import controller.BBQControl;
 import javax.swing.JFrame;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 import model.AccompanimentToBBQ;
 import model.GrillToBBQ;
 import model.MeatToBBQ;
 import model.SaladToBBQ;
+import util.Listeners;
 
 /**
  *
@@ -23,7 +25,10 @@ public class BasketItemPanel extends javax.swing.JPanel {
     private GrillToBBQ grillToBBQ;
     private SaladToBBQ saladToBBQ;
     private BBQControl bbqc;
+    private int transport;
     private int settings;
+    private String salary;
+    private Listeners listener;
 
     /**
      * Creates new form BasketItemPanel
@@ -31,7 +36,9 @@ public class BasketItemPanel extends javax.swing.JPanel {
     public BasketItemPanel(Object category, int settings) {
         this.settings = settings;
         bbqc = BBQControl.getInstance();
+        listener = Listeners.getList();
         initComponents();
+        jTextField1.setVisible(false);
         switch (category.getClass().getSimpleName()) {
             case "MeatToBBQ":
                 meatToBBQ = (MeatToBBQ) category;
@@ -61,6 +68,24 @@ public class BasketItemPanel extends javax.swing.JPanel {
                 jLKilo.setText("");
                 setSize(263, 59);
                 break;
+            case "Integer":
+                transport = (Integer) category;
+                jLType.setText("Transport");
+                jLPrice.setText(transport + " DKK");
+                jLKilo.setText("");
+                jButton1.setVisible(false);
+                setSize(263, 59);
+                break;
+            case "String":
+                salary = (String) category;
+                jLType.setText("Løn");
+                jTextField1.setVisible(true);
+                jLKilo.setText("");
+                jLPrice.setVisible(false);
+                jButton1.setVisible(false);
+                jTextField1.setText(salary + " DDK");
+                setSize(263, 59);
+                break;
         }
     }
 
@@ -73,6 +98,7 @@ public class BasketItemPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
         jLType = new javax.swing.JLabel();
         jLKilo = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -85,6 +111,29 @@ public class BasketItemPanel extends javax.swing.JPanel {
             }
         });
         setLayout(null);
+
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField1.setText("jTextField1");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
+        add(jTextField1);
+        jTextField1.setBounds(110, 30, 100, 20);
 
         jLType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLType.setText("jLabel1");
@@ -113,24 +162,49 @@ public class BasketItemPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        JFrame frame = new JFrame();
-        SaladBarPanel saladBarPanel = new SaladBarPanel(frame, saladToBBQ.getSalad(), true);
-        frame.add(saladBarPanel);
-        frame.setSize(587, 335);
-        frame.setVisible(true);
+        if (saladToBBQ.getSalad().getType().equals("Salatbar")) {
+            JFrame frame = new JFrame();
+            SaladBarPanel saladBarPanel = new SaladBarPanel(frame, saladToBBQ.getSalad(), true);
+            frame.add(saladBarPanel);
+            frame.setSize(587, 335);
+            frame.setVisible(true);
+        }
     }//GEN-LAST:event_formMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(meatToBBQ != null){
+        if (meatToBBQ != null) {
             bbqc.removeMeatFromList(meatToBBQ);
-        } else if(accompanimentToBBQ != null){
+        } else if (accompanimentToBBQ != null) {
             bbqc.removeAccompanimentFromList(accompanimentToBBQ);
-        } else if(grillToBBQ != null){
+        } else if (grillToBBQ != null) {
             bbqc.removeGrillFromList(grillToBBQ);
-        } else if(saladToBBQ != null){
+        } else if (saladToBBQ != null) {
             bbqc.removeSaladFromList(saladToBBQ);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
+        jTextField1.setText("");
+    }//GEN-LAST:event_jTextField1FocusGained
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        if (!jTextField1.getText().equals("")) {
+            bbqc.getBuilder().setSalary(Integer.parseInt(jTextField1.getText()));
+            jTextField1.setText(jTextField1.getText() + " DDK");
+            listener.notifyListeners("added to basket");
+        }else {
+            jTextField1.setText("0 DDK");
+        }
+
+    }//GEN-LAST:event_jTextField1FocusLost
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+
+    }//GEN-LAST:event_jTextField1KeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -138,5 +212,6 @@ public class BasketItemPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLKilo;
     private javax.swing.JLabel jLPrice;
     private javax.swing.JLabel jLType;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
