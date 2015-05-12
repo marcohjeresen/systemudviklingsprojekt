@@ -6,6 +6,9 @@
 package view;
 
 import controller.BBQControl;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import model.AccompanimentToBBQ;
 import model.GrillToBBQ;
@@ -34,7 +37,11 @@ public class BasketItemPanel extends javax.swing.JPanel {
      */
     public BasketItemPanel(Object category, int settings) {
         this.settings = settings;
-        bbqc = BBQControl.getInstance();
+        try {
+            bbqc = BBQControl.getInstance();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(BasketItemPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         listener = Listeners.getList();
         initComponents();
         jTextField1.setVisible(false);

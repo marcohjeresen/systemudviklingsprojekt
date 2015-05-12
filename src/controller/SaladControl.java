@@ -59,7 +59,7 @@ public class SaladControl {
     }
 
     public void addToSaladBar(Vegetable vegetable) {
-        VegetableToSalad toSalad = new VegetableToSalad(vegetable, salad);
+        VegetableToSalad toSalad = new VegetableToSalad(0, vegetable, salad);
         salad.addToVegetableList(toSalad);
         listeners.notifyListeners("salad bar updated");
     }

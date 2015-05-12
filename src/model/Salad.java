@@ -74,7 +74,7 @@ public class Salad {
     
     public void addVegetableListToSalad(ArrayList<Vegetable> vegetables){
         for (Vegetable vegetable : vegetables) {
-            VegetableToSalad toSalad = new VegetableToSalad(vegetable, this);
+            VegetableToSalad toSalad = new VegetableToSalad(0,vegetable, this);
             vegetableList.add(toSalad);
         }
     }

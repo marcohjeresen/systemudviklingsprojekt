@@ -43,8 +43,9 @@ public class CategoryButton extends javax.swing.JPanel implements ActionListener
      * Creates new form CategoryButton
      */
     public CategoryButton(Object category, boolean isStandardVegetable) {
-        bbqc = BBQControl.getInstance();
+        
         try {
+            bbqc = BBQControl.getInstance();
             listener = Listeners.getList();
             saladControl = SaladControl.getInstance();
         } catch (ClassNotFoundException | SQLException ex) {

@@ -5,6 +5,8 @@
  */
 package controller;
 
+import handler.BBQHandler;
+import java.sql.SQLException;
 import java.util.Calendar;
 import model.Accompaniment;
 import model.AccompanimentToBBQ;
@@ -27,16 +29,18 @@ import util.Listeners;
 public class BBQControl {
 
     private static BBQControl bbqc;
+    private BBQHandler bbqh;
     private Listeners listener;
     private BarbercueBuilder builder;
     private Barbercue barbercue;
 
-    private BBQControl() {
+    private BBQControl() throws ClassNotFoundException, SQLException {
         listener = Listeners.getList();
+        bbqh = BBQHandler.getInstance();
         builder = new BarbercueBuilder();
     }
 
-    public static BBQControl getInstance() {
+    public static BBQControl getInstance() throws ClassNotFoundException, SQLException {
         if (bbqc == null) {
             bbqc = new BBQControl();
         }
@@ -127,9 +131,10 @@ public class BBQControl {
         listener.notifyListeners("added to basket");
     }
     
-    public void createBarbecueEvent(BarbercueBuilder builder, Customer customer, Calendar date){
+    public void createBarbecueEvent(Customer customer, Calendar date) throws SQLException{
         barbercue = builder.createBarbercue();
         Event event = new Event(date, customer, null, barbercue);
+        bbqh.saveBarbecueToDB(event);
         
     }
 

@@ -21,26 +21,26 @@ import java.net.URL;
 public class ImageExample {
 
     public ImageExample() {
-        Document document = new Document();
-        
-        System.out.println("hej");
-        try {
-            FileOutputStream file = new FileOutputStream(new File("mailfolder/", "Idtht.pdf"));
-            
-            PdfWriter.getInstance(document, file);
-            document.open();
-
-            Image image1 = Image.getInstance("C:/Users/Mark/Documents/NetBeansProjects/JavaApplication1/src/pictures/event_bkgr.png");
-            image1.setAbsolutePosition(50, 50);
-            document.add(new Paragraph("A Hello World PDF document."));
-            document.add(image1);
-
-
-            document.close();
-            System.out.println("farvel");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getLocalizedMessage());
-        }
+//        Document document = new Document();
+//        
+//        System.out.println("hej");
+//        try {
+//            FileOutputStream file = new FileOutputStream(new File("mailfolder/", "Idfhddthtykihln.pdf"));
+//            
+//            PdfWriter.getInstance(document, file);
+//            document.open();
+//
+//            Image image1 = Image.getInstance("C:/Users/Mark/Documents/GitHub/systemudviklingsprojekt/src/pictures/event_bkgr.png");
+//            image1.setAbsolutePosition(50, 800);
+//            document.add(new Paragraph("A Hello World PDF document."));
+//            document.add(image1);
+//
+//
+//            document.close();
+//            System.out.println("farvel");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            System.out.println(e.getLocalizedMessage());
+//        }
     }
 }

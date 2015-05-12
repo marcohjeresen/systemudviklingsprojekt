@@ -260,6 +260,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 jTBBQPhone.setText(cus.get(0).getPhone());
                 jTBBQName.setText(cus.get(0).getName());
                 jTBBQCusAddress.setText(cus.get(0).getAddress());
+                jTBBQCusEmail.setText(cus.get(0).getEmail());
                 if (editing) {
                     event.setCustomer(cus.get(0));
                 } else {
@@ -335,6 +336,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             customer.setPhone(jTBBQPhone.getText());
             customer.setName(jTBBQName.getText());
             customer.setAddress(jTBBQCusAddress.getText());
+            customer.setEmail(jTBBQCusEmail.getText());
         }
         try {
             cc.alterCustomer(customer, cusPhoneNumber, isMassage);
@@ -933,6 +935,14 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
 
         jTBBQTotalPrice.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTBBQTotalPrice.setText("jTextField1");
+        jTBBQTotalPrice.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTBBQTotalPriceFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTBBQTotalPriceFocusLost(evt);
+            }
+        });
         jPanel3.add(jTBBQTotalPrice);
         jTBBQTotalPrice.setBounds(10, 20, 290, 30);
 
@@ -1151,14 +1161,19 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     }//GEN-LAST:event_jTBBQKmFocusLost
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (customer == null) {
-            saveCustomer(false);
-        } else {
-            if (!jTBBQName.toString().equals(customer.getName()) || !jTBBQPhone.toString().equals(customer.getPhone())) {
-                alterCustomer(false);
-            } else {
+        try {
+            if (customer == null) {
                 saveCustomer(false);
+            } else {
+                if (!jTBBQName.toString().equals(customer.getName()) || !jTBBQPhone.toString().equals(customer.getPhone())) {
+                    alterCustomer(false);
+                } else {
+                    saveCustomer(false);
+                }
             }
+            bbqControl.createBarbecueEvent(customer, cal);
+        } catch (SQLException ex) {
+            Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         
@@ -1206,6 +1221,19 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private void jTBBQCommentsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQCommentsFocusLost
         bbqControl.getBuilder().setComments(jTBBQComments.getText());
     }//GEN-LAST:event_jTBBQCommentsFocusLost
+
+    private void jTBBQTotalPriceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQTotalPriceFocusGained
+        jTBBQTotalPrice.setText("");
+    }//GEN-LAST:event_jTBBQTotalPriceFocusGained
+
+    private void jTBBQTotalPriceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQTotalPriceFocusLost
+        if (jTBBQTotalPrice.getText().equals("")) {
+            jTBBQTotalPrice.setText(bbqControl.getBuilder().getTotalPrice() + "");
+            bbqControl.getBuilder().setTotalPrice(Integer.parseInt(jTBBQTotalPrice.getText()));
+        }else{
+            bbqControl.getBuilder().setTotalPrice(Integer.parseInt(jTBBQTotalPrice.getText()));
+        }
+    }//GEN-LAST:event_jTBBQTotalPriceFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

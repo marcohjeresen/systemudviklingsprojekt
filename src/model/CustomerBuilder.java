@@ -45,6 +45,7 @@ public class CustomerBuilder {
             address = "";
         }
         if (email == null) {
+            System.out.println("email er null");
             email = "";
         }
         return new Customer(phone, name, address, email);

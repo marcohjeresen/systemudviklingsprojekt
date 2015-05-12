@@ -6,6 +6,8 @@
 package view;
 
 import java.awt.Toolkit;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import model.Event;
 
@@ -14,7 +16,7 @@ import model.Event;
  * @author Annette
  */
 public class EventOfDayPanel extends javax.swing.JPanel {
-
+    
     private Event event;
 
     /**
@@ -24,6 +26,14 @@ public class EventOfDayPanel extends javax.swing.JPanel {
         this.event = event;
         setSize(190, 50);
         initComponents();
+        if (event.getMassage() != null) {
+            showMassage();
+        } else {
+            showBarbecue();
+        }
+    }
+    
+    public void showMassage() {
         jLEventType.setText(event.getMassage().getClass().getSimpleName());
         String starttime = event.getMassage().getStartTime();
         jLStartTime.setText(starttime);
@@ -34,7 +44,7 @@ public class EventOfDayPanel extends javax.swing.JPanel {
         } else {
             duration = event.getMassage().getType().getDuration();
         }
-
+        
         endTimeValue += duration;
         String checkTime = endTimeValue + "";
         checkTime = checkTime.substring(2, 4);
@@ -43,10 +53,22 @@ public class EventOfDayPanel extends javax.swing.JPanel {
             int addTime = intCheckTime - 60;
             endTimeValue = endTimeValue - intCheckTime + (addTime + 100);
         }
-
+        
         String endTime = endTimeValue + "";
         endTime = endTime.substring(0, 2) + ":" + endTime.substring(2, endTime.length());
         jLEndTime.setText(endTime);
+        ImageIcon icon = new ImageIcon("C:/Users/Mark/Documents/GitHub/systemudviklingsprojekt/src/pictures/lotus.png");
+        jLabel1.setIcon(icon);
+    }
+    
+    public void showBarbecue() {
+        jLEventType.setText(event.getBarbercue().getClass().getSimpleName());
+        String starttime = event.getBarbercue().getFoodReady();
+        jLabel4.setText(starttime);
+        jLStartTime.setText("");
+        jLEndTime.setText("");
+        ImageIcon icon = new ImageIcon("C:/Users/Mark/Documents/GitHub/systemudviklingsprojekt/src/pictures/grill.png");
+        jLabel1.setIcon(icon);
     }
 
     /**
@@ -96,20 +118,23 @@ public class EventOfDayPanel extends javax.swing.JPanel {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("-");
         add(jLabel4);
-        jLabel4.setBounds(90, 20, 20, 14);
+        jLabel4.setBounds(80, 20, 40, 14);
         add(jLabel1);
         jLabel1.setBounds(2, 2, 70, 50);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        JFrame jf = new JFrame();
-        ReceiptPanel rp = new ReceiptPanel("kvittering", jf, event);
-        jf.add(rp);
-        jf.setVisible(true);
-        int height = Toolkit.getDefaultToolkit().getScreenSize().height - jf.getHeight();
-        int widht = Toolkit.getDefaultToolkit().getScreenSize().width - jf.getWidth();
-        jf.setLocation(widht / 2, height / 2);
-        rp.setVisible(true);
+        if (event.getMassage() != null) {
+            JFrame jf = new JFrame();
+            ReceiptPanel rp = new ReceiptPanel("kvittering", jf, event);
+            jf.add(rp);
+            jf.setVisible(true);
+            int height = Toolkit.getDefaultToolkit().getScreenSize().height - jf.getHeight();
+            int widht = Toolkit.getDefaultToolkit().getScreenSize().width - jf.getWidth();
+            jf.setLocation(widht / 2, height / 2);
+            rp.setVisible(true);
+        }
+
     }//GEN-LAST:event_formMouseClicked
 
 

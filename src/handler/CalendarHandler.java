@@ -8,6 +8,7 @@ package handler;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import model.Barbercue;
 import model.Event;
 import model.Customer;
 import model.CustomerBuilder;
@@ -52,6 +53,20 @@ public class CalendarHandler {
             Event calC = new Event(dt.getDateFromString(date), c, m,null);
             eventList.add(calC);
         }
+        
+        sql = "select * from calendar, barbecue, customer "
+                + "where c_bbq_id = b_id and c_customer_number = cus_phone "
+                + "and (c_date between '" + firstDate + "%' and '" + lastDate + "%') order by c_date;";
+        rs = db.getResult(sql);
+        while (rs.next()) {
+            Customer c = new CustomerBuilder().setPhone(rs.getString("cus_phone")).setName(rs.getString("cus_name")).setAddress(rs.getString("cus_address")).setEmail(rs.getString("cus_email")).createCustomer();
+            String date = rs.getString("c_date").substring(0, 10);
+            Barbercue b = new Barbercue(rs.getInt("b_id"), rs.getInt("b_settings"), rs.getString("b_address"), rs.getString("b_foodReady"), rs.getInt("b_salary"), rs.getInt("b_transport"), rs.getInt("b_totalPrice"), rs.getString("b_comments"), null, null, null, null);
+            Event calC = new Event(dt.getDateFromString(date), c, null,b);
+            eventList.add(calC);
+        }
+        
+        
         return eventList;
     }
 

@@ -10,14 +10,25 @@ package model;
  * @author Annette
  */
 public class VegetableToSalad {
+    private int bbqId;
     private Vegetable vegetable;
     private Salad salad;
 
-    public VegetableToSalad(Vegetable vegetable, Salad salad) {
+    public VegetableToSalad(int bbqId, Vegetable vegetable, Salad salad) {
+        this.bbqId = bbqId;
         this.vegetable = vegetable;
         this.salad = salad;
     }
 
+    public int getBbqId() {
+        return bbqId;
+    }
+
+    public void setBbqId(int bbqId) {
+        this.bbqId = bbqId;
+    }
+
+    
     public Vegetable getVegetable() {
         return vegetable;
     }
