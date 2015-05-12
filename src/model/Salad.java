@@ -45,6 +45,9 @@ public class Salad {
 
     public int getPricePerHead() {
         if(!vegetableList.isEmpty()){
+            if (type.equals("Salatbar")) {
+                pricePerHead = 8;
+            }
             for (VegetableToSalad vegetableToSalad : vegetableList) {
                 pricePerHead += vegetableToSalad.getVegetable().getPricePerHead();
             }

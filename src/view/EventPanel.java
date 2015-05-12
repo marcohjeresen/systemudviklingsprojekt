@@ -172,6 +172,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             case ("bbq"):
                 customer = null;
                 setJFrame(950, 716, "bbq", dateFormatTools.getDayLetters(cal));
+                bbqControl.clearBBQBuilder();
                 showCategories();
                 break;
         }
@@ -1141,6 +1142,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         }else {
             bbqControl.getBuilder().setSettings(Integer.parseInt(jTBBQDishes.getText()));
             listener.notifyListeners("settings added");
+            addToBasket();
             this.repaint();
             this.revalidate();
         }
