@@ -57,17 +57,17 @@ public class EventOfDayPanel extends javax.swing.JPanel {
         String endTime = endTimeValue + "";
         endTime = endTime.substring(0, 2) + ":" + endTime.substring(2, endTime.length());
         jLEndTime.setText(endTime);
-        ImageIcon icon = new ImageIcon("C:/Users/Mark/Documents/GitHub/systemudviklingsprojekt/src/pictures/lotus.png");
+        ImageIcon icon = new ImageIcon("src/pictures/lotus.png");
         jLabel1.setIcon(icon);
     }
     
     public void showBarbecue() {
-        jLEventType.setText(event.getBarbercue().getClass().getSimpleName());
+        jLEventType.setText("Grill");
         String starttime = event.getBarbercue().getFoodReady();
         jLabel4.setText(starttime);
         jLStartTime.setText("");
         jLEndTime.setText("");
-        ImageIcon icon = new ImageIcon("C:/Users/Mark/Documents/GitHub/systemudviklingsprojekt/src/pictures/grill.png");
+        ImageIcon icon = new ImageIcon("src/pictures/grill.png");
         jLabel1.setIcon(icon);
     }
 

@@ -269,11 +269,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 }
             } else if (!cus.isEmpty() && cus.size() >= 2) {
                 isMassage = false;
-                int xSize = 180;
+                int xSize = 290;
                 CustomerPanel cp = new CustomerPanel(cus, isMassage, xSize);
-                cp.setSize(260, 20);
+                cp.setSize(xSize, 20);
                 cp.setVisible(true);
-                cp.setLocation(10, 100);
+                cp.setLocation(10, 140);
                 cp.setSize(xSize, cus.size() * cp.getHeight());
                 bbqPanel.add(cp);
                 bbqPanel.setComponentZOrder(cp, 0);
@@ -1199,7 +1199,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     }//GEN-LAST:event_jTBBQCusEmailFocusGained
 
     private void jTBBQCusEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTBBQCusEmailFocusLost
-        if (jTBBQCusEmail.getText().isEmpty()) {
+        if (jTBBQCusEmail.getText().equals("")) {
             jTBBQCusEmail.setText("Email");
         }
     }//GEN-LAST:event_jTBBQCusEmailFocusLost
@@ -1309,6 +1309,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     jTBBQName.setText(customer.getName());
                     jTBBQPhone.setText(customer.getPhone());
                     jTBBQCusAddress.setText(customer.getAddress());
+                    jTBBQCusEmail.setText(customer.getEmail());
                 }
                 break;
             case "Category Meat":

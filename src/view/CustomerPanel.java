@@ -5,7 +5,6 @@
  */
 package view;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 import model.Customer;
 
