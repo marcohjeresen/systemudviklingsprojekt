@@ -1174,6 +1174,8 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 }
             }
             bbqControl.createBarbecueEvent(customer, cal);
+            listener.notifyListeners("New Event Created");
+            jFrame.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
