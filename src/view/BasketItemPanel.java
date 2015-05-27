@@ -9,7 +9,9 @@ import controller.BBQControl;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Action;
 import javax.swing.JFrame;
+import javax.swing.KeyStroke;
 import model.AccompanimentToBBQ;
 import model.GrillToBBQ;
 import model.MeatToBBQ;
@@ -21,7 +23,7 @@ import util.Listeners;
  * @author Annette
  */
 public class BasketItemPanel extends javax.swing.JPanel {
-
+    
     private MeatToBBQ meatToBBQ;
     private AccompanimentToBBQ accompanimentToBBQ;
     private GrillToBBQ grillToBBQ;
@@ -93,7 +95,7 @@ public class BasketItemPanel extends javax.swing.JPanel {
                 setSize(263, 59);
                 break;
         }
-        jButton1.setLocation((this.getWidth()-this.getHeight()), 0);
+        jButton1.setLocation((this.getWidth() - this.getHeight()), 0);
         jButton1.setSize(this.getHeight(), this.getHeight());
         this.repaint();
         this.revalidate();
@@ -177,13 +179,16 @@ public class BasketItemPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        if (saladToBBQ.getSalad().getType().equals("Salatbar")) {
-            JFrame frame = new JFrame();
-            SaladBarPanel saladBarPanel = new SaladBarPanel(frame, saladToBBQ.getSalad(), true);
-            frame.add(saladBarPanel);
-            frame.setSize(587, 335);
-            frame.setVisible(true);
+        if (saladToBBQ != null) {
+            if (saladToBBQ.getSalad().getType().equals("Salatbar")) {
+                JFrame frame = new JFrame();
+                SaladBarPanel saladBarPanel = new SaladBarPanel(frame, saladToBBQ.getSalad(), true);
+                frame.add(saladBarPanel);
+                frame.setSize(587, 335);
+                frame.setVisible(true);
+            }            
         }
+        
     }//GEN-LAST:event_formMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -199,7 +204,11 @@ public class BasketItemPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
+//        System.out.println(getInputMap().keys());
+//        if (getInputMap().get(KeyStroke.getKeyStroke("ENTER")).equals("ENTER")) {
+//            System.out.println("eagfaef");
+//        }
+//        jTextField1.getInputMap().get(KeyStroke.getKeyStroke("ENTER"));
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
@@ -211,7 +220,7 @@ public class BasketItemPanel extends javax.swing.JPanel {
             bbqc.getBuilder().setSalary(Integer.parseInt(jTextField1.getText()));
             jTextField1.setText(jTextField1.getText() + " DDK");
             listener.notifyListeners("added to basket");
-        }else {
+        } else {
             jTextField1.setText("0 DDK");
         }
 
