@@ -65,7 +65,7 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
     }
 
     public void fillLabels() {
-        ImageExample im = new ImageExample(null, 0, null, null, null, 0);
+        ImageExample im = new ImageExample(Calendar.getInstance(), 0, null, null, null, 0);
         ArrayList<String> list = cc.getWeek();
         fillItUp();
         jLabel1.setText(list.get(0));

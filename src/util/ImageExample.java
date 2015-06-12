@@ -19,14 +19,13 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import javax.xml.soap.Text;
 
 public class ImageExample {
     private Calendar date;
@@ -48,20 +47,20 @@ public class ImageExample {
         FontFactory.register("C:/Windows/Fonts/ARLRDBD.TTF", "Arial Rounded");
         Font font = FontFactory.getFont("Arial Rounded", 22, Font.NORMAL, new BaseColor(51, 102, 102));
         Document document = new Document();
-        ArrayList<String> list = new ArrayList<>();
-        list.add("h");
-        list.add("he");
-        list.add("hej");
-        list.add("hej m");
-        list.add("hej me");
-        list.add("hej med");
-        list.add("hej med d");
-        list.add("hej med di");
-        list.add("hej med dig");
+//        ArrayList<String> list = new ArrayList<>();
+//        list.add("h");
+//        list.add("he");
+//        list.add("hej");
+//        list.add("hej m");
+//        list.add("hej me");
+//        list.add("hej med");
+//        list.add("hej med d");
+//        list.add("hej med di");
+//        list.add("hej med dig");
 
         System.out.println("hej");
         try {
-            FileOutputStream file = new FileOutputStream(new File("mailfolder/", "grill" + date + ".pdf"));
+            FileOutputStream file = new FileOutputStream(new File("mailfolder/", "grill" + new SimpleDateFormat("ddMMyy").format(date.getTime()) + ".pdf"));
 
             PdfWriter writer = PdfWriter.getInstance(document, file);
             document.open();
@@ -74,11 +73,15 @@ public class ImageExample {
             document.add(img);
             Chunk chunk = new Chunk("Grillmester 'Frankie'", font);
             chunk.setCharacterSpacing(3);
-            Paragraph paragraph = new Paragraph(chunk);
+            Paragraph header = new Paragraph(chunk);
 //            Paragraph paragraph = new Paragraph("Grillmester 'Frankie'");
-            paragraph.setAlignment(Element.ALIGN_RIGHT);
-            paragraph.setSpacingBefore(15);
-            document.add(paragraph);
+            header.setAlignment(Element.ALIGN_RIGHT);
+            header.setSpacingBefore(15);
+            document.add(header);
+            Paragraph headline = new Paragraph("Tilbud angående d. "+ new SimpleDateFormat("dd. MMMMM yyyy").format(date.getTime())+".", new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD));
+            headline.setAlignment(Element.ALIGN_RIGHT);
+            headline.setSpacingBefore(90);
+            document.add(headline);
 //            image1.setAbsolutePosition(150, 500);
 ////            document.add(new Paragraph("A Hello World PDF document."));
 //            document.add(image1);
