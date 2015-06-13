@@ -29,6 +29,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
 import model.AccompanimentToBBQ;
+import model.Barbercue;
 import model.Category;
 import model.Event;
 import model.Customer;
@@ -40,6 +41,7 @@ import model.MassageType;
 import model.MeatToBBQ;
 import model.SaladToBBQ;
 import util.DateFormatTools;
+import util.ImageExample;
 import util.Listeners;
 
 /**
@@ -1173,8 +1175,20 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     saveCustomer(false);
                 }
             }
-            bbqControl.createBarbecueEvent(customer, cal);
+            Barbercue barbercue = bbqControl.createBarbecueEvent(customer, cal);
             listener.notifyListeners("New Event Created");
+            ArrayList<String> courses = new ArrayList<>();
+            for (MeatToBBQ meatList : barbercue.getMeatList()) {
+                courses.add(meatList.getMeat().getType());
+            }
+            for (AccompanimentToBBQ accompanimentsList : barbercue.getAccompanimentsList()) {
+                courses.add(accompanimentsList.getAccompaniment().getType());
+            }
+            for (SaladToBBQ saladList  : barbercue.getSaladList()) {
+                courses.add(saladList.getSalad().getType());
+            }
+            ImageExample ie = new ImageExample(cal, barbercue.getSettings(), courses, barbercue.getFoodReady(), barbercue.getAddress(), barbercue.getTotalPrice());
+
             jFrame.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex);

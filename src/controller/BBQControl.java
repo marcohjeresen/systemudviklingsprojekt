@@ -131,11 +131,11 @@ public class BBQControl {
         listener.notifyListeners("added to basket");
     }
     
-    public void createBarbecueEvent(Customer customer, Calendar date) throws SQLException{
+    public Barbercue createBarbecueEvent(Customer customer, Calendar date) throws SQLException{
         barbercue = builder.createBarbercue();
         Event event = new Event(date, customer, null, barbercue);
         bbqh.saveBarbecueToDB(event);
-        
+        return barbercue;
     }
 
 }

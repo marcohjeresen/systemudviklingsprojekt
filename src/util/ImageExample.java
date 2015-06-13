@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class ImageExample {
+
     private Calendar date;
     private int settings;
     private ArrayList<String> courses;
@@ -60,28 +61,54 @@ public class ImageExample {
 
         System.out.println("hej");
         try {
-            FileOutputStream file = new FileOutputStream(new File("mailfolder/", "grill" + new SimpleDateFormat("ddMMyy").format(date.getTime()) + ".pdf"));
-
+            FileOutputStream file = new FileOutputStream(new File("mailfolder/", "grill" + new SimpleDateFormat("ddMMyyhhmm").format(date.getTime()) + ".pdf"));
             PdfWriter writer = PdfWriter.getInstance(document, file);
             document.open();
-
             Image img = Image.getInstance("src/pictures/cirkles.png");
-            if (img.getScaledWidth() > 300 || img.getScaledHeight() > 300) {
-                img.scaleToFit(277, 277);
-            }
-            img.setAbsolutePosition(40, PageSize.A4.getHeight()-img.getHeight());
+            img.scaleToFit(277, 277);
+            img.setAbsolutePosition(40, PageSize.A4.getHeight() - img.getHeight());
             document.add(img);
             Chunk chunk = new Chunk("Grillmester 'Frankie'", font);
             chunk.setCharacterSpacing(3);
             Paragraph header = new Paragraph(chunk);
-//            Paragraph paragraph = new Paragraph("Grillmester 'Frankie'");
             header.setAlignment(Element.ALIGN_RIGHT);
             header.setSpacingBefore(15);
             document.add(header);
-            Paragraph headline = new Paragraph("Tilbud angående d. "+ new SimpleDateFormat("dd. MMMMM yyyy").format(date.getTime())+".", new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD));
-            headline.setAlignment(Element.ALIGN_RIGHT);
-            headline.setSpacingBefore(90);
-            document.add(headline);
+            Paragraph title = new Paragraph("Tilbud angående d. " + new SimpleDateFormat("dd. MMMMM yyyy").format(date.getTime()) + ".", new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD));
+            title.setAlignment(Element.ALIGN_LEFT);
+            title.setIndentationLeft(235);
+            title.setSpacingBefore(100);
+            title.setLeading(17);
+            document.add(title);
+            Paragraph subtitle = new Paragraph("(Arrangement til " + settings + " personer).", new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.ITALIC));
+            subtitle.setAlignment(Element.ALIGN_LEFT);
+            subtitle.setIndentationLeft(235);
+            subtitle.setLeading(17);
+            document.add(subtitle);
+            Paragraph body = new Paragraph("\n\nDer er aftalt:\n\n", new Font(Font.FontFamily.TIMES_ROMAN, 18));
+            body.setAlignment(Element.ALIGN_LEFT);
+            body.setIndentationLeft(235);
+            body.setLeading(17);
+            for (String course : courses) {
+                body.add(course + "\n\n");
+            }
+            body.add("\nServeres klokken " + time + " i " + eventAddress + ".");
+            document.add(body);
+            Paragraph ending = new Paragraph("\n\n\nPris: " + totalPrice + ",-kr.", new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD));
+            ending.setAlignment(Element.ALIGN_LEFT);
+            ending.setIndentationLeft(235);
+            ending.setLeading(17);
+            document.add(ending);
+            Image footerImg = Image.getInstance("src/pictures/grillmester.png");
+            footerImg.scaleToFit(210, 210);
+            footerImg.setAbsolutePosition(40, 40);
+            document.add(footerImg);
+            Paragraph contact = new Paragraph("Frank Børge Sund Petersen\nVallensved Bygade 11\nVallensved\n4700 Næstved\n\nMobil: 26236172", new Font(FontFactory.getFont("Gill Sans MT", 16, Font.NORMAL, new BaseColor(51, 102, 102))));
+            contact.setAlignment(Element.ALIGN_CENTER);
+            contact.setSpacingBefore(-255);
+            contact.setLeading(17);
+            contact.setIndentationLeft(-305);
+            document.add(contact);
 //            image1.setAbsolutePosition(150, 500);
 ////            document.add(new Paragraph("A Hello World PDF document."));
 //            document.add(image1);
@@ -107,5 +134,4 @@ public class ImageExample {
         }
     }
 
-    
 }
