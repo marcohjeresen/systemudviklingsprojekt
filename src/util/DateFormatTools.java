@@ -72,6 +72,17 @@ public class DateFormatTools {
         String date = "" + year + "-" + month + "-" + day + " " + hour + ":" + minut + ":" + second;
         return date;
     }
+    
+    public String getPfdDateFromCal(Calendar calendar){
+        String year = "" + calendar.get(Calendar.YEAR);
+        String month = "" + (calendar.get(Calendar.MONTH) + 1);
+        String day = "" + calendar.get(Calendar.DAY_OF_MONTH);
+        String hour = "" + calendar.get(Calendar.HOUR_OF_DAY);
+        String minut = "" + calendar.get(Calendar.MINUTE);
+        String second = "" + calendar.get(Calendar.SECOND);
+        String date = "" + day + "-" + month + "-" + year + " " + hour + ":" + minut;
+        return date;
+    }
 
     /**
      * Method, gets a short date.

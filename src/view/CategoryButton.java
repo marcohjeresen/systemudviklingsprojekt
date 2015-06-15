@@ -43,7 +43,7 @@ public class CategoryButton extends javax.swing.JPanel implements ActionListener
      * Creates new form CategoryButton
      */
     public CategoryButton(Object category, boolean isStandardVegetable) {
-        
+
         try {
             bbqc = BBQControl.getInstance();
             listener = Listeners.getList();
@@ -71,7 +71,7 @@ public class CategoryButton extends javax.swing.JPanel implements ActionListener
                 jLMeatTitel.setText(meat.getType());
                 setSize(263, 59);
                 jButton2.setSize(this.getWidth(), jButton2.getHeight());
-                jButton2.setLocation(0, (this.getHeight()-jButton2.getHeight()));
+                jButton2.setLocation(0, (this.getHeight() - jButton2.getHeight()));
                 this.repaint();
                 this.revalidate();
                 break;
@@ -224,40 +224,44 @@ public class CategoryButton extends javax.swing.JPanel implements ActionListener
     }//GEN-LAST:event_jTKiloActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int kilo = Integer.parseInt(jTKilo.getText());
-        if (jLMeatTitel.getText().equals("Hel gris 0-35 kg")) {
-            if (kilo >= 0 && kilo <= 35) {
-                bbqc.addMeatToList(meat, Integer.parseInt(jTKilo.getText()));
-                jButton2.setText("OK");
-                jButton2.setForeground(Color.black);
-            } else {
-                jButton2.setText("Forkert antal kilo!");
-                jButton2.setForeground(Color.red);
-            }
-        } else if (jLMeatTitel.getText().equals("Hel gris 35-50 kg")) {
-            if (kilo >= 35 && kilo <= 50) {
-                bbqc.addMeatToList(meat, Integer.parseInt(jTKilo.getText()));
-                jButton2.setText("OK");
-                jButton2.setForeground(Color.black);
-            } else {
-                jButton2.setText("Forkert antal kilo!");
-                jButton2.setForeground(Color.red);
-            }
-        } else if (jLMeatTitel.getText().equals("Hel gris 50-90 kg")) {
-            if (kilo >= 50) {
-                bbqc.addMeatToList(meat, Integer.parseInt(jTKilo.getText()));
-                jButton2.setText("OK");
-                jButton2.setForeground(Color.black);
-            } else {
-                jButton2.setText("Forkert antal kilo!");
-                jButton2.setForeground(Color.red);
-            }
-        } else {
-            bbqc.addMeatToList(meat, Integer.parseInt(jTKilo.getText()));
-            jButton2.setText("OK");
-            jButton2.setForeground(Color.black);
-        }
+        try {
+            int kilo = Integer.parseInt(jTKilo.getText());
 
+            if (jLMeatTitel.getText().equals("Hel gris 0-35 kg")) {
+                if (kilo >= 0 && kilo <= 35) {
+                    bbqc.addMeatToList(meat, Integer.parseInt(jTKilo.getText()));
+                    jButton2.setText("OK");
+                    jButton2.setForeground(Color.black);
+                } else {
+                    jButton2.setText("Forkert antal kilo!");
+                    jButton2.setForeground(Color.red);
+                }
+            } else if (jLMeatTitel.getText().equals("Hel gris 35-50 kg")) {
+                if (kilo >= 35 && kilo <= 50) {
+                    bbqc.addMeatToList(meat, Integer.parseInt(jTKilo.getText()));
+                    jButton2.setText("OK");
+                    jButton2.setForeground(Color.black);
+                } else {
+                    jButton2.setText("Forkert antal kilo!");
+                    jButton2.setForeground(Color.red);
+                }
+            } else if (jLMeatTitel.getText().equals("Hel gris 50-90 kg")) {
+                if (kilo >= 50) {
+                    bbqc.addMeatToList(meat, Integer.parseInt(jTKilo.getText()));
+                    jButton2.setText("OK");
+                    jButton2.setForeground(Color.black);
+                } else {
+                    jButton2.setText("Forkert antal kilo!");
+                    jButton2.setForeground(Color.red);
+                }
+            } else {
+                bbqc.addMeatToList(meat, Integer.parseInt(jTKilo.getText()));
+                jButton2.setText("OK");
+                jButton2.setForeground(Color.black);
+            }
+        } catch (NumberFormatException ex) {
+            System.out.println("fejl i at få kilo til tal");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTKiloFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTKiloFocusGained
