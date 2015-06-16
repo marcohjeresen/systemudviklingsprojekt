@@ -45,9 +45,9 @@ public class SendMail {
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(from));
         message.setRecipients(Message.RecipientType.TO, toAddress);
-        message.setSubject("Grill Mester Franke");
+        message.setSubject("GrillMester Frankie");
         BodyPart messageBodyPart = new MimeBodyPart();
-        messageBodyPart.setText("Here's the file");
+        messageBodyPart.setText("kvittering på grill arrangement");
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(messageBodyPart);
         messageBodyPart = new MimeBodyPart();
