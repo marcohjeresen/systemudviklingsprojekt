@@ -35,14 +35,16 @@ public class ImageExample {
     private String time;
     private String eventAddress;
     private int totalPrice;
+    private String comments;
 
-    public ImageExample(Calendar date, int settings, ArrayList<String> courses, String time, String eventAddress, int totalPrice) {
+    public ImageExample(Calendar date, int settings, ArrayList<String> courses, String time, String eventAddress, int totalPrice, String comments) {
         this.date = date;
         this.settings = settings;
         this.courses = courses;
         this.time = time;
         this.eventAddress = eventAddress;
         this.totalPrice = totalPrice;
+        this.comments = comments;
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         ge.getAllFonts();
         FontFactory.register("C:/Windows/Fonts/ARLRDBD.TTF", "Arial Rounded");
@@ -99,6 +101,11 @@ public class ImageExample {
             ending.setIndentationLeft(235);
             ending.setLeading(17);
             document.add(ending);
+            Paragraph comment = new Paragraph("\n\n\n"+comments, new Font(Font.FontFamily.TIMES_ROMAN, 18));
+            comment.setAlignment(Element.ALIGN_LEFT);
+            comment.setIndentationLeft(235);
+            comment.setLeading(17);
+            document.add(comment);
             Image footerImg = Image.getInstance("src/pictures/grillmester.png");
             footerImg.scaleToFit(210, 210);
             footerImg.setAbsolutePosition(40, 40);

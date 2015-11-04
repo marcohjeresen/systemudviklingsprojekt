@@ -577,7 +577,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         jBCreateMassage = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         bbqPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jBCreateBBQ = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jTBBQPhone = new javax.swing.JTextField();
         jTBBQCusAddress = new javax.swing.JTextField();
@@ -732,15 +732,15 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
 
         bbqPanel.setLayout(null);
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton1.setText("Opret");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBCreateBBQ.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jBCreateBBQ.setText("Opret");
+        jBCreateBBQ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBCreateBBQActionPerformed(evt);
             }
         });
-        bbqPanel.add(jButton1);
-        jButton1.setBounds(630, 640, 290, 31);
+        bbqPanel.add(jBCreateBBQ);
+        jBCreateBBQ.setBounds(630, 640, 290, 31);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Kunde", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18), new java.awt.Color(18, 27, 36))); // NOI18N
         jPanel1.setOpaque(false);
@@ -1164,7 +1164,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         }
     }//GEN-LAST:event_jTBBQKmFocusLost
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBCreateBBQActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCreateBBQActionPerformed
         try {
             if (customer == null) {
                 saveCustomer(false);
@@ -1187,7 +1187,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             for (SaladToBBQ saladList  : barbercue.getSaladList()) {
                 courses.add(saladList.getSalad().getType());
             }
-            ImageExample ie = new ImageExample(cal, barbercue.getSettings(), courses, barbercue.getFoodReady(), barbercue.getAddress(), barbercue.getTotalPrice());
+            ImageExample ie = new ImageExample(cal, barbercue.getSettings(), courses, barbercue.getFoodReady(), barbercue.getAddress(), barbercue.getTotalPrice(), barbercue.getComments());
 
             jFrame.dispose();
         } catch (SQLException ex) {
@@ -1195,7 +1195,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         }
 
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBCreateBBQActionPerformed
 
     private void jBGrillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGrillActionPerformed
         showPage("bbq");
@@ -1257,10 +1257,10 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bbqPanel;
     private javax.swing.JPanel choosePanel;
+    private javax.swing.JButton jBCreateBBQ;
     private javax.swing.JButton jBCreateMassage;
     private javax.swing.JButton jBGrill;
     private javax.swing.JButton jBMassage;
-    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCHalf;
     private javax.swing.JComboBox jCStartTime;
     private javax.swing.JCheckBox jCWhole;
