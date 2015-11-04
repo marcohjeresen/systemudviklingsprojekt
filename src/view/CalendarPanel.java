@@ -18,7 +18,6 @@ import java.util.Calendar;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import model.Event;
-import util.ImageExample;
 import util.Listeners;
 
 /**

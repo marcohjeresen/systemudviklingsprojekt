@@ -6,7 +6,6 @@
 package view;
 
 import java.awt.Toolkit;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import model.Event;

@@ -8,8 +8,6 @@ package view;
 import controller.ErrorControl;
 import controller.MassageControl;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import util.Listeners;
 
 /**
