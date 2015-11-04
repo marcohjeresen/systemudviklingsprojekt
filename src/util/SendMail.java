@@ -34,7 +34,7 @@ public class SendMail {
         String Password = "hjzeecomh";
         String from = "markhjeresen@gmail.com";
         String toAddress = toEmail;
-        String filename = "." +fs+ "mailfolder" +fs+ ""+PdfName+".pdf";
+        String filename = "." +fs+ "mailfolder" +fs+ ""+PdfName;
         // Get system properties
         Properties props = System.getProperties();
         props.put("mail.smtp.host", host);
@@ -45,9 +45,9 @@ public class SendMail {
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(from));
         message.setRecipients(Message.RecipientType.TO, toAddress);
-        message.setSubject("JavaMail Attachment");
+        message.setSubject("GrillMester Frankie");
         BodyPart messageBodyPart = new MimeBodyPart();
-        messageBodyPart.setText("Here's the file");
+        messageBodyPart.setText("kvittering på grill arrangement");
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(messageBodyPart);
         messageBodyPart = new MimeBodyPart();
