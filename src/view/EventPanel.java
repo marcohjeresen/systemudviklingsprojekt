@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
@@ -43,6 +44,7 @@ import model.SaladToBBQ;
 import util.DateFormatTools;
 import util.ImageExample;
 import util.Listeners;
+import util.SendMail;
 
 /**
  *
@@ -1188,9 +1190,12 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 courses.add(saladList.getSalad().getType());
             }
             ImageExample ie = new ImageExample(cal, barbercue.getSettings(), courses, barbercue.getFoodReady(), barbercue.getAddress(), barbercue.getTotalPrice(), barbercue.getComments());
-
+            SendMail mail = new SendMail(jTBBQCusEmail.getText(), ie.getFileName());
+//            GoogleCalendar calendarSample = new GoogleCalendar();
             jFrame.dispose();
         } catch (SQLException ex) {
+            Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
             Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
