@@ -55,9 +55,9 @@ public class Accompaniment {
         this.category = category;
     }
 
-    @Override
-    public String toString() {
-        return "Accompaniment{" + "id=" + id + ", type=" + type + ", pricePerHead=" + pricePerHead + '}';
+    public String toString(int settings) {
+        int total = pricePerHead * settings;
+        return type + "\nPris per kuvert: " + pricePerHead + "kr.\nTotalPris: "+total+"kr.";
     }
 
 }

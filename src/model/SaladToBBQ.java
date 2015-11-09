@@ -40,4 +40,9 @@ public class SaladToBBQ {
         return temp;
     }
 
+    @Override
+    public String toString() {
+        return salad.getType();
+    }
+
 }

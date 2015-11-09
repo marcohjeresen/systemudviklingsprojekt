@@ -44,6 +44,11 @@ public class VegetableToSalad {
     public void setSalad(Salad salad) {
         this.salad = salad;
     }
+
+    @Override
+    public String toString() {
+        return vegetable.getType();
+    }
     
     
     

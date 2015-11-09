@@ -81,10 +81,12 @@ public class ErrorModel {
                 break;
             case "Fejl i transport parsing.":
                 message = "Feltet km må kun indeholde tal";
+                break;
             default:
                 message = "Fejl kendes ikke."
                         + "<br/> Kontakt Annette, for få dette fixet<br/>"
-                        + "(Husk at have maden klar;)!)!";
+                        + "(Husk at have maden klar;)!)!" + error;
+                break;
         }
         return message;
     }

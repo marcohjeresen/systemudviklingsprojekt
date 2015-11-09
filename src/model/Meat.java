@@ -54,10 +54,14 @@ public class Meat {
     public void setCategory(Category category) {
         this.category = category;
     }
+    
+    public int totalprisen(int settings){
+        return pricePerKilo * settings;
+    }
 
-    @Override
-    public String toString() {
-        return "Meat{" + "id=" + id + ", type=" + type + ", pricePerKilo=" + pricePerKilo + '}';
+    public String toString(int settings) {
+        int total = pricePerKilo * settings;
+        return type + "\nPris per kilo: " + pricePerKilo + "kr.";
     }
 
 }

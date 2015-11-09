@@ -27,34 +27,34 @@ import util.Listeners;
  * @author Annette
  */
 public class BBQControl {
-
+    
     private static BBQControl bbqc;
     private BBQHandler bbqh;
     private Listeners listener;
     private BarbercueBuilder builder;
     private Barbercue barbercue;
-
+    
     private BBQControl() throws ClassNotFoundException, SQLException {
         listener = Listeners.getList();
         bbqh = BBQHandler.getInstance();
         builder = new BarbercueBuilder();
     }
-
+    
     public static BBQControl getInstance() throws ClassNotFoundException, SQLException {
         if (bbqc == null) {
             bbqc = new BBQControl();
         }
         return bbqc;
     }
-
+    
     public BarbercueBuilder getBuilder() {
         return builder;
     }
-
+    
     public void clearBBQBuilder() {
         builder = new BarbercueBuilder();
     }
-
+    
     public void addMeatToList(Meat meat, int kilo) {
         boolean alreadyThere = false;
         for (MeatToBBQ meatToBBQ : builder.getMeatList()) {
@@ -68,12 +68,12 @@ public class BBQControl {
             listener.notifyListeners("added to basket");
         }
     }
-
+    
     public void removeMeatFromList(MeatToBBQ meatToBBQ) {
         builder.removeFromMeatList(meatToBBQ);
         listener.notifyListeners("added to basket");
     }
-
+    
     public void addAccompanimentToList(Accompaniment accompaniment) {
         boolean alreadyThere = false;
         for (AccompanimentToBBQ accompanimentToBBQ : builder.getAccompanimentsList()) {
@@ -87,12 +87,12 @@ public class BBQControl {
             listener.notifyListeners("added to basket");
         }
     }
-
+    
     public void removeAccompanimentFromList(AccompanimentToBBQ accompanimentToBBQ) {
         builder.removeFromAccompanimentList(accompanimentToBBQ);
         listener.notifyListeners("added to basket");
     }
-
+    
     public void addGrillToList(Grill grill) {
         boolean alreadyThere = false;
         for (GrillToBBQ grillToBBQ : builder.getGrillList()) {
@@ -106,36 +106,44 @@ public class BBQControl {
             listener.notifyListeners("added to basket");
         }
     }
-
+    
     public void removeGrillFromList(GrillToBBQ grillToBBQ) {
         builder.removeFromGrillList(grillToBBQ);
         listener.notifyListeners("added to basket");
     }
-
+    
     public void addSaladToList(Salad salad) {
         boolean alreadyThere = false;
-        for (SaladToBBQ saladToBBQ : builder.getSaladList()) {
-            if (saladToBBQ.getSalad().equals(salad)) {
-                alreadyThere = true;
+        if (builder.getSaladList() != null) {
+            for (SaladToBBQ saladToBBQ : builder.getSaladList()) {
+                if (saladToBBQ.getSalad().equals(salad)) {
+                    alreadyThere = true;
+                }
             }
         }
+        
         if (!alreadyThere) {
             SaladToBBQ saladToBBQ = new SaladToBBQ(salad, null);
             builder.addToSaladList(saladToBBQ);
             listener.notifyListeners("added to basket");
         }
     }
-
+    
     public void removeSaladFromList(SaladToBBQ saladToBBQ) {
         builder.removeFromSaladList(saladToBBQ);
         listener.notifyListeners("added to basket");
     }
     
-    public Barbercue createBarbecueEvent(Customer customer, Calendar date) throws SQLException{
+    public Barbercue createBarbecueEvent(Customer customer, Calendar date, boolean edit) throws SQLException {
         barbercue = builder.createBarbercue();
+        
         Event event = new Event(date, customer, null, barbercue);
-        bbqh.saveBarbecueToDB(event);
+        bbqh.saveBarbecueToDB(event, edit);
+        
         return barbercue;
     }
-
+    
+    public void geteventStof(Event event) throws SQLException {
+        bbqh.getbbqEvent(event);
+    }
 }

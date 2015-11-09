@@ -15,7 +15,7 @@ import model.Event;
  * @author Annette
  */
 public class EventOfDayPanel extends javax.swing.JPanel {
-    
+
     private Event event;
 
     /**
@@ -31,7 +31,7 @@ public class EventOfDayPanel extends javax.swing.JPanel {
             showBarbecue();
         }
     }
-    
+
     public void showMassage() {
         jLEventType.setText(event.getMassage().getClass().getSimpleName());
         String starttime = event.getMassage().getStartTime();
@@ -43,7 +43,7 @@ public class EventOfDayPanel extends javax.swing.JPanel {
         } else {
             duration = event.getMassage().getType().getDuration();
         }
-        
+
         endTimeValue += duration;
         String checkTime = endTimeValue + "";
         checkTime = checkTime.substring(2, 4);
@@ -52,14 +52,14 @@ public class EventOfDayPanel extends javax.swing.JPanel {
             int addTime = intCheckTime - 60;
             endTimeValue = endTimeValue - intCheckTime + (addTime + 100);
         }
-        
+
         String endTime = endTimeValue + "";
         endTime = endTime.substring(0, 2) + ":" + endTime.substring(2, endTime.length());
         jLEndTime.setText(endTime);
         ImageIcon icon = new ImageIcon("src/pictures/lotus.png");
         jLabel1.setIcon(icon);
     }
-    
+
     public void showBarbecue() {
         jLEventType.setText("Grill");
         String starttime = event.getBarbercue().getFoodReady();
@@ -132,6 +132,15 @@ public class EventOfDayPanel extends javax.swing.JPanel {
             int widht = Toolkit.getDefaultToolkit().getScreenSize().width - jf.getWidth();
             jf.setLocation(widht / 2, height / 2);
             rp.setVisible(true);
+        } else {
+            JFrame jf = new JFrame();
+            EventPanel ep = new EventPanel("bbq edit", jf, event.getDate(), event);
+            jf.add(ep);
+            jf.setVisible(true);
+            int height = Toolkit.getDefaultToolkit().getScreenSize().height - jf.getHeight();
+            int widht = Toolkit.getDefaultToolkit().getScreenSize().width - jf.getWidth();
+            jf.setLocation(widht / 2, height / 2);
+            ep.setVisible(true);
         }
 
     }//GEN-LAST:event_formMouseClicked

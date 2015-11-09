@@ -81,7 +81,7 @@ public class CalendarPanel extends javax.swing.JPanel implements ActionListener 
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_YEAR, cc.getCalList().get(chosenPanel));
         cal.set(Calendar.YEAR, cc.getYearList().get(chosenPanel));
-        EventPanel ep = new EventPanel("vælg", jf, cal);
+        EventPanel ep = new EventPanel("vælg", jf, cal, null);
         jf.add(ep);
         jf.setVisible(true);
         int height = Toolkit.getDefaultToolkit().getScreenSize().height - jf.getHeight();

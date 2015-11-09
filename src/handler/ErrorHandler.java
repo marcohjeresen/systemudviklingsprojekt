@@ -30,7 +30,9 @@ public class ErrorHandler {
     }
     
     public void saveErrorMessage(String message) throws SQLException{
+        System.out.println("jeg var her");
         String sql = "insert into errorMsgs values ('"+dft.getDateNowString()+ "','"+message+"')";
+        System.out.println("jeg fik afsluttet dety "  +dft.getDateNowString());
         dbc.execute(sql);
     }
     

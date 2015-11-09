@@ -90,12 +90,13 @@ public class Salad {
         }
     }
 
-    @Override
-    public String toString() {
-        String toString = "Salad{" + "id=" + id + ", type=" + type + ", pricePerHead=" + pricePerHead + ", vegetableList /n";
+    public String toString(int settings) {
+        String toString = type + "\nPris per kuvert: " + pricePerHead + "kr.\nTilbehør: \n";
         for (VegetableToSalad vegetableList1 : vegetableList) {
-            toString = toString + vegetableList1.toString() + "/n";
+            toString = toString + vegetableList1.toString();
         }
+        int total = pricePerHead * settings;
+        toString = toString + "\n" + "TotalPris: "+ total;
         return toString;
     }
 

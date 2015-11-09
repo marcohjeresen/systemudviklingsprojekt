@@ -35,9 +35,13 @@ public class Barbercue {
         this.transport = transport;
         this.totalPrice = totalPrice;
         this.comments = comments;
+
         this.grillList = grillList;
+
         this.meatList = meatList;
+
         this.saladList = saladList;
+
         this.accompanimentsList = accompanimentsList;
     }
 
@@ -109,12 +113,26 @@ public class Barbercue {
         return grillList;
     }
 
+    public void addGrillToBbqToList(GrillToBBQ grillToBBQ) {
+        if (grillList == null) {
+            this.grillList = new ArrayList<>();
+        }
+        this.grillList.add(grillToBBQ);
+    }
+
     public void setGrillList(ArrayList<GrillToBBQ> grillList) {
         this.grillList = grillList;
     }
 
     public ArrayList<MeatToBBQ> getMeatList() {
         return meatList;
+    }
+
+    public void addMeatToBbqToList(MeatToBBQ meatToBBQ) {
+        if (meatList == null) {
+            this.meatList = new ArrayList<>();
+        }
+        this.meatList.add(meatToBBQ);
     }
 
     public void setMeatList(ArrayList<MeatToBBQ> meatList) {
@@ -125,6 +143,13 @@ public class Barbercue {
         return saladList;
     }
 
+    public void addsaladToBbqToList(SaladToBBQ saladToBBQ) {
+        if (saladList == null) {
+            this.saladList = new ArrayList<>();
+        }
+        this.saladList.add(saladToBBQ);
+    }
+
     public void setSaladList(ArrayList<SaladToBBQ> saladList) {
         this.saladList = saladList;
     }
@@ -133,9 +158,15 @@ public class Barbercue {
         return accompanimentsList;
     }
 
+    public void addAccToBqqToList(AccompanimentToBBQ atbbq) {
+        if (accompanimentsList == null) {
+            this.accompanimentsList = new ArrayList<>();
+        }
+        this.accompanimentsList.add(atbbq);
+    }
+
     public void setAccompanimentsList(ArrayList<AccompanimentToBBQ> accompanimentsList) {
         this.accompanimentsList = accompanimentsList;
     }
 
-    
 }

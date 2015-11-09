@@ -80,10 +80,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     /**
      * Creates new form EventPanel
      */
-    public EventPanel(String panel, JFrame jFrame, Calendar calendar) {
+    public EventPanel(String panel, JFrame jFrame, Calendar calendar, Event event) {
         redLineBorder = BorderFactory.createLineBorder(Color.red);
         editing = false;
         startTime = Calendar.getInstance();
+        this.event = event;
         cb = new CustomerBuilder();
         this.jFrame = jFrame;
         this.cal = calendar;
@@ -179,9 +180,49 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 bbqControl.clearBBQBuilder();
                 showCategories();
                 break;
+            case ("bbq edit"): {
+                try {
+                    bbqControl.geteventStof(event);
+                } catch (SQLException ex) {
+                    Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            customer = event.getCustomer();
+            setJFrame(950, 716, "bbq", dateFormatTools.getDayLetters(cal));
+            fillbarbecue();
+            showCategories();
+            addToBasket();
+            break;
         }
         jFrame.revalidate();
         jFrame.repaint();
+    }
+
+    public void fillbarbecue() {
+        
+        
+        bbqControl.clearBBQBuilder();
+        bbqControl.getBuilder().setAccompanimentsList(event.getBarbercue().getAccompanimentsList());
+        bbqControl.getBuilder().setAddress(event.getCustomer().getAddress());
+        bbqControl.getBuilder().setComments(event.getBarbercue().getComments());
+        bbqControl.getBuilder().setFoodReady(event.getBarbercue().getFoodReady());
+        bbqControl.getBuilder().setGrillList(event.getBarbercue().getGrillList());
+        bbqControl.getBuilder().setMeatList(event.getBarbercue().getMeatList());
+        bbqControl.getBuilder().setSaladList(event.getBarbercue().getSaladList());
+        bbqControl.getBuilder().setSalary(event.getBarbercue().getSalary());
+        bbqControl.getBuilder().setSettings(event.getBarbercue().getSettings());
+        bbqControl.getBuilder().setTotalPrice(event.getBarbercue().getTotalPrice());
+        bbqControl.getBuilder().setTransport(event.getBarbercue().getTransport());
+        jTBBQComments.setText(event.getBarbercue().getComments());
+        jTBBQCusAddress.setText(event.getCustomer().getAddress());
+        jTBBQCusEmail.setText(event.getCustomer().getEmail());
+        jTBBQDishes.setText(event.getBarbercue().getSettings() + "");
+        jTBBQEventAddress.setText(event.getBarbercue().getAddress());
+        jTBBQKm.setText(event.getBarbercue().getTransport() + "");
+        jTBBQName.setText(event.getCustomer().getName());
+        jTBBQPhone.setText(event.getCustomer().getPhone());
+        jTBBQTotalPrice.setText(event.getBarbercue().getTotalPrice() + "");
+        jTStartTime.setText(event.getBarbercue().getFoodReady());
     }
 
     public void fillMassage() {
@@ -320,8 +361,10 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                         cc.saveCustomer(customer);
                     } catch (SQLException ex) {
                         try {
+                            System.out.println("efaefafef");
                             errorControl.createErrorPopup("Fejl i gemme kunder.", ex.getLocalizedMessage());
                         } catch (SQLException ex1) {
+                            System.out.println("der er en fejl......");
                             System.out.println(ex1.getLocalizedMessage());
                         }
                     }
@@ -814,6 +857,11 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
 
         jTBBQKm.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTBBQKm.setText("Km");
+        jTBBQKm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTBBQKmActionPerformed(evt);
+            }
+        });
         jTBBQKm.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTBBQKmFocusGained(evt);
@@ -1123,7 +1171,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             } else {
                 findCustomer("bbqPhone");
             }
-        }else{
+        } else {
             jTBBQPhone.setBackground(Color.red);
         }
 
@@ -1183,7 +1231,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     saveCustomer(false);
                 }
             }
-            Barbercue barbercue = bbqControl.createBarbecueEvent(customer, cal);
+            Barbercue barbercue = bbqControl.createBarbecueEvent(customer, cal, false);
             listener.notifyListeners("New Event Created");
             ArrayList<String> courses = new ArrayList<>();
             for (MeatToBBQ meatList : barbercue.getMeatList()) {
@@ -1195,14 +1243,49 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             for (SaladToBBQ saladList : barbercue.getSaladList()) {
                 courses.add(saladList.getSalad().getType());
             }
-            ImageExample ie = new ImageExample(cal, barbercue.getSettings(), courses, barbercue.getFoodReady(), barbercue.getAddress(), barbercue.getTotalPrice(), barbercue.getComments());
+            ImageExample ie = new ImageExample(cal, barbercue.getSettings(), courses, barbercue.getFoodReady(), barbercue.getAddress(), barbercue.getTotalPrice(), barbercue.getComments(), true);
             SendMail mail = new SendMail(jTBBQCusEmail.getText(), ie.getFileName());
 //            GoogleCalendar calendarSample = new GoogleCalendar();
+
+            ArrayList<String> courses2 = new ArrayList<>();
+            courses2.add("Kød:");
+            for (MeatToBBQ meatList : barbercue.getMeatList()) {
+                courses2.add(meatList.getMeat().toString(barbercue.getSettings()) + "\nAntal kilo: " + meatList.getKilo() + "\nTotalPris: " + meatList.getTotalPrice());
+            }
+            courses2.add("Tilbehør:");
+            for (AccompanimentToBBQ accompanimentsList : barbercue.getAccompanimentsList()) {
+                courses2.add(accompanimentsList.getAccompaniment().toString(barbercue.getSettings()));
+            }
+            courses2.add("Salat:");
+            for (SaladToBBQ saladList : barbercue.getSaladList()) {
+                courses2.add(saladList.getSalad().toString(barbercue.getSettings()));
+            }
+            courses2.add("Grill:");
+            for (GrillToBBQ gril : barbercue.getGrillList()) {
+                courses2.add(gril.getGrill().getType() + " Pris: " + gril.getGrill().getCoalPrice());
+            }
+            courses2.add("Andet:");
+            courses2.add("Transport: " + barbercue.getTransport());
+            courses2.add("Arbejdsløn: " + barbercue.getSalary());
+            ImageExample ie2 = new ImageExample(cal, barbercue.getSettings(), courses2, barbercue.getFoodReady(), barbercue.getAddress(), barbercue.getTotalPrice(), barbercue.getComments(), false);
+//            SendMail mail2 = new SendMail(jTBBQCusEmail.getText(), ie2.getFileName());
+
             jFrame.dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (MessagingException ex) {
-            Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException | MessagingException ex) {
+            try {
+                errorControl.createErrorPopup("fejl1", ex.getMessage() + " " + ex.getLocalizedMessage() + " " + ex.getCause());
+                Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex1) {
+                Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+        } catch (Exception ex) {
+            try {
+                errorControl.createErrorPopup("fejl2", ex.getMessage() + " " + ex.getLocalizedMessage());
+            } catch (SQLException ex1) {
+                System.out.println("error fejlede");
+            }
+
         }
 
 
@@ -1263,6 +1346,10 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             bbqControl.getBuilder().setTotalPrice(Integer.parseInt(jTBBQTotalPrice.getText()));
         }
     }//GEN-LAST:event_jTBBQTotalPriceFocusLost
+
+    private void jTBBQKmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTBBQKmActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTBBQKmActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

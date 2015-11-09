@@ -161,7 +161,7 @@ public class ReceiptPanel extends javax.swing.JPanel implements Printable {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         mc.setEvent(event);
         JFrame jf = new JFrame();
-        EventPanel ep = new EventPanel("rediger massage", jf, event.getDate());
+        EventPanel ep = new EventPanel("rediger massage", jf, event.getDate(), null);
         jf.add(ep);
         jf.setVisible(true);
         int height = Toolkit.getDefaultToolkit().getScreenSize().height - jf.getHeight();

@@ -34,7 +34,7 @@ public class SendMail {
         String Password = "hjzeecomh";
         String from = "markhjeresen@gmail.com";
         String toAddress = toEmail;
-        String filename = "." +fs+ "mailfolder" +fs+ ""+PdfName;
+        String filename = "C:/Users/Mark/Desktop/"+PdfName;
         // Get system properties
         Properties props = System.getProperties();
         props.put("mail.smtp.host", host);

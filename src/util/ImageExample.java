@@ -38,7 +38,7 @@ public class ImageExample {
     private String comments;
     private String fileName;
 
-    public ImageExample(Calendar date, int settings, ArrayList<String> courses, String time, String eventAddress, int totalPrice, String comments) {
+    public ImageExample(Calendar date, int settings, ArrayList<String> courses, String time, String eventAddress, int totalPrice, String comments, boolean kunde) throws Exception{
         this.date = date;
         this.settings = settings;
         this.courses = courses;
@@ -55,10 +55,16 @@ public class ImageExample {
 
         System.out.println("Pdf creation startet");
         try {
-            fileName = "grill" + new SimpleDateFormat("dd. MMMMM yyyy hhmm").format(date.getTime()) + ".pdf";
-            FileOutputStream file = new FileOutputStream(new File("mailfolder/", fileName));
+            if (kunde) {
+                fileName = "grill" + new SimpleDateFormat("dd. MMMMM yyyy hhmm").format(date.getTime()) + ".pdf";
+            }else{
+                fileName = "grill" + new SimpleDateFormat("dd. MMMMM yyyy hhmm").format(date.getTime()) + "Prisliste.pdf";
+            }
+            
+            FileOutputStream file = new FileOutputStream(new File("C:/Users/Mark/Desktop", fileName));
             PdfWriter writer = PdfWriter.getInstance(document, file);
             document.open();
+            
             Image img = Image.getInstance("src/pictures/cirkles.png");
             img.scaleToFit(277, 277);
             img.setAbsolutePosition(40, PageSize.A4.getHeight() - img.getHeight());
@@ -110,12 +116,15 @@ public class ImageExample {
             contact.setIndentationLeft(-305);
             document.add(contact);
             document.close();
+            
             System.out.println("Pdf finish");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getLocalizedMessage());
         }
     }
+    
+   
     public String getFileName(){
         return fileName;
     }
