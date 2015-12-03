@@ -22,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -76,6 +77,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     private boolean editing;
     private boolean isMassage;
     private final Border redLineBorder;
+    private ArrayList<String> sletordlist;
 
     /**
      * Creates new form EventPanel
@@ -90,6 +92,8 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
         this.cal = calendar;
         phoneSearch = true;
         listener = Listeners.getList();
+        sletordlist = new ArrayList<>();
+        sletordlist.addAll(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ""));
         try {
             errorControl = ErrorControl.getInstance();
             cc = CustomerControl.getInstance();
@@ -181,6 +185,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                 showCategories();
                 break;
             case ("bbq edit"): {
+                editing = true;
                 try {
                     bbqControl.geteventStof(event);
                 } catch (SQLException ex) {
@@ -199,9 +204,9 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
     }
 
     public void fillbarbecue() {
-        
-        
+
         bbqControl.clearBBQBuilder();
+        bbqControl.getBuilder().setId(event.getBarbercue().getId());
         bbqControl.getBuilder().setAccompanimentsList(event.getBarbercue().getAccompanimentsList());
         bbqControl.getBuilder().setAddress(event.getCustomer().getAddress());
         bbqControl.getBuilder().setComments(event.getBarbercue().getComments());
@@ -1231,43 +1236,132 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
                     saveCustomer(false);
                 }
             }
-            Barbercue barbercue = bbqControl.createBarbecueEvent(customer, cal, false);
+            Barbercue barbercue = bbqControl.createBarbecueEvent(customer, cal, editing);
             listener.notifyListeners("New Event Created");
             ArrayList<String> courses = new ArrayList<>();
-            for (MeatToBBQ meatList : barbercue.getMeatList()) {
-                courses.add(meatList.getMeat().getType());
+            ArrayList<String> word = new ArrayList<>();
+            String tilføjord = "";
+            if (barbercue.getMeatList() != null) {
+                for (MeatToBBQ meatList : barbercue.getMeatList()) {
+                    word.removeAll(word);
+                    tilføjord = "";
+                    for (int i = 0; i < meatList.getMeat().getType().length(); i++) {
+                        word.add(meatList.getMeat().getType().substring(i, i + 1));
+                    }
+                    boolean erder = false;
+                    for (String ord : word) {
+                        for (String liste1 : sletordlist) {
+                            if (ord.equals(liste1)) {
+                                erder = true;
+                            }
+                        }
+                        if (!erder) {
+                            tilføjord = tilføjord + ord;
+                        }
+                    }
+                    courses.add(tilføjord);
+                }
             }
-            for (AccompanimentToBBQ accompanimentsList : barbercue.getAccompanimentsList()) {
-                courses.add(accompanimentsList.getAccompaniment().getType());
+            if (barbercue.getAccompanimentsList() != null) {
+                for (AccompanimentToBBQ accompanimentsList : barbercue.getAccompanimentsList()) {
+                    word.removeAll(word);
+                    tilføjord = "";
+                    for (int i = 0; i < accompanimentsList.getAccompaniment().getType().length(); i++) {
+                        word.add(accompanimentsList.getAccompaniment().getType().substring(i, i + 1));
+                    }
+                    boolean erder = false;
+                    for (String ord : word) {
+                        for (String liste1 : sletordlist) {
+                            if (ord.equals(liste1)) {
+                                erder = true;
+                            }
+                        }
+                        if (!erder) {
+                            tilføjord = tilføjord + ord;
+                        }
+                    }
+                    courses.add(tilføjord);
+                }
             }
-            for (SaladToBBQ saladList : barbercue.getSaladList()) {
-                courses.add(saladList.getSalad().getType());
+            if (barbercue.getSaladList() != null) {
+                for (SaladToBBQ saladList : barbercue.getSaladList()) {
+                    word.removeAll(word);
+                    tilføjord = "";
+                    for (int i = 0; i < saladList.getSalad().getType().length(); i++) {
+                        word.add(saladList.getSalad().getType().substring(i, i + 1));
+                    }
+                    boolean erder = false;
+                    for (String ord : word) {
+                        for (String liste1 : sletordlist) {
+                            if (ord.equals(liste1)) {
+                                erder = true;
+                            }
+                        }
+                        if (!erder) {
+                            tilføjord = tilføjord + ord;
+                        }
+                    }
+                    courses.add(tilføjord);
+                }
             }
+            if (barbercue.getGrillList() != null) {
+                for (GrillToBBQ grillList : barbercue.getGrillList()) {
+                    word.removeAll(word);
+                    tilføjord = "";
+                    for (int i = 0; i < grillList.getGrill().getType().length(); i++) {
+                        word.add(grillList.getGrill().getType().substring(i, i + 1));
+                    }
+                    boolean erder = false;
+                    for (String ord : word) {
+                        for (String liste1 : sletordlist) {
+                            if (ord.equals(liste1)) {
+                                erder = true;
+                            }
+                        }
+                        if (!erder) {
+                            tilføjord = tilføjord + ord;
+                        }
+                    }
+                    courses.add(tilføjord);
+                }
+
+            }
+
             ImageExample ie = new ImageExample(cal, barbercue.getSettings(), courses, barbercue.getFoodReady(), barbercue.getAddress(), barbercue.getTotalPrice(), barbercue.getComments(), true);
-            SendMail mail = new SendMail(jTBBQCusEmail.getText(), ie.getFileName());
+//            SendMail mail = new SendMail(jTBBQCusEmail.getText(), ie.getFileName());
 //            GoogleCalendar calendarSample = new GoogleCalendar();
 
             ArrayList<String> courses2 = new ArrayList<>();
-            courses2.add("Kød:");
-            for (MeatToBBQ meatList : barbercue.getMeatList()) {
-                courses2.add(meatList.getMeat().toString(barbercue.getSettings()) + "\nAntal kilo: " + meatList.getKilo() + "\nTotalPris: " + meatList.getTotalPrice());
+            if (barbercue.getMeatList() != null) {
+                courses2.add("Kød:");
+                for (MeatToBBQ meatList : barbercue.getMeatList()) {
+                    courses2.add(meatList.getMeat().toString(barbercue.getSettings()) + "\nAntal kilo: " + meatList.getKilo() + "\nTotalPris: " + meatList.getTotalPrice());
+                }
             }
-            courses2.add("Tilbehør:");
-            for (AccompanimentToBBQ accompanimentsList : barbercue.getAccompanimentsList()) {
-                courses2.add(accompanimentsList.getAccompaniment().toString(barbercue.getSettings()));
+            if (barbercue.getAccompanimentsList() != null) {
+                courses2.add("Tilbehør:");
+                for (AccompanimentToBBQ accompanimentsList : barbercue.getAccompanimentsList()) {
+                    courses2.add(accompanimentsList.getAccompaniment().toString(barbercue.getSettings()));
+                }
             }
-            courses2.add("Salat:");
-            for (SaladToBBQ saladList : barbercue.getSaladList()) {
-                courses2.add(saladList.getSalad().toString(barbercue.getSettings()));
+
+            if (barbercue.getSaladList() != null) {
+                courses2.add("Salat:");
+                for (SaladToBBQ saladList : barbercue.getSaladList()) {
+                    courses2.add(saladList.getSalad().toString(barbercue.getSettings()));
+                }
             }
-            courses2.add("Grill:");
-            for (GrillToBBQ gril : barbercue.getGrillList()) {
-                courses2.add(gril.getGrill().getType() + " Pris: " + gril.getGrill().getCoalPrice());
+            if (barbercue.getGrillList() != null) {
+                courses2.add("Grill:");
+                for (GrillToBBQ gril : barbercue.getGrillList()) {
+                    courses2.add(gril.getGrill().getType() + " Pris: " + gril.getGrill().getCoalPrice());
+                }
             }
+
             courses2.add("Andet:");
             courses2.add("Transport: " + barbercue.getTransport());
             courses2.add("Arbejdsløn: " + barbercue.getSalary());
-            ImageExample ie2 = new ImageExample(cal, barbercue.getSettings(), courses2, barbercue.getFoodReady(), barbercue.getAddress(), barbercue.getTotalPrice(), barbercue.getComments(), false);
+//            ImageExample ie2 = new ImageExample(cal, barbercue.getSettings(), courses2, barbercue.getFoodReady(), barbercue.getAddress(), barbercue.getTotalPrice(), barbercue.getComments(), false);
 //            SendMail mail2 = new SendMail(jTBBQCusEmail.getText(), ie2.getFileName());
 
             jFrame.dispose();
@@ -1280,6 +1374,7 @@ public class EventPanel extends javax.swing.JPanel implements ActionListener {
             }
 
         } catch (Exception ex) {
+            Logger.getLogger(EventPanel.class.getName()).log(Level.SEVERE, null, ex);
             try {
                 errorControl.createErrorPopup("fejl2", ex.getMessage() + " " + ex.getLocalizedMessage());
             } catch (SQLException ex1) {

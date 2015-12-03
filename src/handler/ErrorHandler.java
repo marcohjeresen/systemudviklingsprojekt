@@ -34,6 +34,7 @@ public class ErrorHandler {
         String sql = "insert into errorMsgs values ('"+dft.getDateNowString()+ "','"+message+"')";
         System.out.println("jeg fik afsluttet dety "  +dft.getDateNowString());
         dbc.execute(sql);
+        System.out.println("vidre.");
     }
     
     

@@ -38,7 +38,7 @@ public class ImageExample {
     private String comments;
     private String fileName;
 
-    public ImageExample(Calendar date, int settings, ArrayList<String> courses, String time, String eventAddress, int totalPrice, String comments, boolean kunde) throws Exception{
+    public ImageExample(Calendar date, int settings, ArrayList<String> courses, String time, String eventAddress, int totalPrice, String comments, boolean kunde) throws Exception {
         this.date = date;
         this.settings = settings;
         this.courses = courses;
@@ -57,14 +57,14 @@ public class ImageExample {
         try {
             if (kunde) {
                 fileName = "grill" + new SimpleDateFormat("dd. MMMMM yyyy hhmm").format(date.getTime()) + ".pdf";
-            }else{
+            } else {
                 fileName = "grill" + new SimpleDateFormat("dd. MMMMM yyyy hhmm").format(date.getTime()) + "Prisliste.pdf";
             }
-            
+
             FileOutputStream file = new FileOutputStream(new File("C:/Users/Mark/Desktop", fileName));
             PdfWriter writer = PdfWriter.getInstance(document, file);
             document.open();
-            
+
             Image img = Image.getInstance("src/pictures/cirkles.png");
             img.scaleToFit(277, 277);
             img.setAbsolutePosition(40, PageSize.A4.getHeight() - img.getHeight());
@@ -100,32 +100,36 @@ public class ImageExample {
             ending.setIndentationLeft(235);
             ending.setLeading(17);
             document.add(ending);
-            Paragraph comment = new Paragraph("\n\n\n"+comments, new Font(Font.FontFamily.TIMES_ROMAN, 18));
-            comment.setAlignment(Element.ALIGN_LEFT);
-            comment.setIndentationLeft(235);
-            comment.setLeading(17);
-            document.add(comment);
+            if (!comments.equals("null")) {
+                if (!comments.equals("")) {
+                    Paragraph comment = new Paragraph("\n\nKommentarer\n" + comments, new Font(Font.FontFamily.TIMES_ROMAN, 18));
+                    comment.setAlignment(Element.ALIGN_LEFT);
+                    comment.setIndentationLeft(235);
+                    comment.setLeading(17);
+                    document.add(comment);
+                }
+            }
+
             Image footerImg = Image.getInstance("src/pictures/grillmester.png");
             footerImg.scaleToFit(210, 210);
             footerImg.setAbsolutePosition(40, 40);
             document.add(footerImg);
-            Paragraph contact = new Paragraph("Frank Børge Sund Petersen\nVallensved Bygade 11\nVallensved\n4700 Næstved\n\nMobil: 26236172", new Font(FontFactory.getFont("Gill Sans MT", 16, Font.NORMAL, new BaseColor(51, 102, 102))));
-            contact.setAlignment(Element.ALIGN_CENTER);
-            contact.setSpacingBefore(-255);
-            contact.setLeading(17);
-            contact.setIndentationLeft(-305);
-            document.add(contact);
+
+            Image img2 = Image.getInstance("src/pictures/Contact.png");
+            img2.scaleToFit(250, 250);
+            img2.setAbsolutePosition(20, PageSize.A4.getHeight() - img.getHeight() - 250);
+            document.add(img2);
+
             document.close();
-            
+
             System.out.println("Pdf finish");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getLocalizedMessage());
         }
     }
-    
-   
-    public String getFileName(){
+
+    public String getFileName() {
         return fileName;
     }
 

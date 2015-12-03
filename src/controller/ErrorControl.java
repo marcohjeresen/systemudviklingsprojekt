@@ -34,7 +34,7 @@ public class ErrorControl {
     
     public void createErrorPopup(String error, String completeMessage) throws SQLException{
         eh.saveErrorMessage( errorModel.getMessage(error) + " " + completeMessage);
-        System.out.println(errorModel.getMessage(error) + "      svgegeg    " + completeMessage);
+        System.out.println("\n" +errorModel.getMessage(error) + "      svgegeg    " + completeMessage +"\n");
         
         ErrorPopup errorPopup = new ErrorPopup(errorModel.getMessage(error + "   " + completeMessage));
         

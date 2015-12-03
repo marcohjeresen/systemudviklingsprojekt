@@ -107,6 +107,9 @@ public class BarbercueBuilder {
     }
     
     public BarbercueBuilder addToGrillList(GrillToBBQ grillToBBQ) {
+        if (grillList == null) {
+            grillList = new ArrayList<>();
+        }
         grillList.add(grillToBBQ);
         return this;
     }
@@ -141,6 +144,9 @@ public class BarbercueBuilder {
     }
     
     public BarbercueBuilder addToMeatList(MeatToBBQ meatToBBQ) {
+        if (meatList == null) {
+            meatList = new ArrayList<>();
+        }
         meatList.add(meatToBBQ);
         return this;
     }
@@ -159,6 +165,9 @@ public class BarbercueBuilder {
     }
     
     public BarbercueBuilder addToSaladList(SaladToBBQ saladToBBQ) {
+        if (saladList == null) {
+            saladList = new ArrayList<>();
+        }
         saladList.add(saladToBBQ);
         return this;
     }
@@ -177,6 +186,9 @@ public class BarbercueBuilder {
     }
     
     public BarbercueBuilder addToAccompanimentsList(AccompanimentToBBQ accompanimentToBBQ) {
+        if (accompanimentsList == null) {
+            accompanimentsList = new ArrayList<>();
+        }
         accompanimentsList.add(accompanimentToBBQ);
         return this;
     }
